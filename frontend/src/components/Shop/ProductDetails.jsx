@@ -39,19 +39,35 @@ const ProductDetails = ({ onClose }) => {
   const [quantity, setQuantity] = useState(1);
   const [activeImageIndex, setActiveImageIndex] = useState(0);
   const [selectedImages, setSelectedImages] = useState([]);
-
 useEffect(() => {
   const fetchProduct = async () => {
     try {
       const data = await getProduct(id);
 
       if (data) {
-        setProduct(data);
-        if (data.colors?.length > 0) {
-          setSelectedColor(data.colors[0]);
+        // ✅ Clean colors and sizes to remove undefined, null, or empty strings
+        const cleanedColors = Array.isArray(data.colors)
+          ? data.colors.filter(color => typeof color === 'string' && color.trim() !== '')
+          : [];
+
+        const cleanedSizes = Array.isArray(data.sizes)
+          ? data.sizes.filter(size => typeof size === 'string' && size.trim() !== '')
+          : [];
+
+        const cleanedProduct = {
+          ...data,
+          colors: cleanedColors,
+          sizes: cleanedSizes,
+        };
+
+        setProduct(cleanedProduct);
+
+        if (cleanedColors.length > 0) {
+          setSelectedColor(cleanedColors[0]);
         }
-        if (data.sizes?.length > 0) {
-          setSelectedSize(data.sizes[0]);
+
+        if (cleanedSizes.length > 0) {
+          setSelectedSize(cleanedSizes[0]);
         }
       } else {
         console.error('No product data returned for id:', id);
