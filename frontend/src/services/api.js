@@ -68,3 +68,12 @@ export const subscribeToNewsletter = async (email) => {
     throw error.response?.data?.message || 'Subscription failed';
   }
 };
+
+export const getArticles = async () => {
+  try {
+    const response = await axios.get(`${API_URL}/articles`);
+    return response.data;
+  } catch (error) {
+    throw error.response?.data?.message || 'Failed to fetch articles';
+  }
+};
