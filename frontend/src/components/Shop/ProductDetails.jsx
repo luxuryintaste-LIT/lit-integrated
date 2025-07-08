@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 // ✅ Import useNavigate to handle navigation
 import { useParams, useNavigate } from 'react-router-dom';
 import { getProduct } from '../../services/api';
-import '/src/styles/ProductDetails.css';
+import '/frontend/src/styles/ProductDetails.css';
 
 // Convert buffer or base64 to image URL (No changes here)
 const bufferToBase64 = (buffer) => {
