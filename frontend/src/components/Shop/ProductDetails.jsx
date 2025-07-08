@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 // ✅ Import useNavigate to handle navigation
 import { useParams, useNavigate } from 'react-router-dom';
 import { getProduct } from '../../services/api';
-import '/src/styles/ProductDetails.css';
+import '../../styles/ProductDetails.css';
 
 // Convert buffer or base64 to image URL (No changes here)
 const bufferToBase64 = (buffer) => {
@@ -32,7 +32,7 @@ const bufferToBase64 = (buffer) => {
 
 const ProductDetails = ({ onClose }) => {
   const { id } = useParams();
-  const navigate = useNavigate(); // ✅ Initialize navigate hook
+  const navigate = useNavigate(); 
   const [product, setProduct] = useState(null);
   const [selectedColor, setSelectedColor] = useState('');
   const [selectedSize, setSelectedSize] = useState('');
@@ -40,22 +40,29 @@ const ProductDetails = ({ onClose }) => {
   const [activeImageIndex, setActiveImageIndex] = useState(0);
   const [selectedImages, setSelectedImages] = useState([]);
 
-  useEffect(() => {
-    const fetchProduct = async () => {
-      try {
-        const data = await getProduct(id);
+useEffect(() => {
+  const fetchProduct = async () => {
+    try {
+      const data = await getProduct(id);
+
+      if (data) {
         setProduct(data);
-
-        // Set defaults if available, otherwise they remain empty strings ('')
-        if (data.colors?.length > 0) setSelectedColor(data.colors[0]);
-        if (data.sizes?.length > 0) setSelectedSize(data.sizes[0]);
-      } catch (error) {
-        console.error('Failed to fetch product:', error);
+        if (data.colors?.length > 0) {
+          setSelectedColor(data.colors[0]);
+        }
+        if (data.sizes?.length > 0) {
+          setSelectedSize(data.sizes[0]);
+        }
+      } else {
+        console.error('No product data returned for id:', id);
       }
-    };
+    } catch (error) {
+      console.error('Failed to fetch product:', error);
+    }
+  };
 
-    fetchProduct();
-  }, [id]);
+  fetchProduct();
+}, [id]);
 
   useEffect(() => {
     if (!product || !product.images) return;
