@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { getProduct } from '../../services/api';
-import '../../styles/ProductDetails.css';
+import '../../styles/productDetails.css';
 
 const ProductDetails = ({ onClose }) => {
   const { id } = useParams();
@@ -15,7 +15,7 @@ const ProductDetails = ({ onClose }) => {
 
   // Fetch product data
   useEffect(() => {
-    const fetchProduct = async () => {
+    const fetchProduct = async () => {``
       try {
         const data = await getProduct(id);
         setProduct(data);
