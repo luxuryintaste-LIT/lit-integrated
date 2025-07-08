@@ -1,4 +1,4 @@
-/* === Luxury Fashion Section === */
+/* === Luxury Fashion Section (Updated) === */
 .lf-section {
   margin-bottom: 120px;
 }
@@ -23,7 +23,7 @@
   font-size: 82px;
 }
 
-/* Featured Grid */
+/* Featured Grid - NO CHANGES HERE */
 .lf-grid-container {
   display: grid;
   gap: 30px;
@@ -55,7 +55,7 @@
   aspect-ratio: 679 / 453;
 }
 
-/* Extra Posts Grid */
+/* Extra Posts Grid - THIS IS WHERE THE FIX IS */
 .lf-grid-extra {
   display: grid;
   grid-template-columns: repeat(4, 1fr); /* Fixed to 4 columns */
@@ -63,7 +63,13 @@
   margin-top: 60px;
   padding: 0 1rem;
   justify-items: start;
-  align-items: start;
+  /* 
+    --- THIS IS THE FIX ---
+    Changed from 'align-items: start' to 'align-items: stretch'.
+    This forces all cards within this "extra" grid to have a uniform height per row,
+    without affecting the custom featured grid above.
+  */
+  align-items: stretch;
 }
 
 .lf-grid-extra .lf-card-wrapper {
@@ -94,7 +100,7 @@
   color: #fff;
 }
 
-/* Media Queries */
+/* Media Queries - NO CHANGES HERE */
 @media (max-width: 1023px) {
   .lf-grid-container {
     grid-template-columns: 1fr 1fr;

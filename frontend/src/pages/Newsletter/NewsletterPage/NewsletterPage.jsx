@@ -1,5 +1,4 @@
-import React, { useState, useEffect, useMemo, useRef } from 'react';
-import { useSearchParams } from 'react-router-dom';
+import React, { useState, useEffect, useMemo, useCallback, useRef } from 'react';
 import './NewsletterPage.css';
 
 import NewsletterHeader from '../NewsletterHeader/NewsletterHeader';
@@ -9,28 +8,33 @@ import LuxuryFashion from '../LuxuryFashion/LuxuryFashion';
 import FastFashion from '../FastFashion/FastFashion';
 import FashionSection from '../FashionSection/FashionSection';
 import SneakersWorld from '../SneakersWorld/SneakersWorld';
+import Background from '../../../components/Background/Background';
+
+import { getArticles } from '../../../services/api'; 
 
 const NewsletterPage = () => {
-  const [searchParams] = useSearchParams();
-  const contentRef = useRef(null);
-
+  const frontContentRef = useRef(null);
+  const backContentRef = useRef(null);
   const [containerHeight, setContainerHeight] = useState('100vh');
+
   const [allArticles, setAllArticles] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [activeFilter, setActiveFilter] = useState('default');
 
-  useEffect(() => {
+  const [activeFilter, setActiveFilter] = useState('default');
+  const [showBack, setShowBack] = useState(false);
+  const [isFlipping, setIsFlipping] = useState(false);
+
+  // ✅ Fetch from your backend API
+ useEffect(() => {
     const fetchArticles = async () => {
       setError(null);
       setLoading(true);
       try {
-        const response = await fetch('http://localhost:5000/api/articles');
-        if (!response.ok) throw new Error(`API Error: ${response.status}`);
-        const data = await response.json();
+        const data = await getArticles();
         setAllArticles(data || []);
       } catch (err) {
-        setError(err.message);
+        setError(err.message || 'Error fetching articles');
       } finally {
         setLoading(false);
       }
@@ -39,46 +43,53 @@ const NewsletterPage = () => {
   }, []);
 
   useEffect(() => {
-    if (loading) return;
-    const sectionToScroll = searchParams.get('section');
-    if (sectionToScroll) {
-      const element = document.getElementById(`${sectionToScroll}-section`);
-      if (element) {
-        setTimeout(() => {
-          element.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        }, 100);
-      }
-    }
-  }, [loading, searchParams]);
-
-  useEffect(() => {
     const measureHeight = () => {
       requestAnimationFrame(() => {
-        if (contentRef.current) {
-          setContainerHeight(`${contentRef.current.offsetHeight}px`);
+        const activeRef = showBack ? backContentRef : frontContentRef;
+        if (activeRef.current) {
+          setContainerHeight(`${activeRef.current.offsetHeight}px`);
         }
       });
     };
+
     measureHeight();
     window.addEventListener('resize', measureHeight);
     return () => window.removeEventListener('resize', measureHeight);
-  }, [loading, activeFilter]);
+  }, [loading, activeFilter, showBack]);
 
-  const handleFilterChange = (newFilter) => {
-    if (newFilter !== activeFilter) {
-      setActiveFilter(newFilter);
+  const handleFilterChange = useCallback((newFilter) => {
+    if (isFlipping || newFilter === activeFilter) return;
+
+    const isFlippingToBack = newFilter === 'domestic';
+    const isFlippingToFront = activeFilter === 'domestic' && newFilter !== 'domestic';
+    const needsPhysicalFlip = isFlippingToBack || isFlippingToFront;
+
+    if (needsPhysicalFlip) {
+      setIsFlipping(true);
+      setShowBack(isFlippingToBack);
     }
-  };
 
-  const domesticContent = useMemo(() => allArticles.filter(a => a.location?.toLowerCase() === 'domestic'), [allArticles]);
-  const internationalContent = useMemo(() => allArticles.filter(a => a.location?.toLowerCase() === 'international'), [allArticles]);
+    setTimeout(() => {
+      setActiveFilter(newFilter);
+      setIsFlipping(false);
+    }, needsPhysicalFlip ? 600 : 50);
+  }, [activeFilter, isFlipping]);
 
-  const articlesToRender = useMemo(() => {
-    if (activeFilter === 'domestic') return domesticContent;
-    if (activeFilter === 'international') return internationalContent;
-    return allArticles;
-  }, [activeFilter, domesticContent, internationalContent, allArticles]);
+  // ✅ Categorized filtering
+  const domesticContent = useMemo(
+    () => allArticles.filter(a => a.location?.toLowerCase() === 'domestic'),
+    [allArticles]
+  );
+  const internationalContent = useMemo(
+    () => allArticles.filter(a => a.location?.toLowerCase() === 'international'),
+    [allArticles]
+  );
 
+  const articlesForFrontFace = useMemo(() => {
+    return activeFilter === 'international' ? internationalContent : allArticles;
+  }, [activeFilter, internationalContent, allArticles]);
+
+  // ✅ Organize into sections
   const renderSections = (articles) => {
     if (loading || !articles) return null;
 
@@ -91,12 +102,11 @@ const NewsletterPage = () => {
     ];
 
     return sections.map(section => {
-      const sectionId = `${section.id}-section`;
       if (section.id === 'fashion-feature') {
-        return section.post ? <div id={sectionId} key={section.id}><section.Component post={section.post} /></div> : null;
+        return section.post ? <section.Component key={section.id} post={section.post} /> : null;
       }
       if (!section.posts || section.posts.length === 0) return null;
-      return <div id={sectionId} key={section.id}><section.Component posts={section.posts} /></div>;
+      return <section.Component key={section.id} posts={section.posts} />;
     });
   };
 
@@ -104,13 +114,40 @@ const NewsletterPage = () => {
   if (error) return <h2 style={{ color: 'red', textAlign: 'center', marginTop: '150px' }}>Error: {error}</h2>;
 
   return (
-    <div className="page-flip-container" >
-      <div className="content-wrapper" ref={contentRef}>
-        <NewsletterHeader activeFilter={activeFilter} onFilterChange={handleFilterChange} />
-        <div className="page-container">
-          {renderSections(articlesToRender)}
+    // <Background 
+    <div className="page-flip-container" style={{ height: containerHeight }}>
+      <div className={`flip-card-inner ${showBack ? 'is-flipped' : ''}`}>
+        
+        {/* FRONT FACE */}
+        <div className="flip-card-face flip-card-front">
+          <div ref={frontContentRef} className="content-wrapper">
+            <NewsletterHeader
+              activeFilter={showBack ? '' : activeFilter}
+              onFilterChange={handleFilterChange}
+              isFlipping={isFlipping}
+            />
+            <div className="page-container">
+              {renderSections(articlesForFrontFace)}
+            </div>
+            {/* <Footer /> */}
+          </div>
         </div>
-        {/* <Footer /> */}
+
+        {/* BACK FACE */}
+        <div className="flip-card-face flip-card-back">
+          <div ref={backContentRef} className="content-wrapper">
+            <NewsletterHeader
+              activeFilter={showBack ? 'domestic' : ''}
+              onFilterChange={handleFilterChange}
+              isFlipping={isFlipping}
+            />
+            <div className="page-container">
+              {renderSections(domesticContent)}
+            </div>
+            {/* <Footer /> */}
+          </div>
+        </div>
+
       </div>
     </div>
   );
