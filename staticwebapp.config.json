@@ -27,7 +27,7 @@
     }
   },
   "globalHeaders": {
-    "Access-Control-Allow-Origin": "https://black-moss-014630a10.6.azurestaticapps.net",
+    "Access-Control-Allow-Origin": "https://calm-tree-05462bf10.1.azurestaticapps.net",
     "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
     "Access-Control-Allow-Headers": "Content-Type"
   }
