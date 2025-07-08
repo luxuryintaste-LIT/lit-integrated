@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 // ✅ Import useNavigate to handle navigation
 import { useParams, useNavigate } from 'react-router-dom';
 import { getProduct } from '../../services/api';
-import '../../styles/ProductDetails.css';
+import '../../styles/productDetails.css';
 
 // Convert buffer or base64 to image URL (No changes here)
 const bufferToBase64 = (buffer) => {
@@ -211,19 +211,22 @@ useEffect(() => {
 
             <div className="product-description">{product.description}</div>
 
-            {/* Color & Size Selection (No changes here) */}
-            <div className="selection-container">
-              <h3>Color</h3>
-              <div className="color-options">
-                {product.colors.map((color) => (
-                  <button key={color} className={`color-option ${selectedColor === color ? 'selected' : ''}`}
-                    onClick={() => handleColorSelect(color)} style={{ backgroundColor: color.toLowerCase() }} title={color}>
-                    {selectedColor === color && <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" stroke="white"
-                      strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12" /></svg>}
-                  </button>
-                ))}
-              </div>
+          <div className="selection-container">
+            <h3>Color</h3>
+            <div className="color-options">
+              {product.colors.map((color, index) => (
+                <button 
+                  key={color || index} 
+                  className={`color-option ${selectedColor === color ? 'selected' : ''}`}
+                  onClick={() => color && handleColorSelect(color)}
+                  style={{ backgroundColor: color ? color.toLowerCase() : 'transparent' }}
+                  title={color || 'No color'}
+                >
+                  {selectedColor === color && <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12" /></svg>}
+                </button>
+              ))}
             </div>
+          </div>
 
             <div className="selection-container">
               <h3>Size</h3>
