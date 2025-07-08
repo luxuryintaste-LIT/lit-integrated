@@ -4,6 +4,25 @@ import { v4 as uuidv4 } from 'uuid';
 const AuthContext = createContext(null);
 
 // Load initial admin user list from localStorage
+// const getInitialUsers = () => {
+//   try {
+//     const savedUsers = localStorage.getItem('adminUsers');
+//     if (savedUsers) {
+//       return JSON.parse(savedUsers);
+//     }
+//   } catch (error) {
+//     console.error("Could not parse users from localStorage", error);
+//   }
+
+//   return [
+//     {
+//       id: uuidv4(),
+//       email: (import.meta.env.VITE_ADMIN_EMAIL).toLowerCase(),
+//       password:( import.meta.env.VITE_ADMIN_PASSWORD),
+//     }
+//   ];
+// };
+
 const getInitialUsers = () => {
   try {
     const savedUsers = localStorage.getItem('adminUsers');
@@ -14,11 +33,16 @@ const getInitialUsers = () => {
     console.error("Could not parse users from localStorage", error);
   }
 
+  // SAFER: Provide a fallback empty string '' if the environment variable is missing.
+  // This prevents the .toLowerCase() call on `undefined`.
+  const defaultEmail = (import.meta.env.VITE_ADMIN_EMAIL || '').toLowerCase();
+  const defaultPassword = import.meta.env.VITE_ADMIN_PASSWORD || 'defaultpassword'; // Also good to have a fallback here
+
   return [
     {
       id: uuidv4(),
-      email: (import.meta.env.VITE_ADMIN_EMAIL).toLowerCase(),
-      password:( import.meta.env.VITE_ADMIN_PASSWORD),
+      email: defaultEmail,
+      password: defaultPassword,
     }
   ];
 };
