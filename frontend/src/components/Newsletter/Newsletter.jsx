@@ -27,10 +27,8 @@ const Newsletter = ({ onSubscribeClick }) => {
         <h2>Newsletter</h2>
         <p>Subscribe now to receive weekly short updates on fast fashion, luxury fashion, sustainable fashion, and the sneaker market to stay ahead of the curve.</p>
         <div className="cta-buttons">
-        <button className="explore-btn" onClick={() => window.location.href = '/newsletter'}>
-          Explore Newsletter
-        </button>            
-        <button className="subscribe-btn" onClick={onSubscribeClick}>Subscribe Now</button>
+          <Link to="/newsletter" className="explore-btn">Explore Newsletter</Link>         
+          <button className="subscribe-btn" onClick={onSubscribeClick}>Subscribe Now</button>
         </div>
       </div>
 
