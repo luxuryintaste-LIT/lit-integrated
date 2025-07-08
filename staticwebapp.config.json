@@ -18,7 +18,7 @@
   ],
   "navigationFallback": {
     "rewrite": "/index.html",
-    "exclude": ["/images/*.{png,jpg,gif}", "/css/*", "/api/*"]
+    "exclude": ["/images/*", "/assets/*", "/css/*", "/api/*"]
   },
   "responseOverrides": {
     "404": {
@@ -28,7 +28,7 @@
   },
   "globalHeaders": {
     "Access-Control-Allow-Origin": "https://calm-tree-05462bf10.1.azurestaticapps.net",
-    "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
+    "Access-Control-Allow-Methods": "GET, POST, OPTIONS, PUT, DELETE",
     "Access-Control-Allow-Headers": "Content-Type"
   }
 } 
