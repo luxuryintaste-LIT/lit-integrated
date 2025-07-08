@@ -41,21 +41,24 @@ const ProductDetails = ({ onClose }) => {
   const [selectedImages, setSelectedImages] = useState([]);
 
   useEffect(() => {
-    const fetchProduct = async () => {
-      try {
-        const data = await getProduct(id);
+  const fetchProduct = async () => {
+    try {
+      const data = await getProduct(id);
+      if (data) 
         setProduct(data);
 
-        // Set defaults if available, otherwise they remain empty strings ('')
         if (data.colors?.length > 0) setSelectedColor(data.colors[0]);
         if (data.sizes?.length > 0) setSelectedSize(data.sizes[0]);
-      } catch (error) {
-        console.error('Failed to fetch product:', error);
+      } else { // <-- OPTIONAL: Handle case where no product is found
+        console.error('No product data returned for id:', id);
       }
-    };
+    } catch (error) {
+      console.error('Failed to fetch product:', error);
+    }
+  };
 
-    fetchProduct();
-  }, [id]);
+  fetchProduct();
+}, [id]);
 
   useEffect(() => {
     if (!product || !product.images) return;
