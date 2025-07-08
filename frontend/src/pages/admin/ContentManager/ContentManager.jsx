@@ -254,6 +254,7 @@ const WebsiteArticleList = () => {
                                     <td>{article.location || '-'}</td>
                                     <td>{article.category || '-'}</td>
                                     <td>
+                                          {console.log('article.status:', article.status, typeof article.status)}
                                             <span className={`status-pill ${typeof article.status === 'string' ? article.status.toLowerCase() : 'published'}`}>
                                             {article.status || 'Published'}
                                         </span>
