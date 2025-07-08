@@ -163,7 +163,7 @@ const WebsiteArticleList = () => {
                 const response = await fetch('http://localhost:5000/api/articles');
                 if (!response.ok) throw new Error('Failed to fetch articles');
                 const data = await response.json();
-                setArticles(data);
+                setArticles(data || []);
             } catch (err) {
                 setError(err.message);
             } finally {
