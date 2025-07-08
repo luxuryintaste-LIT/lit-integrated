@@ -1,0 +1,1064 @@
+/* =============================
+   GLOBAL & LAYOUT (used by all checkout components)
+   ============================= */
+:root {
+  --primary-purple: #8A2BE2;
+  --text-light: #f0f0f0;
+  --text-dark: #333;
+  --bg-dark-transparent: rgba(255, 255, 255, 0.015);
+  --border-color: rgba(255, 255, 255, 0.2);
+  --selected-glow: 0 0 15px rgba(190, 100, 255, 0.6);
+}
+
+.checkout-page-background {
+  background-image: url('/path-to-your-purple-abstract-background.jpg');
+  background-size: cover;
+  background-position: center;
+  min-height: 100vh;
+  padding: 60px 40px 40px;
+  color: var(--text-light);
+  font-family: 'Segoe UI', 'Roboto', sans-serif;
+}
+
+.checkout-container {
+  display: flex;
+  gap: 30px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.checkout-main-content {
+  flex: 2;
+  background-color: var(--bg-dark-transparent);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-radius: 12px;
+  padding: 25px 30px;
+  border: 1px solid var(--border-color);
+}
+
+.checkout-sidebar {
+  flex: 1;
+}
+
+/* =============================
+   ORDER SUMMARY & SECURE INFO (OrderSummary, SecureInfoBox)
+   ============================= */
+.order-summary-container .summary-card {
+  background-color: var(--bg-dark-transparent);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-radius: 12px;
+  padding: 20px;
+  border: 1px solid var(--border-color);
+  margin-bottom: 20px;
+}
+
+/* Cart Items Summary Styles */
+.cart-items-summary {
+  margin-bottom: 20px;
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+.cart-item-summary {
+  background-color: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 15px;
+  margin-bottom: 10px;
+}
+
+.item-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.item-details {
+  flex: 1;
+}
+
+.item-name {
+  font-size: 14px;
+  font-weight: 600;
+  color: #fff;
+  margin: 0 0 5px 0;
+  line-height: 1.3;
+}
+
+.item-brand {
+  font-size: 12px;
+  color: #ccc;
+  margin: 0 0 3px 0;
+}
+
+.item-variant {
+  font-size: 11px;
+  color: #aaa;
+  margin: 0 0 3px 0;
+}
+
+.item-quantity {
+  font-size: 11px;
+  color: #aaa;
+  margin: 0;
+}
+
+.item-price {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 8px;
+}
+
+.item-price span {
+  font-size: 14px;
+  font-weight: 600;
+  color: #fff;
+}
+
+.remove-item-btn {
+  background: none;
+  border: none;
+  color: #ff6b6b;
+  cursor: pointer;
+  padding: 4px;
+  border-radius: 4px;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.remove-item-btn:hover {
+  background-color: rgba(255, 107, 107, 0.1);
+  color: #ff5252;
+}
+.summary-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: #aaa;
+  margin-bottom: 15px;
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: 10px;
+}
+.summary-row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 12px;
+  font-size: 16px;
+}
+.summary-row.savings { color: #e15aff; }
+.summary-total {
+  display: flex;
+  justify-content: space-between;
+  font-size: 18px;
+  font-weight: bold;
+  border-top: 1px solid var(--border-color);
+  margin-top: 15px;
+  padding-top: 15px;
+}
+.secure-info-box {
+  display: flex;
+  align-items: flex-start;
+  gap: 15px;
+  color: #ccc;
+}
+.secure-info-box .shield-icon { color: #fff; flex-shrink: 0; }
+.secure-info-box .terms-text { font-size: 12px; color: #aaa; }
+.secure-info-box a { color: #e15aff; font-weight: bold; text-decoration: none; }
+
+/* =============================
+   ADDRESS SELECTION (AddressList, AddressCard)
+   ============================= */
+.step-content-container .step-title { font-size: 22px; margin-bottom: 25px; }
+.address-list { display: flex; flex-direction: column; gap: 15px; }
+.address-card {
+  background-color: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 20px;
+  cursor: pointer;
+  position: relative;
+  transition: all 0.2s ease-in-out;
+}
+.address-card:before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 15px;
+  transform: translateY(-50%);
+  width: 18px;
+  height: 18px;
+  border: 2px solid #fff;
+  border-radius: 50%;
+}
+.address-card.selected:after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 20px;
+  transform: translateY(-50%);
+  width: 8px;
+  height: 8px;
+  background-color: #fff;
+  border-radius: 50%;
+}
+.address-card.selected { border-color: #fff; box-shadow: var(--selected-glow); }
+.address-card-content { display: flex; justify-content: space-between; padding-left: 35px; }
+.address-header .address-type-badge {
+  display: inline-block;
+  background-color: rgba(255, 255, 255, 0.2);
+  padding: 3px 8px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+.address-header p { margin: 4px 0; color: #ccc; }
+.address-actions { display: flex; gap: 15px; }
+.icon-btn { background: none; border: none; color: #ccc; cursor: pointer; }
+
+/* =============================
+   BUTTONS (shared by all forms)
+   ============================= */
+.step-navigation { display: flex; justify-content: flex-end; margin-top: 30px; }
+.step-navigation button,
+.btn-primary,
+.payment-btn {
+  padding: 0.375rem 3rem;
+  font-family: 'Poppins', sans-serif;
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #FFFFFF;
+  background: radial-gradient(circle at 60% 40%, #7f53ac 0%, #2d133d 100%);
+  border: 1.5px solid rgba(147, 51, 234, 0.6);
+  border-radius: 16px;
+  cursor: pointer;
+  transition: all 0.2s;
+  box-shadow: 0 2px 8px 0 rgba(0,0,0,0.10);
+}
+.step-navigation button:hover,
+.btn-primary:hover,
+.payment-btn:hover {
+  filter: brightness(1.2);
+  border-color: rgba(255, 255, 255, 1);
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
+}
+.btn-primary:disabled, .payment-btn:disabled {
+  background: #23232b;
+  color: #aaa;
+  cursor: not-allowed;
+  border: 1.5px solid #e0e0e0;
+  box-shadow: none;
+  transform: none;
+  opacity: 1;
+}
+
+/* =============================
+   PAYMENT SELECTION SIDEBAR (PaymentSelection.jsx)
+   ============================= */
+.payment-layout { display: flex; gap: 20px; align-items: flex-start; }
+.payment-methods-sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+  border-radius: 16px;
+  padding: 18px 12px;
+  border: none;
+}
+.method-btn {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: transparent;
+  border: 1px solid transparent;
+  padding: 18px;
+  color: #ccc;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  box-shadow: 0 2px 8px 0 rgba(0,0,0,0.04);
+  margin-bottom: 0;
+  width: 300px;
+}
+.method-btn-group { display: flex; align-items: center; gap: 15px; }
+.method-btn:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.2);
+}
+.method-btn.active {
+  background-color: rgba(255, 255, 255, 0.15);
+  border-color: rgba(255, 255, 255, 0.3);
+  color: #fff;
+  font-weight: 600;
+  box-shadow: 0 4px 16px 0 rgba(80,60,180,0.10);
+}
+.method-btn svg { width: 24px; height: 24px; }
+.payment-content {
+  flex: 1.5;
+  background-color: transparent;
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  padding: 25px;
+}
+.step-content-container .payment-header {
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: 15px;
+  margin-bottom: 20px;
+}
+
+/* =============================
+   NETBANKING DROPDOWN (NetBankingDropdown.jsx)
+   ============================= */
+.custom-dropdown { position: relative; margin-top: 12px; }
+.dropdown-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.2);
+  border: 1px solid var(--border-color);
+  border-radius: 10px;
+  padding: 12px 16px;
+  color: var(--text-light);
+  font-size: 16px;
+  cursor: pointer;
+}
+.dropdown-header .selected-bank-display { display: flex; align-items: center; gap: 10px; }
+.dropdown-list {
+  position: absolute;
+  top: 110%;
+  left: 0;
+  right: 0;
+  background-color: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--border-color);
+  border-radius: 10px;
+  padding: 8px;
+  margin: 0;
+  max-height: 250px;
+  overflow-y: auto;
+  z-index: 20;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  list-style: none;
+}
+.dropdown-list li {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px;
+  cursor: pointer;
+  border-radius: 8px;
+  transition: background 0.2s ease;
+}
+.dropdown-list li:hover { background-color: rgba(255, 255, 255, 0.1); }
+.dropdown-list li.selected { background-color: rgba(255, 255, 255, 0.15); }
+.bank-logo { width: 32px; height: 32px; object-fit: contain; }
+.bank-logo-small { width: 24px; height: 24px; object-fit: contain; }
+.dropdown-header svg.open { transform: rotate(180deg); transition: transform 0.3s ease; }
+
+/* =============================
+   UPI FORM (UpiForm.jsx)
+   ============================= */
+/* The form container inside the glass box. 
+   The 'gap' is much smaller now, which is the key to reducing the height. */
+.upi-form-compact {
+  display: flex;
+  flex-direction: column;
+  gap: 8px; /* CRITICAL: Reduced from 16px to 8px for tight spacing */
+}
+
+.upi-form-compact > div:first-of-type {
+  margin-top: 18px;
+}
+
+.upi-form-compact .verify-btn-large {
+  margin-top: 18px;
+}
+
+.upi-form-compact .save-details {
+  margin-top: 18px;
+  width: 100%;
+  justify-content: flex-start;
+  margin-left: 0;
+}
+
+.upi-form-compact .upi-input-wrapper {
+  position: relative;
+}
+
+.upi-form-compact .spinner-inline,
+.upi-status-icon.verified,
+.upi-status-icon.error {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+/* Header ("₹ UPI") */
+.upi-form-compact .form-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.upi-form-compact .form-header-title {
+  font-size: 18px;
+  font-weight: 600;
+}
+
+/* Labels ("Choose App", "Enter UPI ID") */
+.upi-section-label {
+  font-size: 14px;
+  font-weight: 500;
+  color: #cccccc;
+  margin: 2px 0 -2px 0; /* Reduced margins to tighten the layout */
+}
+
+/* The 'or' text divider */
+.upi-form-compact .upi-divider {
+  font-size: 12px;
+  color: #888;
+  text-align: center;
+  margin: 0; /* No extra margin */
+  margin-top: 0;
+}
+
+.upi-form-compact .upi-divider + div {
+  margin-top: 8px !important;
+}
+
+/* Container for app buttons (GPay, etc.) */
+.upi-apps {
+  display: flex;
+  gap: 12px;
+  margin-top: 0;
+}
+
+/* The app buttons are now shorter */
+.upi-app-btn {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.2s ease;
+  width: 52px;
+  height: 52px;
+}
+
+.upi-app-btn:hover {
+  background-color: rgba(255, 255, 255, 0.15);
+}
+
+.upi-app-btn img {
+  height: 22px; 
+  object-fit: contain;
+}
+
+/* The simple, pill-shaped input field */
+.upi-input-field {
+  width: 100%;
+  box-sizing: border-box; /* Prevents padding from adding to width */
+  background-color: rgba(0, 0, 0, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 16px; /* Highly rounded corners for pill shape */
+  padding: 12px 16px;
+  color: #e0e0e0;
+  font-size: 16px;
+  outline: none;
+  /* margin-top: 0; */
+}
+
+/* The large "Verify" button */
+.verify-btn-large {
+  width: 100%;
+  padding: 12px; /* Reduced padding to make it shorter */
+  font-size: 18px;
+  font-weight: 600;
+  color: #FFFFFF;
+  background-color: #3a2d54; 
+  border: 1.5px solid rgba(147, 51, 234, 0.6);
+  border-radius: 16px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.verify-btn-large:hover:not(:disabled) {
+  background-color: #4f3f6e;
+  border-color: rgba(147, 51, 234, 1);
+}
+
+/* The checkbox at the bottom */
+.save-details {
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+  color: #ccc;
+  gap: 10px;
+  cursor: pointer;
+}
+
+.save-details input[type="checkbox"] {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 18px; /* Slightly smaller */
+  height: 18px;
+  background-color: transparent;
+  border: 1.5px solid rgba(255, 255, 255, 0.5);
+  border-radius: 4px;
+  cursor: pointer;
+  position: relative;
+  transition: all 0.2s;
+}
+
+.save-details input[type="checkbox"]:checked::after {
+  content: '';
+  position: absolute;
+  top: 1px;
+  left: 5px;
+  width: 5px;
+  height: 10px;
+  border: solid white;
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+}
+
+.upi-section-label + .upi-apps {
+  margin-top: 12px;
+}
+
+.upi-app-btn img {
+  height: 32px;
+  object-fit: contain;
+}
+
+.upi-app-btn {
+  height: 52px;
+}
+
+/* =============================
+   CREDIT CARD FORM (CreditCardForm.jsx)
+   ============================= */
+
+.credit-card-form {
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+  border-radius: 16px;
+  padding: 10px 8px 6px 10px;
+  width: 340px;
+  box-sizing: border-box;
+  box-shadow: 0 2px 16px 0 rgba(0,0,0,0.10);
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+.credit-card-form .form-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 18px;
+}
+
+.credit-card-form .form-header-title {
+  font-size: 18px;
+  font-weight: 600;
+  color: #fff;
+}
+
+.credit-card-form .form-group {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 14px;
+  width: 100%;
+}
+
+.credit-card-form label {
+  font-size: 14px;
+  font-weight: 500;
+  color: #ccc;
+  margin-bottom: 6px;
+}
+
+.credit-card-form input[type="text"] {
+  background: rgba(0,0,0,0.4);
+  border: 1.5px solid rgba(255,255,255,0.2);
+  border-radius: 14px;
+  padding: 12px 16px;
+  color: #fff;
+  font-size: 16px;
+  outline: none;
+  transition: border 0.2s;
+  width: 100%;
+}
+
+.credit-card-form input[type="text"]:focus {
+  border-color: #a084e8;
+}
+
+.credit-card-form .form-row {
+  display: flex;
+  gap: 10px;
+}
+
+.credit-card-form .form-row .form-group {
+  flex: 1;
+  max-width: 48%;
+  padding-bottom: 6px;
+}
+
+/* Error state */
+.credit-card-form .form-group.error label {
+  color: #e53935;
+}
+.credit-card-form .form-group.error input[type="text"] {
+  border-color: #e53935;
+}
+.credit-card-form .form-group.error .helper-text {
+  color: #e53935;
+  font-size: 12px;
+  margin-top: 2px;
+}
+
+/* Button */
+.credit-card-form .payment-btn {
+  width: 100%;
+  display: block;
+  margin: 0 auto 10px auto;
+  box-sizing: border-box;
+  padding: 12px;
+  font-size: 18px;
+  font-weight: 600;
+  color: #fff;
+  background: linear-gradient(90deg, #7f53ac 0%, #647dee 100%);
+  border: none;
+  border-radius: 14px;
+  margin-top: 8px;
+  margin-bottom: 10px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.credit-card-form .payment-btnactive {
+  background: linear-gradient(90deg, #647dee 0%, #7f53ac 100%);
+}
+
+/* Checkbox */
+.credit-card-form .save-details {
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+  color: #ccc;
+  gap: 10px;
+  cursor: pointer;
+  margin-top: 0;
+}
+
+.credit-card-form .form-group input[type="text"],
+.credit-card-form .form-group .payment-btn {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* =============================
+   ADDRESS FORM (AddressForm.jsx)
+   ============================= */
+
+.address-form-container {
+  background-color: var(--bg-dark-transparent);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-radius: 12px;
+  padding: 25px 30px;
+  border: 1px solid var(--border-color);
+}
+
+.address-form-container h3 {
+  font-size: 22px;
+  margin-bottom: 25px;
+  color: #fff;
+  font-weight: 600;
+}
+
+.address-form-container label {
+  font-size: 14px;
+  font-weight: 500;
+  color: #ccc;
+  margin-bottom: 6px;
+}
+
+.address-form-container input[type="text"],
+.address-form-container input[type="tel"] {
+  background: rgba(0,0,0,0.4);
+  border: 1.5px solid rgba(255,255,255,0.2);
+  border-radius: 14px;
+  padding: 12px 16px;
+  color: #fff;
+  font-size: 16px;
+  outline: none;
+  transition: border 0.2s;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.address-form-container input[type="text"]:focus,
+.address-form-container input[type="tel"]:focus {
+  border-color: #a084e8;
+}
+
+.address-form-container .form-row {
+  display: flex;
+  gap: 10px;
+}
+
+.address-form-container .form-row .form-group {
+  flex: 1;
+  max-width: 48%;
+  padding-bottom: 6px;
+}
+
+.address-form-container .form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 15px;
+  margin-top: 25px;
+}
+
+.address-form-container .btn-secondary {
+  padding: 12px 24px;
+  font-size: 16px;
+  font-weight: 500;
+  color: #ccc;
+  background: rgba(255,255,255,0.1);
+  border: 1.5px solid rgba(255,255,255,0.2);
+  border-radius: 14px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.address-form-container .btn-secondary:hover {
+  background: rgba(255,255,255,0.15);
+  border-color: rgba(255,255,255,0.3);
+}
+
+.address-form-container .btn-primary {
+  padding: 12px 24px;
+  font-size: 16px;
+  font-weight: 600;
+  color: #fff;
+  background: linear-gradient(90deg, #7f53ac 0%, #647dee 100%);
+  border: none;
+  border-radius: 14px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.address-form-container .btn-primary:hover {
+  background: linear-gradient(90deg, #647dee 0%, #7f53ac 100%);
+}
+
+/* =============================
+   PAYPAL FORM (PaypalForm.jsx)
+   ============================= */
+
+.paypal-row {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.paypal-input {
+  flex: 1;
+  background: transparent;
+  border: 2px solid #ccc;
+  border-radius: 16px;
+  padding: 14px 18px;
+  color: #fff;
+  font-size: 18px;
+  outline: none;
+  transition: border 0.2s;
+}
+
+.paypal-input:focus {
+  border-color: #a084e8;
+}
+
+.paypal-confirm-btn {
+  width: auto;
+  display: inline-block;
+  padding: 0 28px;
+  height: 48px;
+  font-size: 18px;
+  font-weight: 600;
+  color: #fff;
+  background: linear-gradient(90deg, #7f53ac 0%, #2d133d 100%);
+  border: none;
+  border-radius: 14px;
+  cursor: pointer;
+  transition: background 0.2s;
+  white-space: nowrap;
+  box-shadow: 0 2px 8px 0 rgba(0,0,0,0.10);
+  width: auto;
+  display: inline-block;
+}
+
+/* =============================
+   ERROR MESSAGE (shared)
+   ============================= */
+
+.error-message {
+  color: #e53935;
+  font-size: 15px;
+  margin: 10px 0 0 0;
+  background: none !important;
+  border: none !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+  text-align: left;
+  display: block;
+}
+
+/* =============================
+   PAYMENT HEADER (PaymentSelection.jsx, compact header)
+   ============================= */
+
+.payment-header-compact {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2px;
+  padding: px 0 8px 0; /* minimal vertical padding */
+}
+
+.back-btn-compact {
+  color: #fff;
+  border: 1.5px solid #fff;
+  border-radius: 8px;
+  padding: 4px 14px 4px 8px;
+  background: none;
+  font-size: 1rem;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  cursor: pointer;
+  transition: border-color 0.2s, background 0.2s;
+  margin-bottom: 12px;
+}
+
+.back-btn-compact:hover {
+  border-color: #e15aff;
+  background: rgba(225,90,255,0.08);
+}
+
+.payment-title-compact {
+  font-size: 1.05rem;
+  font-weight: 500;
+  color: #fff;
+  margin: 0;
+  padding: 0;
+  letter-spacing: 0.01em;
+}
+/* =============================================
+   TABLET & MOBILE ACCORDION (max-width: 992px)
+   ============================================= */
+   @media (max-width: 992px) {
+
+    /* --- 1. LAYOUT ADJUSTMENTS --- */
+    
+    .payment-layout {
+      flex-direction: column;
+      gap: 0;
+      align-items: normal;
+    }
+    .payment-methods-sidebar,
+    .payment-content {
+      display: none !important; 
+    }
+    .checkout-container {
+    flex-direction: column;   /* main content first, then sidebar */
+    gap: 25px;
+  }
+    /* --- 2. ACCORDION CONTAINER & ITEMS --- */
+  
+    .payment-accordion {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+  
+    .payment-accordion-item {
+      background: rgba(255, 255, 255, 0.04);
+      backdrop-filter: blur(10px);
+      border: 1px solid var(--border-color);
+      border-radius: 14px;
+      overflow: hidden; /* This is CORRECT for inactive items */
+      transition: all 0.3s ease;
+    }
+  
+    /* --- START: DROPDOWN FIX --- */
+    .payment-accordion-item.active {
+      overflow: visible;
+      position: relative;
+      z-index: 10;
+    }
+    .payment-accordion-content .custom-dropdown {
+      position: relative;
+      overflow: visible;
+    }
+    .payment-accordion-content .dropdown-list {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      right: 0;
+      margin-top: 8px;
+      margin-bottom: 0;
+      z-index: 1000;
+      max-height: 300px;
+      background-color: rgba(0, 0, 0, 0.95);
+      border: 1px solid rgba(255,255,255,0.18);
+      border-radius: 12px;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.25);
+      backdrop-filter: blur(15px);
+      -webkit-backdrop-filter: blur(15px);
+    }
+    /* --- END: DROPDOWN FIX --- */
+  
+  
+    /* --- 3. ACCORDION BUTTON & CONTENT --- */
+  
+    .payment-accordion-btn {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: none;
+      border: none;
+      color: var(--text-light);
+      font-size: 1rem;
+      font-weight: 500;
+      padding: 18px 20px;
+      cursor: pointer;
+      text-align: left;
+    }
+  
+    .payment-accordion-btn .method-btn-group {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+  
+    .chevron {
+      color: #ccc;
+      transition: transform 0.3s ease-in-out;
+    }
+    .payment-accordion-item.active .chevron {
+      transform: rotate(180deg);
+    }
+  
+    .payment-accordion-content {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.4s ease-out, padding 0.4s ease-out;
+      padding: 0 20px;
+    }
+  
+    .payment-accordion-item.active .payment-accordion-content {
+      max-height: 1000px;
+      padding: 0 20px 20px 20px;
+    }
+  
+    /* --- 4. FORM RESETS INSIDE ACCORDION --- */
+    
+    .payment-accordion-content .credit-card-form,
+    .payment-accordion-content .upi-form-compact,
+    .payment-accordion-content .paypal-row,
+    .payment-accordion-content .custom-dropdown {
+      background: none !important;
+      border: none !important;
+      box-shadow: none !important;
+      padding: 0 !important;
+      margin: 0 !important;
+      width: 100% !important;
+      max-width: 100% !important;
+      backdrop-filter: none !important;
+    }
+  }
+
+/* =============================================
+   MOBILE PORTRAIT (max-width: 576px)
+   Final adjustments for the smallest screens.
+   ============================================= */
+@media (max-width: 576px) {
+
+  /* --- GLOBAL & LAYOUT --- */
+  .checkout-page-background { padding: 30px 15px 15px; }
+  .checkout-main-content { padding: 15px; }
+  label { font-size: 13px; }
+
+  /* --- ORDER SUMMARY --- */
+  .order-summary-container .summary-card { padding: 15px;
+   }
+  .summary-row { font-size: 15px; }
+  .summary-total { font-size: 17px; }
+
+  /* --- ADDRESS SELECTION --- */
+  .address-card { padding: 15px; }
+  .address-card-content { padding-left: 30px; }
+
+  /* --- BUTTONS --- */
+  .step-navigation button,
+  .btn-primary,
+  .payment-btn { font-size: 1.1rem; }
+
+  /* --- CREDIT CARD FORM --- */
+  .credit-card-form .form-row { flex-direction: column; gap: 14px; }
+  .credit-card-form .form-row .form-group { max-width: 100%; padding-bottom: 0; }
+  .credit-card-form input[type="text"] { padding: 12px 14px; font-size: 15px; }
+
+  /* --- PAYPAL FORM --- */
+  .paypal-row { flex-direction: column; gap: 12px; }
+  .paypal-input, .paypal-confirm-btn { width: 100%; box-sizing: border-box; }
+}
+
+/* =============================
+   ACTION BUTTONS (Next, Send OTP, Pay Now, Proceed, Verify)
+   ============================= */
+.action-btn {
+  padding: .65rem 3rem;
+  margin-top: .25rem;
+  font-family: 'Poppins', sans-serif;
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #FFFFFF;
+  background: radial-gradient(308.33% 308.33% at 53.98% 55.95%, rgba(0, 0, 0, 0.8) 0%, rgba(147, 51, 234, 0.4) 50%);
+  border: 1px solid rgba(174, 174, 174, 1);
+  border-radius: 16px;
+  cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+  width: auto;
+  min-width: 200px;
+  max-width: 400px;
+  height: min-content;
+}
+.action-btn:hover {
+  filter: brightness(1.2);
+  border-color: rgba(255, 255, 255, 1);
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
+}
+
+ 

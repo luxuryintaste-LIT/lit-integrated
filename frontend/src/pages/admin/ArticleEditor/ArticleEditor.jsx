@@ -233,6 +233,17 @@ const ArticleEditor = () => {
                 modules={quillModules}
               />
             </div>
+            <div className="editor-input-group">
+              <label htmlFor="publishDate">Publish Date</label>
+              <input
+                type="date"
+                id="publishDate"
+                name="publishDate"
+                value={articleData.publishDate || ''}
+                onChange={handleInputChange}
+                required
+              />
+            </div>
           </div>
 
           <aside className="editor-sidebar">

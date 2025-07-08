@@ -128,7 +128,7 @@ button:hover {
   }
   .hero-content {
     justify-content: flex-start; /* Align content to top */
-    padding-top: 20px;
+    padding-top: 80px;
     height: auto;
     gap: 20px; /* Reduced from 40px */
   }
@@ -156,7 +156,8 @@ button:hover {
   }
   .hero-title {
     font-size: 36px;
-    padding-top:60px
+    padding-top: 60px;
+  }
 }
 
 /* Very small devices (small phones, 360px and down) */
@@ -171,11 +172,25 @@ button:hover {
 }
 
 /* Remove orientation-specific full-height rules */
-@media (max-width: 768px) and (orientation: portrait) ,
-@media (max-width: 768px) and (orientation: landscape) {
+@media (max-width: 768px) and (orientation: portrait),
+       (max-width: 768px) and (orientation: landscape) {
   .hero-container {
     height: auto;
-    min-height: 50vh; /* Consistent with main mobile rule */
+    min-height: 50vh;
     padding-top: 0;
+  }
+}
+
+/* Reduce button size at 570px and below */
+@media (max-width: 570px) {
+  
+  .hero-button {
+    width: 180px;
+    height: 45px;
+    padding: 8px;
+  }
+    .hero-title {
+    font-size: 31px;
+    padding-top: 155px;
   }
 }

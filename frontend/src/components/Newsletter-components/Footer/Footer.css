@@ -4,9 +4,11 @@
   color: #FFFFFF;
   padding: 3rem 2rem 1.5rem;
   margin-bottom: -1px;
-  margin-top: 70px;
+  /* margin-top: 70px; */
+  z-index: 2;
+  
 }
-
+ 
 .footer-content {
   max-width: 1400px;
   margin: 0 auto;

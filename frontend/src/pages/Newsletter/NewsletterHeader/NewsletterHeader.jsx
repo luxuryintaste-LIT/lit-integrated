@@ -3,8 +3,8 @@ import './NewsletterHeader.css';
 
 // Import all three images
 import defaultImage from '../../../assets/internationalimage.jpg';
-import domesticImage from '../../../assets/DOMESTIC.png';
-import internationalImage from '../../../assets/defaultnewsletter.png';
+import domesticImage from '../../../assets/domestic-image.jpeg';
+import internationalImage from '../../../assets/internationalimage.png';
 
 const NewsletterHeader = ({ activeFilter, onFilterChange, isFlipping }) => {
   const [headerImage, setHeaderImage] = useState(defaultImage);

@@ -31,7 +31,12 @@ import Contact from './pages/Contact';
 import Profile from './pages/Profile';
 import Orders from './pages/Orders';
 import Settings from './pages/Settings';
-import Checkout from './pages/Checkout';
+// import CheckoutPage from './Components/Checkout/CheckoutPage';
+import CheckoutPage from './components/checkout/CheckoutPage';
+
+// import AddressForm from './pages/AddressForm';
+
+
 import OrderConfirmation from './pages/OrderConfirmation';
 import NotFound from './pages/NotFound';
 
@@ -46,6 +51,7 @@ import AdminArticlePage from './pages/admin/ArticlePage';
 
 import NewsletterPage from './pages/Newsletter/NewsletterPage/NewsletterPage';
 import NewsletterArticlePage from './pages/Newsletter/ArticlePage/ArticlePage';
+import Wishlist from './pages/Wishlist';
 
 // --- CHANGE: Removed unused page imports ---
 // import SustainabilityPage from './pages/Newsletter/SustainableFashion/SustainableFashion';
@@ -76,13 +82,16 @@ const AppContent = () => {
           <Route path="/shop" element={<Shop />} />
           <Route path="/product/:id" element={<ProductDetails />} />
           <Route path="/cart" element={<Cart />} />
+          <Route path="/wishlist" element={<Wishlist />} />
           <Route path="/game-modes" element={<ComingSoonPage />} />
           <Route path="/about" element={<About />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/orders" element={<Orders />} />
           <Route path="/settings" element={<Settings />} />
-          <Route path="/checkout" element={<Checkout />} />
+          <Route path="/checkout" element={<CheckoutPage />} />
+          {/* <Route path="/shipping-address" element={<AddressForm />} /> */}
+
           <Route path="/order-confirmation" element={<OrderConfirmation />} />
           <Route path="/ir-icon" element={<ComingSoonPage />} />
           <Route path="/socials" element={<ComingSoonPage />} />

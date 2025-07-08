@@ -17,8 +17,8 @@ const getInitialUsers = () => {
   return [
     {
       id: uuidv4(),
-      email: (import.meta.env.VITE_ADMIN_EMAIL || 'admin@example.com').toLowerCase(),
-      password: import.meta.env.VITE_ADMIN_PASSWORD || 'password'
+      email: (import.meta.env.VITE_ADMIN_EMAIL).toLowerCase(),
+      password:( import.meta.env.VITE_ADMIN_PASSWORD),
     }
   ];
 };

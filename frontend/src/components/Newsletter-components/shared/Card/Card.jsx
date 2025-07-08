@@ -2,6 +2,16 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import './Card.css';
 
+const formatDate = (dateStr) => {
+  if (!dateStr) return '';
+  const date = new Date(dateStr);
+  return date.toLocaleDateString('en-US', {
+    year: 'numeric',
+    month: 'short',
+    day: '2-digit',
+  });
+};
+
 const Card = ({ imageUrl, text, description, publishDate, articleUrl }) => {
   return (
     <Link to={articleUrl || "/"} className="card-link-wrapper">
@@ -19,7 +29,7 @@ const Card = ({ imageUrl, text, description, publishDate, articleUrl }) => {
 
         {/* The hover overlay for the date */}
         <div className="card-hover-overlay">
-          <span className="publish-date">{publishDate}</span>
+          <span className="publish-date">{formatDate(publishDate)}</span>
         </div>
       </div>
 

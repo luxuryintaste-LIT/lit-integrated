@@ -2,6 +2,7 @@ import React, { useEffect, useRef } from 'react';
 import ProductCard from './ProductCard';
 // import menWomenImage from '/src/assets/men.png'; // This will no longer be needed as products come from API
 import '/src/styles/ProductList.css';
+import { YoutubeSearchedFor } from '@mui/icons-material';
 
 const ProductList = ({ products }) => {
   const sectionRef = useRef(null);
@@ -46,8 +47,8 @@ const ProductList = ({ products }) => {
                 key={product._id} // Use _id from MongoDB
                 product={product}
               />
-            ))}
-          </div>
+            ))} 
+          </div> 
         </div>
       </div>
     </section>
@@ -55,3 +56,5 @@ const ProductList = ({ products }) => {
 };
 
 export default ProductList; 
+
+

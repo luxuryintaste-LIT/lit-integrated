@@ -1,104 +1,143 @@
+
 .coming-soon-overlay {
-  /* Core layout: Center everything */
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  position: absolute;
-  top: 0;
-  left: 0;
+  height: 100vh;
   width: 100%;
-  height: 100%;
-  
-  /* Styling: Dark glassmorphism effect */
-  background-color: rgba(18, 18, 24, 0.8);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px); /* For Safari */
-  z-index: 999;
-  
-  color: #FFFFFF;
-  padding: 2rem;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+
+.coming-soon-overlay::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: radial-gradient(circle at 50% 50%, rgba(75, 44, 107, 0.25) 0%, rgba(10, 6, 12, 0) 70%);
+  animation: pulse-background 10s infinite ease-in-out;
+  z-index: -1;
+  pointer-events: none;
+  transform-origin: center;
+}
+
+@keyframes pulse-background {
+  0% { transform: scale(1); opacity: 0.8; }
+  50% { transform: scale(1.2); opacity: 1; }
+  100% { transform: scale(1); opacity: 0.8; }
 }
 
 .coming-soon-content {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 1.5rem;
-  max-width: 500px;
+  text-align: center;
+  z-index: 1; 
+  padding: 20px;
+  width: 100%;
+  box-sizing: border-box;
 }
 
+/* --- Logo Icon --- */
 .coming-soon-icon {
   width: 80px;
   height: 80px;
-  opacity: 0.8;
-  animation: float 6s ease-in-out infinite;
+  margin-bottom: 60px;
+  transition: all 0.3s ease-out;
 }
 
-/* Fun floating animation for the icon */
-@keyframes float {
-  0% { transform: translateY(0px); }
-  50% { transform: translateY(-15px); }
-  100% { transform: translateY(0px); }
-}
-
-.coming-soon-overlay h1 {
-  font-family: 'Poppins', sans-serif;
-  font-size: 3.5rem;
-  font-weight: 700;
+/* --- Main Heading "COMING SOON" Styling --- */
+.main-heading {
+  font-family: 'Krona One', sans-serif;
+  font-size: 110px;
   line-height: 1.1;
-  background: linear-gradient(90deg, #e2c1ff, #a78bfa);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  text-fill-color: transparent;
-  padding-bottom: 16px;
+  margin: 0;
+  padding: 0;
+  font-weight: 400;
+  text-transform: uppercase;
+  text-align: center;
+  transition: font-size 0.3s ease-out;
+  color: #282727;
+  opacity: .5;
 }
 
-.coming-soon-overlay p {
-  font-family: 'Inter', sans-serif;
-  font-size: 1.1rem;
-  color: rgba(255, 255, 255, 0.8);
-  line-height: 1.6;
-}
-
-.coming-soon-button {
-  background-color: transparent;
+/* --- THE SPOTLIGHT EFFECT --- */
+.spotlight-text {
   color: transparent;
-  border: none;
-  position: relative;
-  padding: 8px;
-  font-size: 1rem;
-  font-weight: 600;
-  font-family: 'Poppins', 'Inter', sans-serif;
-  border-radius: 16px;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  width: 277px;
-  height: 52px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-image: linear-gradient(222deg, #E2C1FF, #877499);
-  background-clip: text;
+  background-image: radial-gradient(
+    circle 70px at var(--mouse-x, 50%) var(--mouse-y, 50%),
+    #fff 10%,
+    rgba(220, 220, 220, 0.4) 100%
+  );
   -webkit-background-clip: text;
+  background-clip: text;
+  --mouse-x: 50%;
+  --mouse-y: 50%;
+  cursor: none;
 }
 
-.coming-soon-button:hover {
-  filter: brightness(1.2);
-  transform: translateY(-2px);
-  box-shadow: 0 4px 20px rgba(147, 51, 234, 0.3);
+/* --- Subtext and Button --- */
+.subtext, .home-button {
+  font-family: 'Krona One', sans-serif;
+  line-height: 1.5;
+  transition: all 0.3s ease-out;
+}
+
+.subtext {
+  font-size: 20px;
+  color: #CCCCCC;
+  margin-top: 40px;
+}
+
+.home-button {
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  font-size: 20px;
+  color: #9370DB;
+  margin-top: 30px;
+  text-decoration: none;
+}
+
+.home-button:hover {
+  color: #FFFFFF;
+  letter-spacing: 1px;
+}
+
+/* =========================================== */
+/* ---             RESPONSIVE STYLES         --- */
+/* =========================================== */
+@media (max-width: 1200px) {
+  .main-heading { font-size: 90px; }
+  .spotlight-text { background-image: radial-gradient(circle 200px at var(--mouse-x, 50%) var(--mouse-y, 50%), #E0E0E0 0%, rgba(220, 220, 220, 0.4) 100%); }
+  .subtext, .home-button { font-size: 22px; }
+}
+
+@media (max-width: 992px) {
+  .main-heading { font-size: 100px; }
+  .spotlight-text { background-image: radial-gradient(circle 160px at var(--mouse-x, 50%) var(--mouse-y, 50%), #E0E0E0 0%, rgba(220, 220, 220, 0.4) 100%); }
+  .subtext, .home-button { font-size: 18px; }
+  .coming-soon-icon { margin-bottom: 40px; }
 }
 
 @media (max-width: 768px) {
-  .coming-soon-overlay h1 {
-    font-size: 2.5rem;
-  }
-  .coming-soon-overlay p {
-    font-size: 1rem;
-  }
-  .coming-soon-icon {
-    width: 60px;
-    height: 60px;
-  }
+  .main-heading { font-size: 65px; }
+  .spotlight-text { background-image: radial-gradient(circle 120px at var(--mouse-x, 50%) var(--mouse-y, 50%), #E0E0E0 0%, rgba(220, 220, 220, 0.4) 100%); }
+  .subtext, .home-button { font-size: 16px; }
+  .coming-soon-icon { width: 70px; height: 70px; margin-bottom: 30px; }
+  .subtext { margin-top: 30px; }
+  .home-button { margin-top: 25px; }
+}
+
+@media (max-width: 576px) {
+  .main-heading { font-size: 60px; }
+  .spotlight-text { background-image: radial-gradient(circle 100px at var(--mouse-x, 50%) var(--mouse-y, 50%), #E0E0E0 0%, rgba(220, 220, 220, 0.4) 100%); }
+  .subtext, .home-button { font-size: 14px; }
+  .coming-soon-icon { width: 60px; height: 60px; }
+}
+
+@media (max-width: 420px) {
+  .main-heading { font-size: 48px; }
+  .spotlight-text { background-image: radial-gradient(circle 80px at var(--mouse-x, 50%) var(--mouse-y, 50%), #E0E0E0 0%, rgba(220, 220, 220, 0.4) 100%); }
+  .subtext, .home-button { font-size: 14px; }
 }

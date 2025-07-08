@@ -79,6 +79,8 @@ const ArticlePage = () => {
         loadArticle();
     }, [slug, articles, newsletterContent]);
 
+    console.log('Rendering article body:', articleData?.body);
+
     return (
         <div className="view-page-wrapper">
             <header className="view-page-fixed-header">

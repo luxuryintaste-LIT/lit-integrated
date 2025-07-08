@@ -1,0 +1,106 @@
+/* === ORDER SUMMARY COMPONENT STYLES (Glassmorphism) === */
+.order-summary-container {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 16px;
+  padding: 2rem;
+  height: fit-content; /* Important: Prevents stretching to full column height */
+  box-sizing: border-box;
+}
+
+/* This is a wrapper, so no styling is needed on its own */
+.order-summary-card {
+  padding: 0;
+  background: none;
+  border: none;
+}
+
+/* "PRICE DETAILS" heading */
+.order-summary-card h4 {
+  font-family: 'Poppins', sans-serif;
+  font-size: 1.1rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 1.5rem;
+  color: #FFFFFF;
+}
+
+.price-details {
+  margin-bottom: 1.5rem;
+}
+
+/* "Order Summary" sub-heading */
+.price-details h5 {
+  font-family: 'Poppins', sans-serif;
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  color: #FFFFFF;
+}
+
+/* Each line item like "Cart Total" */
+.summary-item {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 0.75rem;
+  color: #D1D1D1;
+  font-size: 0.9rem;
+  font-family: 'Poppins', sans-serif;
+}
+
+/* Special color for the "Savings" text */
+.savings-text {
+  color: #69f0ae; /* Light green from reference */
+  font-weight: 500;
+}
+
+/* "Total Amount" section at the bottom */
+.total-amount {
+  margin-top: 1.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.15);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.total-amount h5 {
+  font-family: 'Poppins', sans-serif;
+  font-size: 1.1rem;
+  font-weight: 700;
+  margin-bottom: 0;
+  color: #FFFFFF;
+}
+
+/* === SECURITY & DISCLAIMER SECTION === */
+.security-info {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  margin-top: 2rem;
+  color: #D1D1D1;
+  font-size: 0.85rem;
+  line-height: 1.5;
+}
+
+.shield-icon {
+  font-size: 1.5rem;
+  min-width: 24px;
+  color: #FFFFFF;
+}
+
+.disclaimer {
+  margin-top: 1.5rem;
+  font-size: 0.8rem;
+  color: rgba(255, 255, 255, 0.6);
+  line-height: 1.6;
+}
+
+.disclaimer a {
+  color: #c9a7ff; /* Purple-ish link color */
+  text-decoration: underline;
+  font-weight: 500;
+}

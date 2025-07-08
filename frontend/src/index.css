@@ -1,5 +1,6 @@
 /* === THIS IS THE LINE TO CHANGE === */
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Krona+One&family=Poppins:wght@400;500;600;700&display=swap');
+
 :root {
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
@@ -44,6 +45,7 @@ body {
 html,
 body {
   color-scheme: dark;
+  
 }
 
 main {
@@ -100,4 +102,8 @@ button:focus-visible {
   button {
     background-color: #f9f9f9;
   }
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
 }

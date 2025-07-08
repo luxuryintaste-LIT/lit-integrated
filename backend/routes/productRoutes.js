@@ -1,11 +1,19 @@
 const express = require('express');
 const router = express.Router();
-const Product = require('../models/Product'); // Ensure this path is correct
-// const { protect, admin } = require('../middleware/authMiddleware'); // Commented out for now
+const multer = require('multer');
+const Product = require('../models/Product');
 
-// @desc    GET all products from db
-// @route   GET /api/products
-// @access  Public
+// Multer setup (store files in memory)
+const storage = multer.memoryStorage();
+const upload = multer({ storage });
+
+// Helpers
+const parseArray = (value) => {
+  if (!value) return [];
+  return Array.isArray(value) ? value : [value];
+};
+
+// ------------------ GET ALL ------------------
 router.get('/', async (req, res) => {
   try {
     const products = await Product.find({});
@@ -16,9 +24,7 @@ router.get('/', async (req, res) => {
   }
 });
 
-// @desc    GET featured products from db
-// @route   GET /api/products/featured
-// @access  Public
+// ------------------ GET FEATURED ------------------
 router.get('/featured', async (req, res) => {
   try {
     const featuredProducts = await Product.find({ featured: true });
@@ -29,15 +35,11 @@ router.get('/featured', async (req, res) => {
   }
 });
 
-// @desc    GET product by id from db
-// @route   GET /api/products/:id
-// @access  Public
+// ------------------ GET BY ID ------------------
 router.get('/:id', async (req, res) => {
   try {
     const product = await Product.findById(req.params.id);
-    if (!product) {
-      return res.status(404).json({ message: 'Product not found' });
-    }
+    if (!product) return res.status(404).json({ message: 'Product not found' });
     res.json(product);
   } catch (error) {
     console.error(error);
@@ -45,28 +47,52 @@ router.get('/:id', async (req, res) => {
   }
 });
 
-// @desc    Create a product
-// @route   POST /api/products
-// @access  Public (for now, removed protect/admin)
-router.post('/', async (req, res) => { 
+router.post('/', upload.any(), async (req, res) => {
+
+  console.log("FILES:", req.files);
+console.log("BODY:", req.body);
   try {
-    const { 
-      name, 
-      description, 
-      price, 
-      originalPrice, 
-      discount, 
-      imageUrl, // Changed from images to imageUrl as per schema
-      category, 
-      brand, 
-      rating, 
-      reviews, 
-      sizes, 
-      colors, 
-      stock, // Changed from countInStock to stock
+    const {
+      name,
+      description,
+      price,
+      originalPrice,
+      discount,
+      category,
+      brand,
+      sizes,
+      colors,
+      stock,
       features,
       featured
     } = req.body;
+
+    // Parse arrays
+    const parsedColors = Array.isArray(colors) ? colors : [colors].filter(Boolean);
+    const parsedSizes = Array.isArray(sizes) ? sizes : [sizes].filter(Boolean);
+    const parsedFeatures = Array.isArray(features) ? features : [features].filter(Boolean);
+
+    // ✅ FIX: Define this BEFORE using it
+    const imagesByColor = {};
+
+    // ✅ SAFE: protect against undefined req.files
+    (req.files || []).forEach(file => {
+      const match = file.fieldname.match(/^images\[(.+?)\]$/);
+      if (match) {
+        const color = match[1];
+        if (!imagesByColor[color]) imagesByColor[color] = [];
+        imagesByColor[color].push({
+          data: file.buffer,
+          contentType: file.mimetype,
+          filename: file.originalname
+        });
+      }
+    });
+
+    const images = Object.entries(imagesByColor).map(([color, files]) => ({
+      color,
+      images: files
+    }));
 
     const product = new Product({
       name,
@@ -74,94 +100,109 @@ router.post('/', async (req, res) => {
       price,
       originalPrice,
       discount,
-      imageUrl,
       category,
       brand,
-      rating,
-      reviews,
+      sizes: parsedSizes,
+      colors: parsedColors,
+      stock,
+      features: parsedFeatures,
+      featured: featured === 'true' || featured === true,
+      images
+    });
+
+    const saved = await product.save();
+    res.status(201).json(saved);
+    console.log("FILES:", req.files);
+  } catch (error) {
+    console.error('Create Error:', error);
+    res.status(400).json({ message: error.message });
+  }
+});
+
+// ------------------ UPDATE PRODUCT ------------------
+router.put('/:id', upload.any(), async (req, res) => {
+  try {
+    const product = await Product.findById(req.params.id);
+    if (!product) return res.status(404).json({ message: 'Product not found' });
+
+    const {
+      name,
+      description,
+      price,
+      originalPrice,
+      discount,
+      category,
+      brand,
       sizes,
       colors,
       stock,
       features,
-      featured,
-    });
-
-    const createdProduct = await product.save();
-    res.status(201).json(createdProduct);
-  } catch (error) {
-    console.error(error);
-    res.status(400).json({ message: error.message }); // Changed to 400 for bad request
-  }
-});
-
-// @desc    Update a product
-// @route   PUT /api/products/:id
-// @access  Public (for now, removed protect/admin)
-router.put('/:id', async (req, res) => {
-  try {
-    const { 
-      name, 
-      description, 
-      price, 
-      originalPrice, 
-      discount, 
-      imageUrl, 
-      category, 
-      brand, 
-      rating, 
-      reviews, 
-      sizes, 
-      colors, 
-      stock, 
-      features,
       featured
     } = req.body;
 
-    const product = await Product.findById(req.params.id);
+    const parsedColors = parseArray(colors);
+    const parsedSizes = parseArray(sizes);
+    const parsedFeatures = parseArray(features);
+const imagesByColor = {};  // <-- This must be defined BEFORE the loop
 
-    if (product) {
-      product.name = name !== undefined ? name : product.name;
-      product.description = description !== undefined ? description : product.description;
-      product.price = price !== undefined ? price : product.price;
-      product.originalPrice = originalPrice !== undefined ? originalPrice : product.originalPrice;
-      product.discount = discount !== undefined ? discount : product.discount;
-      product.imageUrl = imageUrl !== undefined ? imageUrl : product.imageUrl;
-      product.category = category !== undefined ? category : product.category;
-      product.brand = brand !== undefined ? brand : product.brand;
-      product.rating = rating !== undefined ? rating : product.rating;
-      product.reviews = reviews !== undefined ? reviews : product.reviews;
-      product.sizes = sizes !== undefined ? sizes : product.sizes;
-      product.colors = colors !== undefined ? colors : product.colors;
-      product.stock = stock !== undefined ? stock : product.stock;
-      product.features = features !== undefined ? features : product.features;
-      product.featured = featured !== undefined ? featured : product.featured;
-
-      const updatedProduct = await product.save();
-      res.json(updatedProduct);
-    } else {
-      res.status(404).json({ message: 'Product not found' });
-    }
-  } catch (error) {
-    console.error(error);
-    res.status(400).json({ message: error.message }); // Changed to 400 for bad request
+(req.files || []).forEach(file => {
+  const match = file.fieldname.match(/^images\[(.+?)\]$/);
+  if (match) {
+    const color = match[1];
+    if (!imagesByColor[color]) imagesByColor[color] = [];
+    imagesByColor[color].push({
+      data: file.buffer,
+      contentType: file.mimetype,
+      filename: file.originalname
+    });
   }
 });
 
-// @desc    Delete a product
-// @route   DELETE /api/products/:id
-// @access  Public (for now, removed protect/admin)
+    const newImages = Object.entries(imagesByColor).map(([color, imageArr]) => ({
+      color,
+      images: imageArr
+    }));
+
+    // Update fields only if provided
+    if (name) product.name = name;
+    if (description) product.description = description;
+    if (price) product.price = price;
+    if (originalPrice) product.originalPrice = originalPrice;
+    if (discount) product.discount = discount;
+    if (category) product.category = category;
+    if (brand) product.brand = brand;
+    if (stock) product.stock = stock;
+    if (typeof featured !== 'undefined') product.featured = featured;
+
+   if (parsedColors.length > 0)
+  product.colors = parsedColors;
+    if (parsedSizes.length > 0)
+      product.sizes = parsedSizes;
+    if (parsedFeatures.length > 0)
+      product.features = parsedFeatures;
+
+    if (newImages.length > 0) {
+      product.images.push(...newImages);
+    }
+
+    const updatedProduct = await product.save();
+    res.json(updatedProduct);
+  } catch (error) {
+    console.error('Update Error:', error);
+    res.status(400).json({ message: error.message });
+  }
+});
+
+// ------------------ DELETE PRODUCT ------------------
 router.delete('/:id', async (req, res) => {
   try {
     const product = await Product.findById(req.params.id);
+    if (!product) return res.status(404).json({ message: 'Product not found' });
 
-    if (product) {
-      await Product.deleteOne({ _id: product._id });
-      res.json({ message: 'Product removed' });
-    } else {
-      res.status(404).json({ message: 'Product not found' });
-    }
+    await product.deleteOne();
+    res.json({ message: 'Product removed' });
   } catch (error) {
-    console.error(error);
+    console.error('Delete Error:', error);
     res.status(500).json({ message: 'Server Error' });
   }
 });

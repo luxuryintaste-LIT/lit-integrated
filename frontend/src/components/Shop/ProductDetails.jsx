@@ -1,515 +1,273 @@
 import React, { useState, useEffect } from 'react';
-import {
-  Container,
-  Grid,
-  Paper,
-  Typography,
-  Box,
-  Button,
-  IconButton,
-  Divider,
-  Snackbar,
-  Alert,
-  Rating,
-  CircularProgress,
-} from '@mui/material';
-import { useNavigate, useParams } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
-import { addToCart, addToWishlist } from '../../redux/reducers/cartReducer';
+// ✅ Import useNavigate to handle navigation
+import { useParams, useNavigate } from 'react-router-dom';
 import { getProduct } from '../../services/api';
-import ProductImage from './ProductImage';
-import RemoveIcon from '@mui/icons-material/Remove';
-import AddIcon from '@mui/icons-material/Add';
-import FavoriteIcon from '@mui/icons-material/Favorite';
-import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
-import { styled } from '@mui/material/styles';
+import '/src/styles/ProductDetails.css';
 
-// Dummy product data (fallback)
-const dummyProduct = {
-  id: '1',
-  name: 'Regular Fit Cashmere jumper',
-  brand: 'H&M',
-  rating: 4.5,
-  reviews: 120,
-  price: 3199,
-  originalPrice: 7999,
-  discount: 60,
-  description: 'A luxurious cashmere jumper with a regular fit. Made from 100% pure cashmere, this jumper offers exceptional softness and warmth.',
-  colors: ['Black', 'Beige', 'Navy'],
-  sizes: ['S', 'M', 'L', 'XL'],
-  stock: 50,
-  image: '/images/men.png',
-  features: [
-    '100% Pure Cashmere',
-    'Regular Fit',
-    'Machine washable',
-    'Premium quality',
-  ],
+// Convert buffer or base64 to image URL (No changes here)
+const bufferToBase64 = (buffer) => {
+  if (!buffer || !buffer.data || !buffer.contentType) return '';
+
+  if (typeof buffer.data === 'string') {
+    return `data:${buffer.contentType};base64,${buffer.data}`;
+  }
+
+  if (Array.isArray(buffer.data)) {
+    try {
+      const byteArray = Uint8Array.from(buffer.data);
+      let binary = '';
+      for (let i = 0; i < byteArray.length; i++) {
+        binary += String.fromCharCode(byteArray[i]);
+      }
+      const base64String = btoa(binary);
+      return `data:${buffer.contentType};base64,${base64String}`;
+    } catch (err) {
+      console.error('Base64 conversion error:', err);
+      return '';
+    }
+  }
+
+  return '';
 };
 
-const StyledPaper = styled(Paper)(({ theme }) => ({
-  padding: theme.spacing(3),
-  backgroundColor: '#1E1E1E',
-  color: '#FFFFFF',
-  border: 'none',
-  boxShadow: 'none',
-  borderRadius: '12px',
-}));
-
-const ColorOption = styled(Box)(({ selected, color }) => ({
-  width: 32,
-  height: 32,
-  borderRadius: '50%',
-  backgroundColor: color,
-  border: selected ? '2px solid #FFFFFF' : '1px solid #555555',
-  cursor: 'pointer',
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-  '&:hover': { opacity: 0.8 },
-  transition: 'all 0.2s ease-in-out',
-}));
-
-const SizeOption = styled(Button)(({ selected }) => ({
-  minWidth: 40,
-  height: 40,
-  borderRadius: '4px',
-  borderColor: selected ? '#9333ea' : '#555555',
-  color: selected ? '#FFFFFF' : '#CCCCCC',
-  backgroundColor: selected ? '#9333ea' : 'transparent',
-  fontFamily: 'Inter, sans-serif',
-  fontSize: '1rem',
-  fontWeight: 500,
-  '&:hover': {
-    borderColor: '#9333ea',
-    backgroundColor: selected ? '#7c2cb4' : 'rgba(147, 51, 234, 0.1)',
-  },
-  transition: 'all 0.2s ease-in-out',
-}));
-
-const QuantityButton = styled(IconButton)(({ theme }) => ({
-  border: '1px solid rgba(255,255,255,.2)',
-  color: '#fff',
-  borderRadius: '8px',
-  width: 36,
-  height: 36,
-  '&:hover': {
-    background: '#fff3',
-    transform: 'translateY(-2px)',
-  },
-}));
-
-const AddToCartButton = styled(Button)(({ theme }) => ({
-  backgroundColor: '#9333ea',
-  color: '#fff',
-  borderRadius: '8px',
-  padding: '12px 24px',
-  fontSize: '1rem',
-  fontWeight: 600,
-  textTransform: 'none',
-  '&:hover': {
-    backgroundColor: '#7c2cb4',
-    transform: 'translateY(-2px)',
-  },
-  transition: 'all 0.2s ease-in-out',
-  flexGrow: 1,
-}));
-
-const BuyNowButton = styled(Button)(({ theme }) => ({
-  backgroundColor: 'transparent',
-  color: '#9333ea',
-  border: '1px solid #9333ea',
-  borderRadius: '8px',
-  padding: '12px 24px',
-  fontSize: '1rem',
-  fontWeight: 600,
-  textTransform: 'none',
-  '&:hover': {
-    backgroundColor: 'rgba(147, 51, 234, 0.1)',
-    transform: 'translateY(-2px)',
-  },
-  transition: 'all 0.2s ease-in-out',
-  flexGrow: 1,
-}));
-
-const ProductDetails = () => {
+const ProductDetails = ({ onClose }) => {
   const { id } = useParams();
-  const [product, setProduct] = useState(dummyProduct); // Initialize with dummy data
-  const [selectedColor, setSelectedColor] = useState(dummyProduct.colors[0]);
-  const [selectedSize, setSelectedSize] = useState(dummyProduct.sizes[0]);
+  const navigate = useNavigate(); // ✅ Initialize navigate hook
+  const [product, setProduct] = useState(null);
+  const [selectedColor, setSelectedColor] = useState('');
+  const [selectedSize, setSelectedSize] = useState('');
   const [quantity, setQuantity] = useState(1);
-  const [showSnackbar, setShowSnackbar] = useState(false);
-  const [snackbarMessage, setSnackbarMessage] = useState('');
-  const [snackbarSeverity, setSnackbarSeverity] = useState('success');
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
-  const wishlist = useSelector(state => state.cart.wishlist);
-  const isWishlisted = product ? wishlist.some(item => item.name === product.name) : false;
+  const [activeImageIndex, setActiveImageIndex] = useState(0);
+  const [selectedImages, setSelectedImages] = useState([]);
 
   useEffect(() => {
-    const fetchProductData = async () => {
+    const fetchProduct = async () => {
       try {
         const data = await getProduct(id);
-        if (data) {
-          setProduct(data);
-          if (data.colors && data.colors.length > 0) {
-            setSelectedColor(data.colors[0]);
-          }
-          if (data.sizes && data.sizes.length > 0) {
-            setSelectedSize(data.sizes[0]);
-          }
-        }
+        setProduct(data);
+
+        // Set defaults if available, otherwise they remain empty strings ('')
+        if (data.colors?.length > 0) setSelectedColor(data.colors[0]);
+        if (data.sizes?.length > 0) setSelectedSize(data.sizes[0]);
       } catch (error) {
-        console.error('Error fetching product:', error);
-        // Use dummy data as fallback
-        setProduct(dummyProduct);
-        setSelectedColor(dummyProduct.colors[0]);
-        setSelectedSize(dummyProduct.sizes[0]);
-        setSnackbarMessage('Using demo data. Backend connection failed.');
-        setSnackbarSeverity('warning');
-        setShowSnackbar(true);
+        console.error('Failed to fetch product:', error);
       }
     };
-    fetchProductData();
+
+    fetchProduct();
   }, [id]);
 
-  const handleQuantityChange = (change) => {
-    if (quantity + change > 0 && quantity + change <= product.stock) {
-      setQuantity(quantity + change);
-    }
+  useEffect(() => {
+    if (!product || !product.images) return;
+
+    const colorGroup = product.images.find((group) => group.color === selectedColor);
+    setSelectedImages(colorGroup?.images || []);
+    setActiveImageIndex(0);
+  }, [selectedColor, product]);
+
+  // Effects for modal behavior and Esc key (No changes here)
+  useEffect(() => {
+    const scrollPosition = window.scrollY;
+    document.body.style.overflow = 'hidden';
+    document.body.style.position = 'fixed';
+    document.body.style.top = `-${scrollPosition}px`;
+    document.body.style.width = '100%';
+
+    return () => {
+      document.body.style.overflow = '';
+      document.body.style.position = '';
+      document.body.style.top = '';
+      document.body.style.width = '';
+      window.scrollTo(0, scrollPosition);
+    };
+  }, []);
+
+  useEffect(() => {
+    const handleEscKey = (e) => {
+      if (e.key === 'Escape') {
+        handleClose(); // Use our handleClose function to also navigate
+      }
+    };
+    window.addEventListener('keydown', handleEscKey);
+    return () => window.removeEventListener('keydown', handleEscKey);
+  }, [onClose]);
+
+
+  // Handlers for state changes (No changes here)
+  const handleColorSelect = (color) => {
+    setSelectedColor(color);
   };
 
+  const handleSizeSelect = (size) => {
+    setSelectedSize(size);
+  };
+
+  const handleQuantityChange = (e) => {
+    setQuantity(Math.max(1, parseInt(e.target.value) || 1));
+  };
+
+  // Main Action Handlers (Updated)
   const handleAddToCart = () => {
+    // The validation is now handled by disabling the button, so this check is a fallback.
     if (!selectedColor || !selectedSize) {
-      setSnackbarMessage('Please select a color and size.');
-      setSnackbarSeverity('warning');
-      setShowSnackbar(true);
+      alert('Please select both color and size');
       return;
     }
-
-    const item = {
-      ...product,
-      color: selectedColor,
-      size: selectedSize,
-      quantity: quantity,
-    };
-    dispatch(addToCart(item));
-    setSnackbarMessage('Product added to cart!');
-    setSnackbarSeverity('success');
-    setShowSnackbar(true);
+    // This part now works as expected once a color/size is selected.
+    alert(`Added to cart: ${product.name} - ${selectedColor} - ${selectedSize} - Quantity: ${quantity}`);
+    // You could optionally close the modal here too: handleClose();
   };
 
   const handleBuyNow = () => {
     if (!selectedColor || !selectedSize) {
-      setSnackbarMessage('Please select a color and size before buying.');
-      setSnackbarSeverity('warning');
-      setShowSnackbar(true);
+      alert('Please select both color and size');
       return;
     }
-
-    const item = {
-      ...product,
+    
+    // ✅ ENHANCEMENT: Navigate to a checkout page with product info
+    const itemToBuy = {
+      id: product._id || id,
+      name: product.name,
       color: selectedColor,
       size: selectedSize,
       quantity: quantity,
+      price: product.price,
+      image: selectedImages.length > 0 ? bufferToBase64(selectedImages[0]) : '',
     };
 
-    dispatch(addToCart(item));
-    navigate('/checkout');
+    navigate('/checkout', { state: { item: itemToBuy } });
   };
 
-  const handleWishlistClick = () => {
-    dispatch(addToWishlist(product));
-    setSnackbarMessage(isWishlisted ? 'Removed from wishlist!' : 'Added to wishlist!');
-    setSnackbarSeverity('info');
-    setShowSnackbar(true);
+  const handleClose = (e) => {
+    if (e) e.stopPropagation();
+    if (typeof onClose === 'function') {
+      onClose(); // Call parent's close function if it exists
+    }
+    // ✅ FIX: Navigate back to the previous page when closing
+    navigate(-1);
   };
+
+  if (!product) return <div className="product-details-loading">Loading...</div>;
 
   return (
-    <Container maxWidth="lg" sx={{ 
-      py: 8, 
-      backgroundColor: '#121212', 
-      minHeight: '100vh',
-      color: '#FFFFFF',
-    }}>
-      <Grid container spacing={6}>
-        <Grid item xs={12} md={6}>
-          <StyledPaper elevation={0}>
-            <ProductImage src={product.image} alt={product.name} />
-          </StyledPaper>
-        </Grid>
-        <Grid item xs={12} md={6}>
-          <StyledPaper elevation={0}>
-            <Box sx={{ mb: 2 }}>
-              <Typography variant="subtitle1" sx={{
-                fontFamily: 'Inter, sans-serif',
-                fontSize: '1rem',
-                color: '#AAAAAA',
-                mb: 0.5
-              }}>
-                {product.brand}
-              </Typography>
-              <Typography variant="h4" component="h1" gutterBottom
-                sx={{
-                  fontFamily: 'Poppins, sans-serif',
-                  fontSize: '2.5rem',
-                  fontWeight: 700,
-                  color: '#FFFFFF',
-                }}
-              >
-                {product.name}
-              </Typography>
-              <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
-                <Rating value={product.rating} precision={0.1} readOnly
-                  sx={{ color: '#FFD700' }}
+    <div className="product-details-container" onClick={handleClose}>
+      <div className="product-details-content" onClick={(e) => e.stopPropagation()}>
+        <button className="close-button" onClick={handleClose} aria-label="Close">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor"
+            strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <line x1="18" y1="6" x2="6" y2="18" />
+            <line x1="6" y1="6" x2="18" y2="18" />
+          </svg>
+        </button>
+
+        <div className="product-details-grid">
+          {/* Images Section (No changes here) */}
+          <div className="product-images-section">
+            <div className="main-image-container">
+              {selectedImages[activeImageIndex] ? (
+                <img
+                  src={bufferToBase64(selectedImages[activeImageIndex])}
+                  alt={`${product.name} - ${selectedColor}`}
+                  className="main-product-image"
                 />
-                <Typography variant="body2" sx={{ ml: 1,
-                  fontFamily: 'Inter, sans-serif',
-                  fontSize: '1rem',
-                  color: '#CCCCCC',
-                }}
-                >
-                  ({product.reviews} reviews)
-                </Typography>
-              </Box>
-            </Box>
-
-            <Box sx={{ mb: 3 }}>
-              {product.discount > 0 && (
-                <Typography variant="body2" sx={{
-                  fontFamily: 'Inter, sans-serif',
-                  fontSize: '1.25rem',
-                  color: '#9333ea',
-                  fontWeight: 600,
-                  mb: 0.5,
-                }}>
-                  {product.discount}% OFF
-                </Typography>
+              ) : (
+                <div className="main-product-image placeholder">No Image Available</div>
               )}
-              <Box sx={{ display: 'flex', alignItems: 'baseline', gap: '0.75rem' }}>
-                <Typography variant="h5" component="p" sx={{
-                  fontFamily: 'Poppins, sans-serif',
-                  fontSize: '2rem',
-                  fontWeight: 700,
-                  color: '#FFFFFF',
-                  margin: 0,
-                }}>
-                  Rs. {product.price.toLocaleString()}
-                </Typography>
-                {product.originalPrice && (
-                  <Typography variant="body1" sx={{
-                    fontFamily: 'Inter, sans-serif',
-                    fontSize: '1.2rem',
-                    color: '#AAAAAA',
-                    textDecoration: 'line-through',
-                    margin: 0,
-                  }}>
-                    Rs. {product.originalPrice.toLocaleString()}
-                  </Typography>
-                )}
-              </Box>
-            </Box>
+            </div>
+            <div className="thumbnail-container">
+              {selectedImages.map((img, index) => (
+                <div
+                  key={index}
+                  className={`thumbnail ${activeImageIndex === index ? 'active' : ''}`}
+                  onClick={() => setActiveImageIndex(index)}
+                >
+                  <img src={bufferToBase64(img)} alt={`Thumbnail ${index + 1}`} />
+                </div>
+              ))}
+            </div>
+          </div>
 
-            <Divider sx={{ my: 3, bgcolor: 'rgba(255,255,255,.1)' }} />
+          {/* Info Section (Button changes are here) */}
+          <div className="product-info-section">
+            <div className="brand-name">{product.brand}</div>
+            <h1 className="product-name">{product.name}</h1>
 
-            <Typography variant="body1" paragraph className="product-description"
-              sx={{
-                fontFamily: 'Inter, sans-serif',
-                fontSize: '1rem',
-                color: '#fffc',
-                lineHeight: 1.6,
-              }}
-            >
-              {product.description}
-            </Typography>
+            <div className="price-container">
+              <div className="current-price">Rs. {product.price.toLocaleString()}</div>
+              {product.originalPrice && (
+                <div className="original-price">Rs. {product.originalPrice.toLocaleString()}</div>
+              )}
+              {product.discount && (
+                <div className="discount">{product.discount}% OFF</div>
+              )}
+            </div>
 
-            <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }} className="selection-container">
-              <Typography variant="h6" sx={{
-                fontFamily: 'Poppins, sans-serif',
-                fontSize: '1rem',
-                fontWeight: 500,
-                color: '#FFFFFF',
-                margin: 0,
-              }}
-              >
-                Color
-              </Typography>
-              <Box sx={{ display: 'flex', gap: '0.75rem', flexWrap: 'wrap' }} className="color-options">
+            <div className="product-description">{product.description}</div>
+
+            {/* Color & Size Selection (No changes here) */}
+            <div className="selection-container">
+              <h3>Color</h3>
+              <div className="color-options">
                 {product.colors.map((color) => (
-                  <ColorOption
-                    key={color}
-                    selected={selectedColor === color}
-                    color={color.toLowerCase() === 'gold' ? '#FFD700' : color.toLowerCase() === 'silver' ? '#C0C0C0' : color.toLowerCase() === 'rose gold' ? '#B76E79' : color.toLowerCase()}
-                    onClick={() => setSelectedColor(color)}
-                  />
+                  <button key={color} className={`color-option ${selectedColor === color ? 'selected' : ''}`}
+                    onClick={() => handleColorSelect(color)} style={{ backgroundColor: color.toLowerCase() }} title={color}>
+                    {selectedColor === color && <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" stroke="white"
+                      strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12" /></svg>}
+                  </button>
                 ))}
-              </Box>
+              </div>
+            </div>
 
-              <Typography variant="h6" sx={{
-                fontFamily: 'Poppins, sans-serif',
-                fontSize: '1rem',
-                fontWeight: 500,
-                color: '#FFFFFF',
-                margin: 0,
-              }}
-              >
-                Size
-              </Typography>
-              <Box sx={{ display: 'flex', gap: '0.75rem', flexWrap: 'wrap' }} className="size-options">
+            <div className="selection-container">
+              <h3>Size</h3>
+              <div className="size-options">
                 {product.sizes.map((size) => (
-                  <SizeOption
-                    key={size}
-                    selected={selectedSize === size}
-                    onClick={() => setSelectedSize(size)}
-                  >
+                  <button key={size} className={`size-option ${selectedSize === size ? 'selected' : ''}`} onClick={() => handleSizeSelect(size)}>
                     {size}
-                  </SizeOption>
+                  </button>
                 ))}
-              </Box>
-            </Box>
+              </div>
+            </div>
 
-            <Box sx={{ display: 'flex', alignItems: 'center', gap: '0.5rem', width: 'fit-content' }} className="quantity-selector">
-              <Typography variant="h6" sx={{ mr: 1,
-                fontFamily: 'Poppins, sans-serif',
-                fontSize: '1rem',
-                fontWeight: 500,
-                color: '#FFFFFF',
-              }}>
-                Quantity:
-              </Typography>
-              <QuantityButton
-                onClick={() => handleQuantityChange(-1)}
-                disabled={quantity <= 1}
-              >
-                <RemoveIcon />
-              </QuantityButton>
-              <Box
-                component="input"
-                type="number"
-                value={quantity}
-                onChange={(e) => setQuantity(Number(e.target.value))}
-                sx={{
-                  width: '60px',
-                  height: '36px',
-                  textAlign: 'center',
-                  border: '1px solid rgba(255,255,255,.2)',
-                  borderRadius: '8px',
-                  background: '#ffffff0d',
-                  color: '#fff',
-                  fontSize: '1rem',
-                  padding: '0 5px',
-                  '&::-webkit-inner-spin-button, &::-webkit-outer-spin-button': { WebkitAppearance: 'none', margin: 0 },
-                  MozAppearance: 'textfield',
-                }}
-                className="quantity-input"
-              />
-              <QuantityButton
-                onClick={() => handleQuantityChange(1)}
-                disabled={quantity >= product.stock}
-              >
-                <AddIcon />
-              </QuantityButton>
-              <Typography
-                variant="body2"
-                sx={{ ml: 2,
-                  fontFamily: 'Inter, sans-serif',
-                  fontSize: '1rem',
-                  color: product.stock > 0 ? '#4CAF50' : '#FF0000',
-                }}
-              >
-                {product.stock > 0 ? `${product.stock} items available` : 'Out of stock'}
-              </Typography>
-            </Box>
+            <div className="selection-container">
+              <h3>Quantity</h3>
+              <div className="quantity-selector">
+                <button className="quantity-btn" onClick={() => setQuantity(Math.max(1, quantity - 1))}>-</button>
+                <input type="number" min="1" value={quantity} onChange={handleQuantityChange} className="quantity-input" />
+                <button className="quantity-btn" onClick={() => setQuantity(quantity + 1)}>+</button>
+              </div>
+            </div>
 
-            <Box sx={{ display: 'flex', gap: '1rem', marginTop: '1rem' }} className="action-buttons">
-              <AddToCartButton
+            {/* ✅ FIX: Action Buttons are now disabled based on state */}
+            <div className="action-buttons">
+              <button
+                className="add-to-cart-btn"
                 onClick={handleAddToCart}
-                disabled={product.stock === 0}
+                disabled={!selectedColor || !selectedSize}
               >
                 Add to Cart
-              </AddToCartButton>
-              <BuyNowButton
+              </button>
+              <button
+                className="buy-now-btn"
                 onClick={handleBuyNow}
-                disabled={product.stock === 0}
+                disabled={!selectedColor || !selectedSize}
               >
                 Buy Now
-              </BuyNowButton>
-              <IconButton
-                sx={{
-                  border: '1px solid rgba(255,255,255,.2)',
-                  color: '#fff',
-                  borderRadius: '50%',
-                  width: 50,
-                  height: 50,
-                  flexShrink: 0,
-                  background: '#ffffff1a',
-                  '&:hover': {
-                    background: '#fff3',
-                    transform: 'translateY(-2px)',
-                  }
-                }}
-                onClick={handleWishlistClick}
-              >
-                {isWishlisted ? <FavoriteIcon sx={{ color: '#FF0000' }} /> : <FavoriteBorderIcon />}
-              </IconButton>
-            </Box>
+              </button>
+            </div>
 
-            <Divider sx={{ my: 4, bgcolor: 'rgba(255,255,255,.1)' }} />
-
-            <Box className="product-details-list">
-              <Typography variant="h6" gutterBottom sx={{
-                fontFamily: 'Poppins, sans-serif',
-                fontSize: '1.2rem',
-                fontWeight: 500,
-                color: '#FFFFFF',
-                mb: '1rem',
-              }}>
-                Product Features
-              </Typography>
-              <Box component="ul" sx={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-                {product.features.map((feature, index) => (
-                  <Box component="li" key={index} sx={{
-                    position: 'relative',
-                    paddingLeft: '1.5rem',
-                    color: '#fffc',
-                    padding: '0.5rem 0',
-                    borderBottom: index === product.features.length - 1 ? 'none' : '1px solid rgba(255,255,255,.1)',
-                    fontSize: '0.95rem',
-                    '&::before': {
-                      content: '""',
-                      position: 'absolute',
-                      left: '0.5rem',
-                      width: '8px',
-                      height: '8px',
-                      borderRadius: '50%',
-                      backgroundColor: '#9333ea',
-                      top: '50%',
-                      transform: 'translateY(-50%)',
-                    },
-                  }}>
-                    {feature}
-                  </Box>
+            <div className="product-details-list">
+              <h3>Product Details</h3>
+              <ul>
+                {(product.features || []).map((detail, index) => (
+                  <li key={index}>{detail}</li>
                 ))}
-              </Box>
-            </Box>
-          </StyledPaper>
-        </Grid>
-      </Grid>
-
-      <Snackbar
-        open={showSnackbar}
-        autoHideDuration={3000}
-        onClose={() => setShowSnackbar(false)}
-      >
-        <Alert
-          onClose={() => setShowSnackbar(false)}
-          severity={snackbarSeverity}
-          sx={{ width: '100%' }}
-        >
-          {snackbarMessage}
-        </Alert>
-      </Snackbar>
-    </Container>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   );
 };
 

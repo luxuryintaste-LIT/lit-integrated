@@ -1,0 +1,1008 @@
+/* 
+Sure! Here's the **detailed breakdown part-by-part**, like **Part 4: Address Section** and what’s inside each part:
+
+---
+
+### 🔹 **Part 1: Global Styles & Variables**
+
+Includes:
+
+* `:root` — CSS variables like `--primary-purple`, `--text-light`, `--bg-dark-transparent`
+* Base font settings, global background, and padding
+* `.checkout-page-background` — background image, font, and top-level layout styling
+
+---
+
+### 🔹 **Part 2: Layout Containers**
+
+Includes:
+
+* `.checkout-container` — Flex layout for the entire checkout structure
+* `.checkout-main-content` — central glass-effect panel
+* `.checkout-sidebar` — sidebar beside main content
+
+---
+
+### 🔹 **Part 3: Order Summary Section**
+
+Includes:
+
+* `.order-summary-container` and `.summary-card` — glass card for order details
+* `.summary-title` — section headings
+* `.summary-row`, `.summary-row.savings` — line items
+* `.summary-total` — final amount row
+* `.secure-info-box`, `.shield-icon`, `.terms-text`, `a` — secure payment message
+
+---
+
+### 🔹 **Part 4: Address Section**
+
+Includes:
+
+* `.step-title` — “Choose Address” heading
+* `.address-list` — list of saved addresses
+* `.address-card` — glassy clickable card for each address
+* `.address-card:before`, `.address-card.selected:after` — custom radio button styles
+* `.address-card.selected` — glow effect on selected card
+* `.address-card-content` — spacing and layout inside the card
+* `.address-header`, `.address-type-badge`, `p` — label like “Home”, address text
+* `.address-actions`, `.icon-btn` — edit/delete buttons
+
+---
+
+### 🔹 **Part 5: Address Form**
+
+Includes:
+
+* `.address-form-container` — full container for adding address
+* `.form-group`, `.form-row`, `.form-actions` — input group layout
+* `label`, `input[type="text"]`, `input[type="tel"]`
+* `.btn-secondary` — cancel/save buttons
+
+---
+
+### 🔹 **Part 6: UPI Form Glass Box**
+
+Includes:
+
+* `.upi-form` — full UPI box with glass background
+* `.form-header`, `.form-header-icon`, `.form-header-title` — UPI title row
+* `.upi-apps`, `.upi-app-btn`, `.upi-app-btn:hover` — GPay/PhonePe/PAYTM etc. icons
+
+---
+
+### 🔹 **Part 7: UPI Input Field**
+
+Includes:
+
+* `.form-group` — input group container
+* `label` — "Enter UPI ID"
+* `.upi-input-wrapper` — input container with inline icon
+* `.upi-input-wrapper.error` — red border if invalid
+* `.upi-status-icon`, `.verified`, `.error` — success/error icons
+* `.error-message` — red error text
+
+---
+
+### 🔹 **Part 8: Spinner Styles**
+
+Includes:
+
+* `.spinner`, `.spinner-inline` — circular loading animation
+* `@keyframes spin` — keyframe for spinner rotation
+
+---
+
+### 🔹 **Part 9: Buttons**
+
+Includes:
+
+* `.btn-primary`, `.btn-primary:hover` — standard buttons
+* `.btn-primary.purple-gradient`, `:hover`, `:disabled` — purple gradient
+* `.payment-btn`, `.payment-btn:disabled`, `.payment-btn:hover`
+* `.step-navigation` — positions "Next" button to the right
+
+---
+
+### 🔹 **Part 10: Save UPI Checkbox**
+
+Includes:
+
+* `.save-details` — container for checkbox and label
+* `input[type="checkbox"]` — hidden browser checkbox
+* `::after` — custom white tick mark
+
+---
+
+### 🔹 **Part 11: Payment Method Layout**
+
+Includes:
+
+* `.payment-layout` — two-column Flexbox layout
+* `.payment-methods-sidebar` — vertical list of buttons (UPI, Card, NetBanking)
+* `.method-btn`, `.method-btn.active`, `.method-btn:hover`
+* `.method-btn-group` — logo and label in each button
+
+---
+
+### 🔹 **Part 12: Payment Content Area**
+
+Includes:
+
+* `.payment-content` — main form area on right
+* `.payment-form` — form container
+* `.form-group`, `.form-row`, input and label styles reused here
+
+---
+
+### 🔹 **Part 13: NetBanking Dropdown**
+
+Includes:
+
+* `.custom-dropdown`, `.dropdown-header` — dropdown structure
+* `.dropdown-list`, `li`, `li:hover`, `li.selected` — items inside dropdown
+* `.bank-logo`, `.bank-logo-small` — payment provider logos
+* `.radio-icon`, `.radio-icon::after` — selection circle
+
+---
+
+
+:root {
+  --primary-purple: #8A2BE2; /* Adjust to match your brand */
+  --text-light: #f0f0f0;
+  --text-dark: #333;
+  --bg-dark-transparent: rgba(255, 255, 255, 0.015);
+  --border-color: rgba(255, 255, 255, 0.2);
+  --selected-glow: 0 0 15px rgba(190, 100, 255, 0.6);
+}
+
+.checkout-page-background {
+  background-image: url('/path-to-your-purple-abstract-background.jpg'); /* IMPORTANT: Set your background image */
+  background-size: cover;
+  background-position: center;
+  min-height: 100vh;
+  padding: 40px;
+  color: var(--text-light);
+  font-family: 'Segoe UI', 'Roboto', sans-serif;
+}
+
+.checkout-container {
+  display: flex;
+  gap: 30px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.checkout-main-content {
+  flex: 2;
+  background-color: var(--bg-dark-transparent);
+  backdrop-filter: blur(10px);
+  border-radius: 12px;
+  padding: 25px 30px;
+  border: 1px solid var(--border-color);
+}
+
+.checkout-sidebar {
+  flex: 1;
+}
+
+/* --- OrderSummary Component --- */
+.order-summary-container .summary-card {
+  background-color: var(--bg-dark-transparent);
+  backdrop-filter: blur(10px);
+  border-radius: 12px;
+  padding: 20px;
+  border: 1px solid var(--border-color);
+  margin-bottom: 20px;
+}
+
+.summary-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: #aaa;
+  margin-bottom: 15px;
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: 10px;
+}
+
+.summary-row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 12px;
+  font-size: 16px;
+}
+
+.summary-row.savings {
+  color: #32CD32; /* Green for savings */
+}
+
+.summary-total {
+  display: flex;
+  justify-content: space-between;
+  font-size: 18px;
+  font-weight: bold;
+  border-top: 1px solid var(--border-color);
+  margin-top: 15px;
+  padding-top: 15px;
+}
+
+.secure-info-box {
+  display: flex;
+  align-items: flex-start;
+  gap: 15px;
+  color: #ccc;
+}
+
+.secure-info-box .shield-icon {
+  color: #32CD32;
+  flex-shrink: 0;
+}
+
+.secure-info-box .terms-text {
+  font-size: 12px;
+  color: #aaa;
+}
+.secure-info-box a {
+    color: #fff;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+
+/* --- AddressSelection & AddressCard --- */
+.step-content-container .step-title {
+  font-size: 22px;
+  margin-bottom: 25px;
+}
+
+.address-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.address-card {
+  background-color: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 20px;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  position: relative; /* For pseudo-elements */
+}
+.address-card:before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 15px;
+    transform: translateY(-50%);
+    width: 18px;
+    height: 18px;
+    border: 2px solid #fff;
+    border-radius: 50%;
+}
+.address-card.selected:after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 20px;
+    transform: translateY(-50%);
+    width: 8px;
+    height: 8px;
+    background-color: #fff;
+    border-radius: 50%;
+}
+
+.address-card.selected {
+  border-color: #fff;
+  box-shadow: var(--selected-glow);
+}
+
+.address-card-content {
+    display: flex;
+    justify-content: space-between;
+    padding-left: 35px; /* space for the custom radio button */
+}
+
+.address-header .address-type-badge {
+  display: inline-block;
+  background-color: rgba(255, 255, 255, 0.2);
+  padding: 3px 8px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+.address-header p {
+    margin: 4px 0;
+    color: #ccc;
+}
+.address-actions {
+    display: flex;
+    gap: 15px;
+}
+.icon-btn {
+    background: none;
+    border: none;
+    color: #ccc;
+    cursor: pointer;
+}
+
+/* --- Buttons --- */
+.step-navigation {
+    display: flex;
+    justify-content: flex-end; /* Pushes button to the right */
+    margin-top: 30px;
+}
+
+.btn-primary {
+  background-color: #fff;
+  color: var(--text-dark);
+  font-weight: bold;
+  border: none;
+  border-radius: 8px;
+  padding: 12px 40px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.btn-primary:hover {
+    transform: scale(1.05);
+}
+
+.add-new-address-btn {
+    width: 100%;
+    text-align: center;
+    padding: 15px;
+    border: 1px dashed var(--border-color);
+    background: none;
+    color: var(--text-light);
+    border-radius: 8px;
+    cursor: pointer;
+    margin-top: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+/* --- AddressForm Component --- */
+.address-form-container {
+  padding: 10px;
+}
+
+.address-form-container h3 {
+  font-size: 20px;
+  margin-bottom: 25px;
+}
+
+.address-form-container .form-group {
+  margin-bottom: 20px;
+}
+
+.address-form-container label {
+  display: block;
+  font-size: 14px;
+  margin-bottom: 8px;
+  color: #aaa;
+}
+
+.address-form-container input[type="text"],
+.address-form-container input[type="tel"] {
+  width: 100%;
+  /* background-color: rgba(0, 0, 0, 0.2); */
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  padding: 12px;
+  color: var(--text-light);
+  font-size: 16px;
+}
+
+.address-form-container input:focus {
+  outline: none;
+  border-color: #fff;
+  box-shadow: var(--selected-glow);
+}
+
+.address-form-container .form-row {
+  display: flex;
+  gap: 20px;
+}
+
+.address-form-container .form-row .form-group {
+  flex: 1;
+}
+
+.address-form-container .form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 15px;
+  margin-top: 30px;
+  border-top: 1px solid var(--border-color);
+  padding-top: 20px;
+}
+
+.btn-secondary {
+  background: none;
+  border: 1px solid var(--border-color);
+  color: var(--text-light);
+  font-weight: bold;
+  border-radius: 8px;
+  padding: 12px 30px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+/* --- Add this to the bottom of checkout.css --- */
+
+/* --- Spinner Animation --- */
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.spinner {
+  width: 16px;
+  height: 16px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-top-color: #fff;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+/* Spinner for inside the UPI input */
+.spinner-inline {
+  width: 18px;
+  height: 18px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-top-color: #fff;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  position: absolute;
+  right: 12px;
+}
+
+/* --- UPI Button Enhancements --- */
+.payment-btn[disabled] {
+  cursor: not-allowed;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+/* --- NetBanking Dropdown Enhancements --- */
+.dropdown-header .selected-bank-display {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.bank-logo-small {
+  height: 24px;
+  width: 24px;
+  object-fit: contain;
+}
+
+.dropdown-list li {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.bank-logo {
+  height: 32px;
+  width: 32px;
+  object-fit: contain;
+  background-color: white; /* Add a white background for logos with transparency */
+  border-radius: 4px;
+  padding: 2px;
+}
+
+.radio-icon {
+  width: 18px;
+  height: 18px;
+  border: 2px solid var(--border-color);
+  border-radius: 50%;
+  flex-shrink: 0;
+  position: relative;
+}
+
+.dropdown-list li.selected {
+  background-color: rgba(255, 255, 255, 0.15);
+}
+
+/* Add the inner dot to the selected radio icon */
+.dropdown-list li.selected .radio-icon::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 8px;
+  height: 8px;
+  background-color: #fff;
+  border-radius: 50%;
+}
+
+.step-content-container .payment-header {
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: 15px;
+  margin-bottom: 20px;
+}
+
+/* --- THE NEW TWO-BOX LAYOUT --- */
+.payment-layout {
+  display: flex;
+  gap: 20px;
+  align-items: flex-start; /* Aligns boxes to the top */
+}
+
+/* --- Box 1: The Left Sidebar --- */
+.payment-methods-sidebar {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  background-color: transparent;
+}
+
+.method-btn {
+  /* Layout and alignment */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  background-color: transparent;
+  border: 1px solid transparent;
+  padding: 18px;
+  color: #ccc;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out; 
+}
+
+.method-btn-group {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.method-btn:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+.method-btn.active {
+  background-color: rgba(255, 255, 255, 0.15);
+  border-color: rgba(255, 255, 255, 0.3);
+  color: #fff;
+  font-weight: 600;
+}
+
+
+/* --- Box 2: The Right Content Area --- */
+.payment-content {
+  flex: 1.5; /* Makes it a bit wider than the sidebar */
+  background-color: transparent;
+  backdrop-filter: blur(15px);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  padding: 25px;
+}
+
+/* --- Shared Form Styles within the Right Box --- */
+.payment-form .form-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+.payment-form .form-header-title {
+  font-size: 18px;
+  font-weight: 600;
+  margin: 0;
+}
+.payment-form label {
+  display: block;
+  font-size: 14px;
+  font-weight: 500;
+  color: #ccc;
+  margin-bottom: 8px;
+}
+
+/* --- New Purple Gradient Button Style --- */
+.btn-primary.purple-gradient {
+  color: #e0e0e0;
+  font-weight: 600;
+  background-image: linear-gradient(to right, #4a2f6c, #2a1a3d);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease;
+}
+.btn-primary.purple-gradient:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+}
+.btn-primary.purple-gradient:disabled {
+  background-image: none;
+  background-color: rgba(50,50,50,0.5);
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+/* --- NetBanking Dropdown (with radio button removed) --- */
+.custom-dropdown {
+  position: relative;
+}
+.dropdown-header {
+  /* same as before */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.2);
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  padding: 12px;
+  color: var(--text-light);
+  font-size: 16px;
+  cursor: pointer;
+}
+.dropdown-list {
+  /* same as before */
+  position: absolute;
+  top: 105%;
+  left: 0;
+  right: 0;
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  list-style: none;
+  padding: 8px;
+  margin: 0;
+  max-height: 250px;
+  overflow-y: auto;
+  z-index: 10;
+}
+.dropdown-list li {
+  padding: 12px;
+  cursor: pointer;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  gap: 15px; /* Spacing between logo and text */
+}
+.dropdown-list li:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+.dropdown-list li.selected {
+  background-color: rgba(255, 255, 255, 0.15);
+}
+
+/* --- Bank Logo Styles (TRANSPARENT background) --- */
+.bank-logo {
+  height: 32px;
+  width: 32px;
+  object-fit: contain;
+  /* NO background-color */
+}
+.bank-logo-small {
+  height: 24px;
+  width: 24px;
+  object-fit: contain;
+}
+
+/* --- Box 1: Left Sidebar Spacing --- */
+.payment-methods-sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 10px; /* This creates the vertical space between the buttons */
+  flex: 1;
+  backdrop-filter: blur(15px);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  padding: 10px;
+}
+
+/* --- Box 2: Right Content Area Form --- */
+.payment-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px; /* Adds space between form elements */
+}
+
+/* --- General Form Elements Styling --- */
+.payment-form .form-group {
+  margin: 0; /* Remove default margin as we are using gap now */
+}
+
+.payment-form label {
+  font-size: 14px;
+  font-weight: 600;
+  color: #e0e0e0; /* Brighter label text */
+  margin-bottom: 10px;
+  display: block;
+}
+
+.payment-form input[type="text"] {
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.3); /* Slightly more visible border */
+  border-radius: 10px; /* More rounded corners */
+  padding: 14px;
+  color: var(--text-light);
+  font-size: 16px;
+  transition: all 0.2s ease-in-out;
+}
+
+.payment-form input[type="text"]:focus {
+  outline: none;
+  border-color: #fff;
+  box-shadow: 0 0 15px rgba(190, 100, 255, 0.4); /* The subtle purple glow */
+}
+
+.payment-form .form-row {
+  display: flex;
+  gap: 20px;
+}
+.payment-form .form-row .form-group {
+  flex: 1;
+}
+
+/* --- Custom Checkbox Styling --- */
+.save-details {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 10px; /* Space above the checkbox */
+  cursor: pointer;
+}
+
+.save-details label {
+  margin-bottom: 0; /* Override default margin */
+  color: #ccc;
+  font-weight: 500;
+}
+
+/* Hide the default browser checkbox */
+.save-details input[type="checkbox"] {
+  appearance: none;
+  -webkit-appearance: none;
+  margin: 0;
+  width: 20px;
+  height: 20px;
+  background-color: transparent;
+  border: 2px solid rgba(255, 255, 255, 0.5);
+  border-radius: 4px;
+  cursor: pointer;
+  position: relative;
+  transition: all 0.2s;
+}
+
+.save-details input[type="checkbox"]:hover {
+  border-color: #fff;
+}
+
+/* Style for when the checkbox is checked */
+.save-details input[type="checkbox"]:checked {
+  background-color: var(--primary-purple);
+  border-color: var(--primary-purple);
+}
+
+/* Create the checkmark using a pseudo-element */
+.save-details input[type="checkbox"]:checked::after {
+  content: '';
+  position: absolute;
+  top: 1px;
+  left: 6px;
+  width: 6px;
+  height: 12px;
+  border: solid white;
+  border-width: 0 3px 3px 0;
+  transform: rotate(45deg);
+}
+
+/* --- Ensure the Purple Gradient Button is Correct --- */
+.btn-primary.purple-gradient {
+  color: #e0e0e0;
+  font-weight: 600;
+  font-size: 16px;
+  padding: 14px;
+  background-image: linear-gradient(to right, #4a2f6c, #2a1a3d);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease;
+  margin-top: 10px; /* Space above the button */
+}
+.btn-primary.purple-gradient:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+}
+
+/* Container glassmorphism style */
+.upi-form {
+  background: rgba(255, 255, 255, 0.025);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 16px;
+  padding: 24px;
+  width: 340px;
+  color: white;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+}
+
+/* Header section */
+.form-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.form-header-icon {
+  margin-right: 8px;
+  color: white;
+}
+
+.form-header-title {
+  font-size: 18px;
+  font-weight: 600;
+}
+
+/* UPI app button section */
+.upi-apps {
+  display: flex;
+  gap: 12px;
+  margin-top: 8px;
+  margin-bottom: 16px;
+}
+
+.upi-app-btn {
+  background: rgba(255, 255, 255, 0.04);
+  padding: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  width: 52px;
+  height: 52px;
+}
+
+.upi-app-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+/* Divider text */
+.or-divider {
+  text-align: center;
+  color: rgba(255, 255, 255, 0.6);
+  margin: 16px 0;
+}
+
+.or-divider span {
+  font-size: 12px;
+  background: rgba(0, 0, 0, 0.3);
+  padding: 2px 8px;
+  border-radius: 12px;
+}
+
+/* Input group */
+.form-group {
+  margin-bottom: 16px;
+}
+
+label {
+  display: block;
+  font-size: 14px;
+  color: #fff;
+  margin-bottom: 6px;
+}
+
+.upi-input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  padding: 8px 12px;
+}
+
+.upi-input-wrapper input {
+  background: transparent;
+  border: none;
+  color: white;
+  outline: none;
+  flex: 1;
+}
+
+.upi-input-wrapper.error {
+  border: 1px solid #ff4b4b;
+}
+
+.error-message {
+  color: #ff4b4b;
+  font-size: 12px;
+  margin-top: 4px;
+}
+
+/* Status icons */
+.upi-status-icon {
+  margin-left: 8px;
+}
+
+.upi-status-icon.verified {
+  color: #4caf50;
+}
+
+.upi-status-icon.error {
+  color: #ff4b4b;
+}
+
+/* Spinner for verify */
+.spinner,
+.spinner-inline {
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  border-top: 2px solid white;
+  border-radius: 50%;
+  width: 16px;
+  height: 16px;
+  animation: spin 1s linear infinite;
+}
+
+.spinner {
+  width: 20px;
+  height: 20px;
+  margin-right: 8px;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Buttons */
+.payment-btn {
+  width: 100%;
+  margin-top: 12px;
+  padding: 10px 0;
+  background: linear-gradient(to right, #4f0fff, #8b2fff);
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-weight: 600;
+  font-size: 15px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.payment-btn:disabled {
+  background: rgba(255, 255, 255, 0.2);
+  cursor: not-allowed;
+}
+
+.payment-btn:hover:not(:disabled) {
+  background: linear-gradient(to right, #6f1fff, #9f4fff);
+}
+
+/* Save details */
+.save-details {
+  display: flex;
+  align-items: center;
+  margin-top: 12px;
+  font-size: 14px;
+  color: white;
+}
+
+.save-details input {
+  margin-right: 6px;
+}
+
+

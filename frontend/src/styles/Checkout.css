@@ -1,0 +1,141 @@
+/* === Global Page and Layout Styling === */
+
+/* This targets the root element where your app is rendered */
+#root {
+  background-image: url('/path/to/your/purple-background.jpg'); /* ❗ IMPORTANT: Update this path */
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  min-height: 100vh;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  color: #fff;
+}
+
+/* === Stepper Styling === */
+.checkout-stepper .MuiStepLabel-label {
+  color: rgba(255, 255, 255, 0.7) !important;
+}
+.checkout-stepper .MuiStepLabel-label.Mui-active {
+  color: #ffffff !important;
+  font-weight: 500;
+}
+.checkout-stepper .MuiStepLabel-label.Mui-completed {
+  color: #ffffff !important;
+}
+.checkout-stepper .MuiStepIcon-root {
+  color: rgba(255, 255, 255, 0.3) !important;
+}
+.checkout-stepper .MuiStepIcon-root.Mui-active {
+  color: #a855f7 !important; /* Purple color for active step */
+}
+.checkout-stepper .MuiStepIcon-root.Mui-completed {
+  color: #4CAF50 !important; /* Green for completed */
+}
+
+/* === Main Card "Glassmorphism" Style === */
+.glass-card {
+  background: rgba(30, 30, 42, 0.5) !important; /* Dark semi-transparent background */
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  border-radius: 16px !important;
+  padding: 24px !important;
+  color: white !important;
+}
+
+/* === Form Input (TextField) Styling === */
+.checkout-form .MuiTextField-root label {
+  color: rgba(255, 255, 255, 0.6);
+}
+.checkout-form .MuiTextField-root label.Mui-focused {
+  color: #a855f7; /* Purple on focus */
+}
+.checkout-form .MuiOutlinedInput-root {
+  color: white;
+}
+.checkout-form .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline {
+  border-color: rgba(255, 255, 255, 0.2);
+}
+.checkout-form .MuiOutlinedInput-root:hover .MuiOutlinedInput-notchedOutline {
+  border-color: rgba(255, 255, 255, 0.5);
+}
+.checkout-form .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline {
+  border-color: #a855f7; /* Purple border on focus */
+}
+
+/* === Button Styling === */
+.checkout-button {
+  background: linear-gradient(90deg, #a855f7, #6d28d9) !important;
+  color: white !important;
+  padding: 12px 0 !important;
+  font-weight: 600 !important;
+  border-radius: 8px !important;
+  text-transform: none !important;
+  font-size: 16px !important;
+  transition: box-shadow 0.3s ease !important;
+}
+.checkout-button:hover {
+  box-shadow: 0 0 15px rgba(168, 85, 247, 0.6) !important;
+}
+
+
+/* === Payment Method Radio Buttons === */
+.payment-form .MuiFormControlLabel-label {
+  color: white;
+}
+.payment-form .MuiRadio-root {
+  color: rgba(255, 255, 255, 0.5);
+}
+.payment-form .MuiRadio-root.Mui-checked {
+  color: #a855f7 !important; /* Purple when selected */
+}
+.payment-form .MuiFormLabel-root {
+  color: rgba(255, 255, 255, 0.8) !important;
+}
+
+
+/* === Order Summary and Price Details Styling === */
+.order-summary-card h6 {
+  padding-bottom: 10px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  margin-bottom: 15px;
+  text-transform: uppercase;
+  font-size: 14px;
+  letter-spacing: 0.5px;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.order-summary-card .MuiListItem-root {
+  padding: 8px 0 !important;
+}
+
+.order-summary-card .MuiListItemText-primary {
+  color: white;
+}
+.order-summary-card .MuiListItemText-secondary {
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.order-summary-card .price-row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+.order-summary-card .price-row-total {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 15px;
+  padding-top: 15px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+.order-summary-card .price-row-savings {
+  color: #4CAF50; /* Green for savings */
+}
+
+/* --- Utility divider --- */
+.checkout-divider {
+  border-color: rgba(255, 255, 255, 0.1) !important;
+}
