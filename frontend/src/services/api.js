@@ -1,3 +1,4 @@
+// api.js
 import axios from 'axios';
 
 // ✅ Dynamically switch between local and production backend
@@ -7,35 +8,63 @@ export const API_URL = isLocalhost
   ? 'http://localhost:5000/api'
   : 'https://calm-tree-05462bf10.1.azurestaticapps.net/api';
 
-// ==================== Product APIs ====================
+
+// ✅ Get all products
 export const getProducts = async () => {
-const response = await axios.get(`${API_URL}/products`);
-  return response.data;
+  try {
+    const response = await axios.get(`${API_URL}/products`);
+    return response.data;
+  } catch (error) {
+    throw error.response?.data?.message || 'Failed to fetch products';
+  }
 };
 
+// ✅ Get featured products
 export const getFeaturedProducts = async () => {
-  const response = await axios.get(`${API_URL}/products/featured`);
-  return response.data;
+  try {
+    const response = await axios.get(`${API_URL}/products/featured`);
+    return response.data;
+  } catch (error) {
+    throw error.response?.data?.message || 'Failed to fetch featured products';
+  }
 };
 
+// ✅ Get single product by ID
 export const getProduct = async (id) => {
-  const response = await axios.get(`${API_URL}/products/${id}`);
-  return response.data;
+  try {
+    const response = await axios.get(`${API_URL}/products/${id}`);
+    return response.data;
+  } catch (error) {
+    throw error.response?.data?.message || 'Failed to fetch product';
+  }
 };
 
+// ✅ Create a new product
 export const createProduct = async (productData) => {
-  const response = await axios.post(`${API_URL}/products`, productData);
-  return response.data;
+  try {
+    const response = await axios.post(`${API_URL}/products`, productData);
+    return response.data;
+  } catch (error) {
+    throw error.response?.data?.message || 'Product creation failed';
+  }
 };
 
+// ✅ Validate a coupon code
 export const validateCouponCode = async (code) => {
-  const response = await axios.post(`${API_URL}/coupons/validate`, { code });
-  return response.data;
+  try {
+    const response = await axios.post(`${API_URL}/coupons/validate`, { code });
+    return response.data;
+  } catch (error) {
+    throw error.response?.data?.message || 'Coupon validation failed';
+  }
 };
 
-// ==================== Newsletter APIs ====================
-export const getArticles = async () => {
-  const response = await axios.get(`${API_URL}/articles`);
-  return response.data;
+// ✅ Subscribe to newsletter
+export const subscribeToNewsletter = async (email) => {
+  try {
+    const response = await axios.post(`${API_URL}/newsletter/subscribe`, { email });
+    return response.data;
+  } catch (error) {
+    throw error.response?.data?.message || 'Subscription failed';
+  }
 };
-
