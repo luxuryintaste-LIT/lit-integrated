@@ -9,32 +9,33 @@ export const API_URL = isLocalhost
 
 // ==================== Product APIs ====================
 export const getProducts = async () => {
-  const response = await axios.get(${API_URL}/products);
+const response = await axios.get(`${API_URL}/products`);
   return response.data;
 };
 
 export const getFeaturedProducts = async () => {
-  const response = await axios.get(${API_URL}/products/featured);
+  const response = await axios.get(`${API_URL}/products/featured`);
   return response.data;
 };
 
 export const getProduct = async (id) => {
-  const response = await axios.get(${API_URL}/products/${id});
+  const response = await axios.get(`${API_URL}/products/${id}`);
   return response.data;
 };
 
 export const createProduct = async (productData) => {
-  const response = await axios.post(${API_URL}/products, productData);
+  const response = await axios.post(`${API_URL}/products`, productData);
   return response.data;
 };
 
 export const validateCouponCode = async (code) => {
-  const response = await axios.post(${API_URL}/coupons/validate, { code });
+  const response = await axios.post(`${API_URL}/coupons/validate`, { code });
   return response.data;
 };
 
 // ==================== Newsletter APIs ====================
 export const getArticles = async () => {
-  const response = await axios.get(${API_URL}/articles);
+  const response = await axios.get(`${API_URL}/articles`);
   return response.data;
 };
+
