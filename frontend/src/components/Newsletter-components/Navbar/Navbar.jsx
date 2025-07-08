@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+// 1. IMPORT Link alongside useNavigate
+import { Link, useNavigate } from 'react-router-dom';
 import './Navbar.css';
 
 import litLogo from '../../../assets/lit-logo.png';
@@ -14,6 +15,7 @@ const Navbar = () => {
 
   // Handle scroll effect
   useEffect(() => {
+    // ... (rest of your useEffect is fine)
     const handleScroll = () => {
       const offset = window.scrollY;
       if (offset > 50) {
@@ -22,22 +24,14 @@ const Navbar = () => {
         setScrolled(false);
       }
     };
-
     window.addEventListener('scroll', handleScroll);
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-    };
+    return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
   // Handle link click
   const handleLinkClick = (link) => {
     setActiveLink(link);
-    setIsMenuOpen(false); // close menu on link click (for mobile UX)
-  };
-
-  // Toggle mobile menu
-  const toggleMenu = () => {
-    setIsMenuOpen(!isMenuOpen);
+    setIsMenuOpen(false);
   };
 
   // Navigate to profile page
@@ -49,54 +43,56 @@ const Navbar = () => {
     <nav className={`navbar ${scrolled ? 'scrolled' : ''}`}>
       <div className="navbar-container">
         <div className="navbar-logo">
-          <a href="/">
+          {/* Use Link for the logo as well to prevent a full-page reload */}
+          <Link to="/">
             <img src={litLogo} alt="LIT Logo" className="logo-img" />
-          </a>
+          </Link>
         </div>
 
+        {/* 2. REPLACE <a> with <Link> and href with to */}
         <div className={`navbar-links ${isMenuOpen ? 'active' : ''}`}>
-          <a 
-            href="/game-modes" 
-            className={activeLink === 'game-modes' ? 'active' : ''} 
+          <Link
+            to="/game-modes"
+            className={activeLink === 'game-modes' ? 'active' : ''}
             onClick={() => handleLinkClick('game-modes')}
           >
             Game Modes
-          </a>
-          <a 
-            href="/shop" 
-            className={activeLink === 'shop' ? 'active' : ''} 
+          </Link>
+          <Link
+            to="/shop"
+            className={activeLink === 'shop' ? 'active' : ''}
             onClick={() => handleLinkClick('shop')}
           >
             Marketplace
-          </a>
-          <a 
-            href="/socials" 
-            className={activeLink === 'socials' ? 'active' : ''} 
+          </Link>
+          <Link
+            to="/socials"
+            className={activeLink === 'socials' ? 'active' : ''}
             onClick={() => handleLinkClick('socials')}
           >
             Socials
-          </a>
-          <a 
-            href="/newsletter" 
-            className={activeLink === 'newsletter' ? 'active' : ''} 
+          </Link>
+          <Link
+            to="/newsletter"
+            className={activeLink === 'newsletter' ? 'active' : ''}
             onClick={() => handleLinkClick('newsletter')}
           >
             Newsletter
-          </a>
-          <a 
-            href="/avatar-store" 
-            className={activeLink === 'avatar-store' ? 'active' : ''} 
+          </Link>
+          <Link
+            to="/avatar-store"
+            className={activeLink === 'avatar-store' ? 'active' : ''}
             onClick={() => handleLinkClick('avatar-store')}
           >
             Avatar Store
-          </a>
-          <a 
-            href="/ir-icon" 
-            className={activeLink === 'ir-icon' ? 'active' : ''} 
+          </Link>
+          <Link
+            to="/ir-icon"
+            className={activeLink === 'ir-icon' ? 'active' : ''}
             onClick={() => handleLinkClick('ir-icon')}
           >
             IR Icon
-          </a>
+          </Link>
         </div>
 
         <div className="navbar-right">
