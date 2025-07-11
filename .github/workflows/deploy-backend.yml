@@ -38,7 +38,7 @@ jobs:
           images: '${{ env.ACR_LOGIN_SERVER }}/${{ env.AZURE_WEBAPP_NAME }}:${{ github.sha }}'
 
       - name: 'Logout from Azure'
-        if: always() # Ye step hamesha chalega, chahe pichle steps fail ho ya pass
+        if: always()
         run: |
           az logout
           az cache purge
