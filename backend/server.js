@@ -34,6 +34,8 @@ app.use(express.json({ limit: '50mb' }));
 app.use(express.urlencoded({ extended: true, limit: '50mb' }));
 app.use('/uploads', express.static(path.join(__dirname, '/uploads')));
 
+console.log('🌐 MONGODB_URI from env:', process.env.MONGODB_URI);
+
 // MongoDB connect function with await
 const connectDB = async () => {
   try {
