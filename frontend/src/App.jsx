@@ -19,6 +19,7 @@ import Navbar from './components/Newsletter-components/Navbar/Navbar';
 // import MainLayout from './components/Newsletter-components/MainLayout/MainLayout'; 
 import ProtectedRoute from './components/admin-components/ProtectedRoute';
 import AdminLayout from './components/admin-components/AdminLayout';
+import AuthCallback from './pages/AuthCallback';
 
 // Pages
 import LandingPage from './components/LandingPage';
@@ -91,6 +92,9 @@ const AppContent = () => {
           <Route path="/settings" element={<Settings />} />
           <Route path="/checkout" element={<CheckoutPage />} />
           {/* <Route path="/shipping-address" element={<AddressForm />} /> */}
+
+                    {/* login route */}
+          <Route path="/auth/callback" element={<AuthCallback />} />
 
           <Route path="/order-confirmation" element={<OrderConfirmation />} />
           <Route path="/ir-icon" element={<ComingSoonPage />} />
