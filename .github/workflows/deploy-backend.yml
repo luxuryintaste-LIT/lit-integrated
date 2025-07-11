@@ -17,35 +17,28 @@ jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
     steps:
-      # 1. Code ko checkout karein
       - name: 'Checkout Code'
         uses: actions/checkout@v4
 
-      # 2. Azure me login karein (Naya Tareeka)
       - name: 'Login to Azure'
         uses: azure/login@v1
         with:
-          client-id: ${{ secrets.AZURE_CLIENT_ID }}
-          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
-          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
-          client-secret: ${{ secrets.AZURE_CLIENT_SECRET }}
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
 
-      # 3. Docker image build karke ACR me push karein
       - name: 'Build and Push Docker Image'
         run: |
           docker build . --file ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}/Dockerfile --tag ${{ env.ACR_LOGIN_SERVER }}/${{ env.AZURE_WEBAPP_NAME }}:${{ github.sha }}
           docker login ${{ env.ACR_LOGIN_SERVER }} -u ${{ secrets.AZURE_CLIENT_ID }} -p ${{ secrets.AZURE_CLIENT_SECRET }}
           docker push ${{ env.ACR_LOGIN_SERVER }}/${{ env.AZURE_WEBAPP_NAME }}:${{ github.sha }}
 
-      # 4. App Service par naya container deploy karein
       - name: 'Deploy to App Service'
         uses: azure/webapps-deploy@v2
         with:
           app-name: ${{ env.AZURE_WEBAPP_NAME }}
           images: '${{ env.ACR_LOGIN_SERVER }}/${{ env.AZURE_WEBAPP_NAME }}:${{ github.sha }}'
 
-      # 5. Azure se logout karein
       - name: 'Logout from Azure'
+        if: always() # Ye step hamesha chalega, chahe pichle steps fail ho ya pass
         run: |
           az logout
           az cache purge
