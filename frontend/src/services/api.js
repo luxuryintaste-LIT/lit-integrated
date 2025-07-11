@@ -6,7 +6,7 @@ const isLocalhost = window.location.hostname === 'localhost';
 
 export const API_URL = isLocalhost
   ? 'http://localhost:5000/api'
-  : 'https://calm-tree-05462bf10.1.azurestaticapps.net/api';
+  : 'https://lit-backend-azajexa8e2a9g4az.canadacentral-01.azurewebsites.net/api';
 
 
 // ✅ Get all products
