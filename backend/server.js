@@ -44,7 +44,7 @@ mongoose.connect(process.env.MONGODB_URI, {
   useUnifiedTopology: true
 })
   .then(() => console.log('✅ MongoDB connected'))
-  .catch(err => console.error('❌ MongoDB connection error:', err,process.env.MONGODB_URI));
+  .catch(err => console.error('❌ MongoDB connection error:', err));
 
 // Ecommerce API Routes
 app.use('/api/products', productRoutes);
@@ -62,7 +62,7 @@ app.use('/api/sneaker-world', sneakerWorldRoutes);
 
 // Root Route
 app.get('/', (req, res) => {
-  res.send('🚀 Unified API for Ecommerce + Newsletter is running... the mongodb URI IS: ',process.env.MONGODB_URI);
+  res.send('🚀 Unified API for Ecommerce + Newsletter is running...');
 });
 
 // Error Handling Middleware
