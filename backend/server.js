@@ -62,7 +62,7 @@ app.use('/api/sneaker-world', sneakerWorldRoutes);
 
 // Root Route
 app.get('/', (req, res) => {
-  res.send('🚀 Unified API for Ecommerce + Newsletter is running...');
+  res.send('🚀 Unified API for Ecommerce + Newsletter is running... the mongodb URI IS: ',process.env.MONGODB_URI);
 });
 
 // Error Handling Middleware
