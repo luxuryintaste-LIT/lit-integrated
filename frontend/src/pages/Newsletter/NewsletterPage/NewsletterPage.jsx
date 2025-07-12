@@ -34,7 +34,7 @@ const NewsletterPage = () => {
         const data = await getArticles();
         setAllArticles(data || []);
       } catch (err) {
-        setError(err.message || 'Error fetching articles');
+        setError(err.message || 'Error fetching articles.....bump');
       } finally {
         setLoading(false);
       }
