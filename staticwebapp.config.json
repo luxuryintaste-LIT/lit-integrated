@@ -27,8 +27,8 @@
     }
   },
   "globalHeaders": {
-    "Access-Control-Allow-Origin": "https://calm-tree-05462bf10.1.azurestaticapps.net",
+    "Access-Control-Allow-Origin": "https://www.luxuryintaste.com",
     "Access-Control-Allow-Methods": "GET, POST, OPTIONS, PUT, DELETE",
     "Access-Control-Allow-Headers": "Content-Type"
   }
-} 
+}
