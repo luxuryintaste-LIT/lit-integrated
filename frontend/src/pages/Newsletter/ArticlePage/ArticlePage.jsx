@@ -6,11 +6,10 @@ import './ArticlePage.css';
 import ArticleHero from './ArticleHero/ArticleHero';
 import ArticleBody from './ArticleBody/ArticleBody';
 import ShareButtons from "../../../components/Newsletter-components/ShareButtons/ShareButtons";
+
+
 import RelatedArticles from './RelatedArticles/RelatedArticles';
 import Footer from "../../../components/Newsletter-components/Footer/Footer";
-
-// API
-import { getArticleBySlug, getArticles } from '../../../api'; // Update path if needed
 
 const ArticlePage = () => {
   const { slug } = useParams();
@@ -25,17 +24,20 @@ const ArticlePage = () => {
       setError(null);
 
       try {
-        // Get the article by slug
-        const data = await getArticleBySlug(slug);
+        // Fetch the main article by slug
+        const res = await fetch(`https://lit-backend-azajexa8e2a9g4az.canadacentral-01.azurewebsites.net/api/articles/slug/${slug}`);
+        if (!res.ok) throw new Error('Article not found');
+        const data = await res.json();
         setArticle(data);
 
-        // Get all articles and filter
-        const allData = await getArticles();
+        // Fetch all articles to pick related ones
+        const allRes = await fetch('https://lit-backend-azajexa8e2a9g4az.canadacentral-01.azurewebsites.net/api/articles');
+        const allData = await allRes.json();
         const filtered = allData.filter(p => p.slug !== slug).slice(0, 3);
         setRelatedArticles(filtered);
       } catch (err) {
         console.error('Fetch Error:', err);
-        setError(err);
+        setError(err.message);
       } finally {
         setLoading(false);
       }
