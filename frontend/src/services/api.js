@@ -77,3 +77,13 @@ export const getArticles = async () => {
     throw error.response?.data?.message || 'Failed to fetch articles';
   }
 };
+
+export const getArticleBySlug = async (slug) => {
+  try {
+    const response = await axios.get(`${API_URL}/articles/slug/${slug}`);
+    return response.data;
+  } catch (error) {
+    throw error.response?.data?.message || 'Failed to fetch article by slug';
+  }
+};
+

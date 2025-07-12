@@ -6,10 +6,11 @@ import './ArticlePage.css';
 import ArticleHero from './ArticleHero/ArticleHero';
 import ArticleBody from './ArticleBody/ArticleBody';
 import ShareButtons from "../../../components/Newsletter-components/ShareButtons/ShareButtons";
-
-
 import RelatedArticles from './RelatedArticles/RelatedArticles';
 import Footer from "../../../components/Newsletter-components/Footer/Footer";
+
+// API
+import { getArticleBySlug, getArticles } from '../../../api'; // Update path if needed
 
 const ArticlePage = () => {
   const { slug } = useParams();
@@ -24,20 +25,17 @@ const ArticlePage = () => {
       setError(null);
 
       try {
-        // Fetch the main article by slug
-        const res = await fetch(`http://localhost:5000/api/articles/slug/${slug}`);
-        if (!res.ok) throw new Error('Article not found');
-        const data = await res.json();
+        // Get the article by slug
+        const data = await getArticleBySlug(slug);
         setArticle(data);
 
-        // Fetch all articles to pick related ones
-        const allRes = await fetch('http://localhost:5000/api/articles');
-        const allData = await allRes.json();
+        // Get all articles and filter
+        const allData = await getArticles();
         const filtered = allData.filter(p => p.slug !== slug).slice(0, 3);
         setRelatedArticles(filtered);
       } catch (err) {
         console.error('Fetch Error:', err);
-        setError(err.message);
+        setError(err);
       } finally {
         setLoading(false);
       }
