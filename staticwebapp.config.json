@@ -1,7 +1,7 @@
 {
   "routes": [
     {
-      "route": "//confirm",
+      "route": "/confirm",
       "methods": ["GET"],
       "rewrite": "/api/confirm"
     },
@@ -9,16 +9,11 @@
       "route": "/api/subscribe",
       "methods": ["POST"],
       "rewrite": "/api/subscribe"
-    },
-    {
-      "route": "/*",
-      "serve": "/index.html",
-      "statusCode": 200
     }
   ],
   "navigationFallback": {
     "rewrite": "/index.html",
-    "exclude": ["/images/*", "/assets/*", "/css/*", "/api/*"]
+    "exclude": ["/api/*", "/assets/*", "/static/*", "/images/*", "/css/*"]
   },
   "responseOverrides": {
     "404": {
@@ -28,7 +23,7 @@
   },
   "globalHeaders": {
     "Access-Control-Allow-Origin": "https://www.luxuryintaste.com",
-    "Access-Control-Allow-Methods": "GET, POST, OPTIONS, PUT, DELETE",
+    "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
     "Access-Control-Allow-Headers": "Content-Type"
   }
 }
