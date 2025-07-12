@@ -131,7 +131,7 @@ const AppContent = () => {
         </Routes>
       </main>
 
-      {showFooter && <Footer />}
+     {/*{showFooter && <Footer />}*/}
     </Background>
   );
 };
