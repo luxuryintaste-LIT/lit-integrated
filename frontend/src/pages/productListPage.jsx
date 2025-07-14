@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import ProductList from '../components/Shop/ProductList';
 import { getProducts } from '../services/api';
-import '../styles/ProductListPage.css';
+import '../styles/productListPage.css';
 
 const ProductListPage = () => {
   const location = useLocation();
