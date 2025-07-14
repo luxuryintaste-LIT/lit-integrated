@@ -16,6 +16,7 @@
   import ProtectedRoute from './components/admin-components/ProtectedRoute';
   import AdminLayout from './components/admin-components/AdminLayout';
   import Notification from './components/Notification'; // ✅ Added
+  import AuthCallback from './pages/AuthCallback'; // ✅ Added
 
   // Pages - Public
   import LandingPage from './components/LandingPage';
@@ -98,6 +99,7 @@
             <Route path="/socials" element={<ComingSoonPage />} />
             <Route path="/avatar-store" element={<ComingSoonPage />} />
             <Route path="/products" element={<ProductListPage />} />
+            <Route path="/auth/callback" element={<AuthCallback />} />
 
             {/* Newsletter Routes */}
             <Route element={<MainLayout />}>
