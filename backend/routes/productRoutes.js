@@ -2,12 +2,13 @@ const express = require('express');
 const router = express.Router();
 const multer = require('multer');
 const Product = require('../models/Product');
+const { uploadImageToAzure } = require('../services/azureBlob');
 
 // Multer setup (store files in memory)
 const storage = multer.memoryStorage();
 const upload = multer({ storage });
 
-// Helpers
+// Helper to parse form values
 const parseArray = (value) => {
   if (!value) return [];
   return Array.isArray(value) ? value : [value];
@@ -47,10 +48,8 @@ router.get('/:id', async (req, res) => {
   }
 });
 
+// ------------------ CREATE PRODUCT ------------------
 router.post('/', upload.any(), async (req, res) => {
-
-  console.log("FILES:", req.files);
-console.log("BODY:", req.body);
   try {
     const {
       name,
@@ -64,35 +63,37 @@ console.log("BODY:", req.body);
       colors,
       stock,
       features,
-      featured
+      featured,
+      gender
     } = req.body;
 
-    // Parse arrays
-    const parsedColors = Array.isArray(colors) ? colors : [colors].filter(Boolean);
-    const parsedSizes = Array.isArray(sizes) ? sizes : [sizes].filter(Boolean);
-    const parsedFeatures = Array.isArray(features) ? features : [features].filter(Boolean);
+    const parsedColors = parseArray(colors);
+    const parsedSizes = parseArray(sizes);
+    const parsedFeatures = parseArray(features);
 
-    // ✅ FIX: Define this BEFORE using it
     const imagesByColor = {};
 
-    // ✅ SAFE: protect against undefined req.files
-    (req.files || []).forEach(file => {
+    // Group uploaded files by color
+    for (const file of req.files || []) {
       const match = file.fieldname.match(/^images\[(.+?)\]$/);
       if (match) {
         const color = match[1];
         if (!imagesByColor[color]) imagesByColor[color] = [];
-        imagesByColor[color].push({
-          data: file.buffer,
-          contentType: file.mimetype,
-          filename: file.originalname
-        });
+        imagesByColor[color].push(file);
       }
-    });
+    }
 
-    const images = Object.entries(imagesByColor).map(([color, files]) => ({
-      color,
-      images: files
-    }));
+    const images = [];
+
+    // Upload each image to Azure Blob and collect URLs
+    for (const [color, files] of Object.entries(imagesByColor)) {
+      const uploadedUrls = [];
+      for (const file of files) {
+        const url = await uploadImageToAzure(file.buffer, file.mimetype, file.originalname);
+        uploadedUrls.push(url); // ✅ only URL
+      }
+      images.push({ color, images: uploadedUrls });
+    }
 
     const product = new Product({
       name,
@@ -107,12 +108,12 @@ console.log("BODY:", req.body);
       stock,
       features: parsedFeatures,
       featured: featured === 'true' || featured === true,
+      gender,
       images
     });
 
     const saved = await product.save();
     res.status(201).json(saved);
-    console.log("FILES:", req.files);
   } catch (error) {
     console.error('Create Error:', error);
     res.status(400).json({ message: error.message });
@@ -137,33 +138,37 @@ router.put('/:id', upload.any(), async (req, res) => {
       colors,
       stock,
       features,
-      featured
+      featured,
+      gender
     } = req.body;
 
     const parsedColors = parseArray(colors);
     const parsedSizes = parseArray(sizes);
     const parsedFeatures = parseArray(features);
-const imagesByColor = {};  // <-- This must be defined BEFORE the loop
 
-(req.files || []).forEach(file => {
-  const match = file.fieldname.match(/^images\[(.+?)\]$/);
-  if (match) {
-    const color = match[1];
-    if (!imagesByColor[color]) imagesByColor[color] = [];
-    imagesByColor[color].push({
-      data: file.buffer,
-      contentType: file.mimetype,
-      filename: file.originalname
+    const imagesByColor = {};
+
+    (req.files || []).forEach(file => {
+      const match = file.fieldname.match(/^images\[(.+?)\]$/);
+      if (match) {
+        const color = match[1];
+        if (!imagesByColor[color]) imagesByColor[color] = [];
+        imagesByColor[color].push(file);
+      }
     });
-  }
-});
 
-    const newImages = Object.entries(imagesByColor).map(([color, imageArr]) => ({
-      color,
-      images: imageArr
-    }));
+    const newImages = [];
 
-    // Update fields only if provided
+    for (const [color, files] of Object.entries(imagesByColor)) {
+      const uploadedUrls = [];
+      for (const file of files) {
+        const url = await uploadImageToAzure(file.buffer, file.mimetype, file.originalname);
+        uploadedUrls.push(url); // ✅ only URL
+      }
+      newImages.push({ color, images: uploadedUrls });
+    }
+
+    // Update fields
     if (name) product.name = name;
     if (description) product.description = description;
     if (price) product.price = price;
@@ -173,20 +178,17 @@ const imagesByColor = {};  // <-- This must be defined BEFORE the loop
     if (brand) product.brand = brand;
     if (stock) product.stock = stock;
     if (typeof featured !== 'undefined') product.featured = featured;
-
-   if (parsedColors.length > 0)
-  product.colors = parsedColors;
-    if (parsedSizes.length > 0)
-      product.sizes = parsedSizes;
-    if (parsedFeatures.length > 0)
-      product.features = parsedFeatures;
+    if (gender) product.gender = gender;
+    if (parsedColors.length > 0) product.colors = parsedColors;
+    if (parsedSizes.length > 0) product.sizes = parsedSizes;
+    if (parsedFeatures.length > 0) product.features = parsedFeatures;
 
     if (newImages.length > 0) {
       product.images.push(...newImages);
     }
 
-    const updatedProduct = await product.save();
-    res.json(updatedProduct);
+    const updated = await product.save();
+    res.json(updated);
   } catch (error) {
     console.error('Update Error:', error);
     res.status(400).json({ message: error.message });

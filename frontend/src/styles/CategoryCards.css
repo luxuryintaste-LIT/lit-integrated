@@ -12,17 +12,26 @@
 .category-container {
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: flex-start;
   gap: 2rem;
   padding: 0 2rem 2rem;
-  min-height: calc(100vh - 200px);
   max-width: 1400px;
   margin: 0 auto;
   width: 100%;
+  flex-wrap: wrap;
+}
+
+.category-card-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex: 1;
+  min-width: 300px;
+  max-width: 600px;
 }
 
 .category-card {
-  flex: 1;
+  width: 100%;
   height: 350px;
   position: relative;
   overflow: hidden;
@@ -31,22 +40,18 @@
   background-position: center;
   transition: all 0.3s ease-in-out;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-  min-width: 300px;
-  max-width: 600px;
   cursor: pointer;
   opacity: 0;
   animation: fadeInUp 0.8s ease-out forwards;
 }
 
 .category-card.men {
-  /* background: url('../../assets/men.png'); */
   background-size: cover;
   background-position: center;
   animation-delay: 0.2s;
 }
 
 .category-card.women {
-  /* background: url('../../assets/women.png'); */
   background-size: cover;
   background-position: center;
   animation-delay: 0.4s;
@@ -150,24 +155,46 @@
   transform: translateY(20px);
   font-size: 42px;
   font-weight: 500;
-  font-family: 'poppins',sans-serif;
+  font-family: 'Poppins', sans-serif;
   color: #fff;
   animation: fadeInUp 0.8s ease-out forwards;
   animation-delay: 0.6s;
-
 }
 
 .card-content p {
   margin-bottom: 0.5rem;
   font-size: 20px;
   font-weight: 400;
-  font-family: 'poppins',sans-serif;
+  font-family: 'Poppins', sans-serif;
   color: #aeaeae;
   opacity: 0;
   text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
   transform: translateY(20px);
   animation: fadeInUp 0.8s ease-out forwards;
   animation-delay: 0.8s;
+}
+
+/* Title below cards */
+.category-title {
+  margin-top: 1rem;
+  font-size: 1.6rem;
+  font-weight: 600;
+  color: white;
+  font-family: 'Poppins', sans-serif;
+  text-align: center;
+  letter-spacing: 0.5px;
+}
+
+/* Scroll Animation */
+.fade-in {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: all 0.6s ease-out;
+}
+
+.fade-in-visible {
+  opacity: 1;
+  transform: translateY(0);
 }
 
 /* Mobile Responsive Design */
@@ -187,11 +214,6 @@
     min-width: unset;
     margin: 0;
     flex: none;
-  }
-
-  .category-card.men,
-  .category-card.women {
-    background-position: center;
   }
 
   .card-content {
@@ -214,10 +236,15 @@
     padding: 0.5rem 1.5rem;
   }
 
+  .category-title {
+    font-size: 1.3rem;
+    margin-top: 0.8rem;
+  }
+
   .category-card:hover {
     transform: none;
   }
-  
+
   .category-card:active .category-options,
   .category-card:active .card-content {
     opacity: 1;

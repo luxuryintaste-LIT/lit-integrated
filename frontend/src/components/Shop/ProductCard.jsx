@@ -1,59 +1,28 @@
 import React, { useState, useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { addToCart, addToWishlist, removeFromWishlist } from '../../redux/reducers/cartReducer';
 import '/src/styles/ProductCard.css';
 
 const ProductCard = ({ product }) => {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
   const wishlist = useSelector(state => state.cart.wishlist);
   const isWishlisted = product ? wishlist.some(item => item._id === product._id) : false;
 
   const [imgSrc, setImgSrc] = useState('/images/products/default-product.jpg');
 
-  // ✅ Convert image data (base64 string or buffer) to usable image src
-  const convertToBase64 = (image) => {
-    if (!image || !image.data || !image.contentType) return '';
-
-    // Case 1: Already base64 string
-    if (typeof image.data === 'string') {
-      return `data:${image.contentType};base64,${image.data}`;
-    }
-
-    // Case 2: Buffer-like array from MongoDB
-    if (Array.isArray(image.data)) {
-      try {
-        const byteArray = Uint8Array.from(image.data);
-        let binary = '';
-        for (let i = 0; i < byteArray.length; i++) {
-          binary += String.fromCharCode(byteArray[i]);
-        }
-        const base64String = btoa(binary);
-        return `data:${image.contentType};base64,${base64String}`;
-      } catch (err) {
-        console.error('Image base64 conversion error:', err);
-        return '';
-      }
-    }
-
-    return '';
-  };
-
-  // ✅ Load the first image on product load
+  // ✅ Use image URL directly (not base64)
   useEffect(() => {
     if (
-      product?.images?.[0]?.images?.[0]
+      product.images &&
+      product.images.length > 0 &&
+      product.images[0].images &&
+      product.images[0].images.length > 0
     ) {
-      const image = product.images[0].images[0];
-      const base64Src = convertToBase64(image);
-      if (base64Src) setImgSrc(base64Src);
+      const imageUrl = product.images[0].images[0]; // now just a URL string
+      setImgSrc(imageUrl);
     }
   }, [product]);
-
-  const handleCardClick = () => {
-    navigate(`/product/${product._id}`);
-  };
 
   const handleWishlistClick = (e) => {
     e.preventDefault();
@@ -72,15 +41,15 @@ const ProductCard = ({ product }) => {
     const itemToAdd = {
       ...product,
       quantity: 1,
-      color: product.colors?.[0] || 'Default Color',
-      size: product.sizes?.[0] || 'Default Size',
+      color: product.colors && product.colors.length > 0 ? product.colors[0] : 'Default Color',
+      size: product.sizes && product.sizes.length > 0 ? product.sizes[0] : 'Default Size',
     };
 
     dispatch(addToCart(itemToAdd));
   };
 
   return (
-    <div className="product-card" onClick={handleCardClick} style={{ cursor: 'pointer' }}>
+    <Link to={`/product/${product._id}`} className="product-card">
       <div className="product-image-container">
         <img
           src={imgSrc}
@@ -110,11 +79,11 @@ const ProductCard = ({ product }) => {
           )}
         </div>
         <div className="button-container">
-          <Link to={`/product/${product._id}`} className="buy-now" onClick={(e) => e.stopPropagation()}>Buy Now</Link>
+          <Link to={`/product/${product._id}`} className="buy-now">Buy Now</Link>
           <button className="add-to-cart" onClick={handleAddToCart}>Add to Cart</button>
         </div>
       </div>
-    </div>
+    </Link>
   );
 };
 

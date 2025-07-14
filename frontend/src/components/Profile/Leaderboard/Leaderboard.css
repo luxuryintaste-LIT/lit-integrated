@@ -1,0 +1,90 @@
+.leaderboard-section {
+  background: var(--glass-bg);
+  backdrop-filter: blur(10px);
+  border: 1px solid var(--glass-border);
+  border-radius: 15px;
+  padding: 20px;
+}
+
+.leaderboard-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.view-all-btn {
+  background: none;
+  border: none;
+  color: #d1d1d1;
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-weight: 500;
+  padding: 0;
+  transition: color 0.2s;
+}
+
+.view-all-btn:hover {
+  color: #fff;
+  background: none;
+  box-shadow: none;
+}
+
+.leaderboard-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 0;
+  border-bottom: 1px solid var(--glass-border);
+}
+
+.leaderboard-item:last-child {
+  border-bottom: none;
+}
+
+.leaderboard-player {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.rank {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+ 
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: #fff;
+}
+
+.leaderboard-avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+}
+
+.player-info {
+  display: contents;
+}
+
+.coins {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.coins img {
+  width: 20px;
+  height: 20px;
+}
+
+/* Mobile styles */
+@media (max-width: 767px) {
+  .leaderboard-section {
+    padding: 20px 0;
+    max-width: none;
+    margin-top: 20px;
+  }
+
+}
