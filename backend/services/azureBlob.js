@@ -1,3 +1,5 @@
+require('dotenv').config(); // <-- Needed for local dev
+
 const {
   BlobServiceClient,
   StorageSharedKeyCredential,
@@ -12,6 +14,10 @@ const AZURE_STORAGE_CONNECTION_STRING = process.env.AZURE_STORAGE_CONNECTION_STR
 const AZURE_STORAGE_ACCOUNT_NAME = process.env.AZURE_STORAGE_ACCOUNT_NAME;
 const AZURE_STORAGE_ACCOUNT_KEY = process.env.AZURE_STORAGE_ACCOUNT_KEY;
 const containerName = 'product-images';
+
+if (!AZURE_STORAGE_CONNECTION_STRING) {
+  throw new Error('❌ AZURE_STORAGE_CONNECTION_STRING is not defined.');
+}
 
 // 🔗 Clients and credentials
 const blobServiceClient = BlobServiceClient.fromConnectionString(AZURE_STORAGE_CONNECTION_STRING);
@@ -33,18 +39,18 @@ async function uploadImageToAzure(buffer, mimetype, originalName) {
     },
   });
 
-  // 📅 Set SAS expiry to 12 months from now
   const expiresOn = new Date();
-  expiresOn.setFullYear(expiresOn.getFullYear() + 1); // 12 months from now
+  expiresOn.setFullYear(expiresOn.getFullYear() + 1);
 
   const sasToken = generateBlobSASQueryParameters({
     containerName,
     blobName,
-    permissions: BlobSASPermissions.parse('r'), // Read-only
+    permissions: BlobSASPermissions.parse('r'),
     expiresOn,
     protocol: SASProtocol.Https,
   }, sharedKeyCredential).toString();
 
   return `${blockBlobClient.url}?${sasToken}`;
 }
+
 module.exports = { uploadImageToAzure };
