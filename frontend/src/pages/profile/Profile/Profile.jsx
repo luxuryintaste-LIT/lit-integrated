@@ -2,7 +2,7 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import './Profile.css';
 import Leaderboard from '../../../components/profile/Leaderboard/Leaderboard'; 
-import "../../../components/profile/Leaderboard/Leaderboard.css"; 
+// import "../../../components/profile/Leaderboard/Leaderboard."; 
 import Navbar from '../../../components/Newsletter-components/Navbar/Navbar';
 import lockBeginner from '../../../assets/lock-beginner-new.png';
 import lockAmateur from '../../../assets/lock-amateur-new.png';
