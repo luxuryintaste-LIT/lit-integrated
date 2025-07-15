@@ -18,6 +18,8 @@ const luxuryFashionRoutes = require('./routes/luxuryFashionRoutes');
 const sustainableFashionRoutes = require('./routes/sustainableFashionRoutes');
 const sneakerWorldRoutes = require('./routes/sneakerWorldRoutes');
 
+const contactRoutes = require('./routes/contactRoutes');
+
 // Error middleware
 const { notFound, errorHandler } = require('./middleware/errorMiddleware');
 
@@ -79,6 +81,9 @@ app.use('/api/fast-fashion', fastFashionRoutes);
 app.use('/api/luxury-fashion', luxuryFashionRoutes);
 app.use('/api/sustainable-fashion', sustainableFashionRoutes);
 app.use('/api/sneaker-world', sneakerWorldRoutes);
+
+app.use('/api/contact', require('./routes/contactRoutes'));
+
 
 //
 // ✅ ROOT ROUTE

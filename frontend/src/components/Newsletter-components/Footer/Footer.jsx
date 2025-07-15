@@ -65,6 +65,7 @@ const Footer = () => {
             <Link to="/about">About</Link>
             <Link to="/privacy">Privacy Policy</Link>
             <Link to="/terms">Terms of Services</Link>
+            <Link to="/returnpolicy">Return Policy</Link>
             <Link to="/contact">Contact Us</Link>
           </div>
         </div>
@@ -147,4 +148,3 @@ const Footer = () => {
 };
 
 export default Footer;
- 

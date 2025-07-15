@@ -1,0 +1,136 @@
+/* src/styles/PrivacyPolicy.css */
+
+/* --- Theme Variables --- */
+:root {
+  --text-primary: #ffffff;
+  --text-secondary: rgba(255, 255, 255, 0.75);
+  --accent-glow: rgba(147, 112, 219, 0.6);
+}
+
+.privacy-policy-page {
+  background-color: var(--background-primary);
+  color: var(--text-primary);
+  font-family: 'Poppins', sans-serif;
+  min-height: 100vh;
+  padding: 80px 5%;
+  position: relative;
+  overflow: hidden;
+}
+
+/* --- Header Section (No changes here) --- */
+.privacy-header {
+  position: relative;
+  text-align: center;
+  margin-bottom: 60px;
+  padding: 40px 0;
+}
+
+.header-glow {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 300px;
+  height: 300px;
+  background: radial-gradient(circle, var(--accent-glow) 0%, transparent 65%);
+  filter: blur(100px);
+  z-index: 0;
+}
+
+.sub-heading {
+  color: var(--text-secondary);
+  font-size: 1rem;
+  font-weight: 500;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  margin: 0;
+  position: relative;
+  z-index: 1;
+}
+
+.privacy-title {
+  font-size: 4rem;
+  font-weight: 700;
+  margin: 0;
+  position: relative;
+  z-index: 1;
+}
+
+/* --- Main Content Section (THIS IS WHERE THE FIX IS) --- */
+.privacy-content {
+  max-width: 800px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 1;
+}
+
+.privacy-content section {
+  margin-bottom: 2.5rem;
+}
+
+.privacy-content h2 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 1rem;
+  border-left: 3px solid var(--accent-glow);
+  padding-left: 15px;
+}
+
+/* ✅ NEW: Specific style for paragraphs */
+.privacy-content p {
+  font-size: 1rem;          /* Smaller, more standard font size */
+  font-weight: 400;         /* This is the key: 400 is normal/regular weight */
+  line-height: 1.7;         /* Good spacing between lines for readability */
+  color: var(--text-secondary);
+  margin-bottom: 1rem;
+}
+
+/* ✅ NEW: Specific style for the bullet point container (list) */
+.privacy-content ul {
+  list-style-position: inside;
+  padding-left: 10px;
+  margin-bottom: 1rem;
+  color: var(--text-secondary); /* Apply base color to the container */
+}
+
+/* ✅ NEW: Specific style for the text of each bullet point */
+.privacy-content ul li {
+  font-size: 1rem;
+  font-weight: 500; /* Slightly bolder than paragraphs to stand out */
+  line-height: 1.6;
+  margin-bottom: 0.75rem;
+}
+
+.privacy-content a {
+  color: #a4a2ff;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+
+.privacy-content a:hover {
+  text-decoration: underline;
+  color: var(--text-primary);
+}
+
+
+/* --- Responsive Adjustments (No changes here) --- */
+@media (max-width: 768px) {
+  .privacy-policy-page {
+    padding: 60px 20px;
+  }
+  
+  .privacy-title {
+    font-size: 3rem;
+  }
+  
+  .privacy-content h2 {
+    font-size: 1.3rem;
+  }
+
+  .privacy-content p,
+  .privacy-content ul li {
+    font-size: 0.95rem; 
+  }
+}

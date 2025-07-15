@@ -1,174 +1,140 @@
-import React from 'react';
-import { Container, Typography, Box, Grid, TextField, Button, Paper } from '@mui/material';
+  import React, { useState } from 'react';
+  import axios from 'axios'; // You'll need to install this: npm install axios
+  import '../styles/contact.css'; // We will use the updated CSS
 
-const Contact = () => {
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    // Handle form submission
+  const Contact = () => {
+    // State to hold the data from the form fields
+    const [formData, setFormData] = useState({
+      name: '',
+      email: '',
+      message: '',
+    });
+
+    // State to manage the submission status (e.g., 'submitting', 'success', 'error')
+    const [status, setStatus] = useState('');
+    // State to hold the message received from the server
+    const [responseMessage, setResponseMessage] = useState('');
+
+    // This function updates the state as the user types
+    const handleChange = (event) => {
+      const { name, value } = event.target;
+      setFormData((prevData) => ({
+        ...prevData,
+        [name]: value,
+      }));
+    };
+
+    // This function handles the form submission when the button is clicked
+    const handleSubmit = async (event) => {
+      event.preventDefault(); // Prevents the browser from reloading the page
+      setStatus('submitting');
+      setResponseMessage('');
+
+      try {
+        // Send the form data to your backend API endpoint
+        const response = await axios.post('http://localhost:5000/api/contact', formData);
+
+        // Handle a successful response from the server
+        setStatus('success');
+        setResponseMessage(response.data.msg); // Use the success message from your controller
+        
+        // Clear the form fields after successful submission
+        setFormData({
+          name: '',
+          email: '',
+          message: '',
+        });
+
+      } catch (error) {
+        // Handle any errors that occurred during the submission
+        setStatus('error');
+        
+        // Create a user-friendly error message
+        // It checks for specific validation errors from the backend first
+        const errorMsg = error.response?.data?.errors 
+          ? error.response.data.errors.map(e => e.msg).join(', ') 
+          : (error.response?.data?.msg || 'An error occurred. Please try again.');
+        
+        setResponseMessage(errorMsg);
+      }
+    };
+
+    return (
+      <div className="contact-page">
+        <div className="contact-container">
+          {/* ======= Header ======= */}
+          <header className="contact-header">
+            <h1 className="header-title">Contact Us</h1>
+            <p className="contact-subtitle">
+              Have any questions about our products or services?<br />
+              Fill out the form and We'd love to hear from you!
+            </p>
+          </header>
+
+          {/* ======= Form ======= */}
+          {/* The onSubmit attribute now points to our new function */}
+          <form className="contact-form" onSubmit={handleSubmit} noValidate>
+            {/* Each input is now controlled by React state */}
+            <input
+              type="text"
+              name="name"
+              placeholder="Name"
+              className="custom-input"
+              value={formData.name}       // The input's value is tied to our state
+              onChange={handleChange}     // The handleChange function is called when the user types
+              required
+            />
+            <input
+              type="email"
+              name="email"
+              placeholder="E-Mail"
+              className="custom-input"
+              value={formData.email}
+              onChange={handleChange}
+              required
+            />
+            <textarea
+              name="message"
+              placeholder="Message"
+              rows="3"
+              className="custom-textarea"
+              value={formData.message}
+              onChange={handleChange}
+              required
+            ></textarea>
+            <div className="button-container">
+              {/* The button is now disabled during submission and shows a dynamic label */}
+              <button type="submit" className="submit-button-contact" disabled={status === 'submitting'}>
+                {status === 'submitting' ? 'Sending...' : "Let's Talk"}
+              </button>
+            </div>
+
+            {/* This element will display the success or error message from the server */}
+            {responseMessage && (
+              <p className={`status-message ${status === 'error' ? 'error' : 'success'}`}>
+                {responseMessage}
+              </p>
+            )}
+          </form>
+
+          {/* ======= Reach Out Directly Section (Unchanged) ======= */}
+          <div className="reach-out-section">
+            <h2 className="reach-out-title">Got questions, feedback, or need support?</h2>
+            <p className="reach-out-para">Our team is available from Monday to Friday,<br></br> 10 AM – 6 PM IST.</p>
+            <div className="info-grid">
+              <div className="info-block">
+                <h6>For Any Queries</h6>
+                <a href="mailto:info@luxuryintaste.com">info@luxuryintaste.com</a>
+              </div>
+              <div className="info-block">
+                <h6>For Newsletter</h6>
+                <a href="mailto:newsletter@yourdomain.com">newsletter@yourdomain.com</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
   };
 
-  return (
-    <Box sx={{ minHeight: '100vh', bgcolor: 'background.default' }}>
-      <Box
-        sx={{
-          bgcolor: 'primary.main',
-          color: 'primary.contrastText',
-          py: 8,
-          textAlign: 'center',
-        }}
-      >
-        <Container maxWidth="md">
-          <Typography variant="h2" component="h1" gutterBottom>
-            Contact Us
-          </Typography>
-          <Typography variant="h5" paragraph>
-            We'd love to hear from you
-          </Typography>
-        </Container>
-      </Box>
-
-      <Container maxWidth="lg" sx={{ py: 8 }}>
-        <Grid container spacing={6}>
-          <Grid item xs={12} md={6}>
-            <Paper
-              elevation={0}
-              sx={{
-                p: 4,
-                height: '100%',
-                bgcolor: 'background.paper',
-                border: 1,
-                borderColor: 'divider',
-              }}
-            >
-              <Typography variant="h4" gutterBottom>
-                Get in Touch
-              </Typography>
-              <Typography variant="body1" paragraph>
-                Have questions about our products or services? We're here to help!
-                Fill out the form and we'll get back to you as soon as possible.
-              </Typography>
-              <Box component="form" onSubmit={handleSubmit} noValidate>
-                <Grid container spacing={2}>
-                  <Grid item xs={12} sm={6}>
-                    <TextField
-                      required
-                      fullWidth
-                      label="First Name"
-                      name="firstName"
-                      autoComplete="given-name"
-                    />
-                  </Grid>
-                  <Grid item xs={12} sm={6}>
-                    <TextField
-                      required
-                      fullWidth
-                      label="Last Name"
-                      name="lastName"
-                      autoComplete="family-name"
-                    />
-                  </Grid>
-                  <Grid item xs={12}>
-                    <TextField
-                      required
-                      fullWidth
-                      label="Email"
-                      name="email"
-                      autoComplete="email"
-                    />
-                  </Grid>
-                  <Grid item xs={12}>
-                    <TextField
-                      required
-                      fullWidth
-                      label="Subject"
-                      name="subject"
-                    />
-                  </Grid>
-                  <Grid item xs={12}>
-                    <TextField
-                      required
-                      fullWidth
-                      multiline
-                      rows={4}
-                      label="Message"
-                      name="message"
-                    />
-                  </Grid>
-                  <Grid item xs={12}>
-                    <Button
-                      type="submit"
-                      variant="contained"
-                      color="primary"
-                      size="large"
-                      fullWidth
-                    >
-                      Send Message
-                    </Button>
-                  </Grid>
-                </Grid>
-              </Box>
-            </Paper>
-          </Grid>
-          <Grid item xs={12} md={6}>
-            <Paper
-              elevation={0}
-              sx={{
-                p: 4,
-                height: '100%',
-                bgcolor: 'background.paper',
-                border: 1,
-                borderColor: 'divider',
-              }}
-            >
-              <Typography variant="h4" gutterBottom>
-                Contact Information
-              </Typography>
-              <Box sx={{ mt: 4 }}>
-                <Typography variant="h6" gutterBottom>
-                  Address
-                </Typography>
-                <Typography variant="body1" paragraph>
-                  123 Gaming Street
-                  <br />
-                  Luxury City, LC 12345
-                  <br />
-                  United States
-                </Typography>
-              </Box>
-              <Box sx={{ mt: 4 }}>
-                <Typography variant="h6" gutterBottom>
-                  Email
-                </Typography>
-                <Typography variant="body1" paragraph>
-                  support@luxuryintaste.com
-                </Typography>
-              </Box>
-              <Box sx={{ mt: 4 }}>
-                <Typography variant="h6" gutterBottom>
-                  Phone
-                </Typography>
-                <Typography variant="body1" paragraph>
-                  +1 (555) 123-4567
-                </Typography>
-              </Box>
-              <Box sx={{ mt: 4 }}>
-                <Typography variant="h6" gutterBottom>
-                  Business Hours
-                </Typography>
-                <Typography variant="body1" paragraph>
-                  Monday - Friday: 9:00 AM - 6:00 PM
-                  <br />
-                  Saturday: 10:00 AM - 4:00 PM
-                  <br />
-                  Sunday: Closed
-                </Typography>
-              </Box>
-            </Paper>
-          </Grid>
-        </Grid>
-      </Container>
-    </Box>
-  );
-};
-
-export default Contact; 
+  export default Contact;

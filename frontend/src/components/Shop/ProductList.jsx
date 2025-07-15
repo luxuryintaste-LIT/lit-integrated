@@ -1,5 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import ProductCard from './ProductCard';
+import SearchBar from '../SearchBar';
 // import menWomenImage from '/src/assets/men.png'; // This will no longer be needed as products come from API
 import '/src/styles/ProductList.css';
 import { YoutubeSearchedFor } from '@mui/icons-material';
@@ -39,6 +40,7 @@ const ProductList = ({ products }) => {
   return (
     <section className="products-section" ref={sectionRef}>
       <div>
+        <SearchBar onSearch={(query) => console.log('Search query:', query)} />
         <h2 className="section-title ">Fresh Arrivals</h2>
         <div className="product-list-container">
           <div className="product-grid">

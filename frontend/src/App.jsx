@@ -27,6 +27,9 @@
   import About from './pages/About';
   import Contact from './pages/Contact';
   import Profile from './pages/profile/Profile/Profile';
+  import PrivacyPolicy from './pages/privacyPolicy';
+  // import ReturnPolicy from './pages/returnPolicy.jsx';
+  // import TermsOfService from './pages/termsOfService';
   import Orders from './pages/profile/Orders'; // ✅ Updated path
   import Settings from './pages/profile/Settings'; // ✅ Updated path
   // import AddFriendsPage from './pages/profile/AddFriendsPage/AddFriendsPage'; 
@@ -86,7 +89,11 @@
             <Route path="/game-modes" element={<ComingSoonPage />} />
             <Route path="/about" element={<About />} />
             <Route path="/contact" element={<Contact />} />
+            <Route path="/privacy" element={<PrivacyPolicy />} />
             <Route path="/profile" element={<Profile />} />
+            {/* <Route path='/returnpolicy' element={<ReturnPolicy />} /> 
+            <Route Path='/terms' element={<TermsOfService />} /> */}
+
             <Route path="/orders" element={<Orders />} />
             <Route path="/settings" element={<Settings />} /> 
             {/* <Route path="/add-friends" element={<AddFriendsPage />} />  */}
