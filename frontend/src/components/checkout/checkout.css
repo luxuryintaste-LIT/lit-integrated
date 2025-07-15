@@ -25,6 +25,8 @@
   gap: 30px;
   max-width: 1200px;
   margin: 0 auto;
+      margin-top: 10px;
+
 }
 
 .checkout-main-content {
@@ -173,7 +175,7 @@
 /* =============================
    ADDRESS SELECTION (AddressList, AddressCard)
    ============================= */
-.step-content-container .step-title { font-size: 22px; margin-bottom: 25px; }
+.step-content-container .step-title { font-size: 22px;}
 .address-list { display: flex; flex-direction: column; gap: 15px; }
 .address-card {
   background-color: rgba(255, 255, 255, 0.05);
@@ -228,17 +230,19 @@
 .step-navigation button,
 .btn-primary,
 .payment-btn {
-  padding: 0.375rem 3rem;
-  font-family: 'Poppins', sans-serif;
-  font-size: 1.2rem;
-  font-weight: 600;
-  color: #FFFFFF;
-  background: radial-gradient(circle at 60% 40%, #7f53ac 0%, #2d133d 100%);
-  border: 1.5px solid rgba(147, 51, 234, 0.6);
-  border-radius: 16px;
-  cursor: pointer;
-  transition: all 0.2s;
-  box-shadow: 0 2px 8px 0 rgba(0,0,0,0.10);
+  padding: 0.7rem 3rem;
+    font-family: 'Poppins', sans-serif;
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #FFFFFF;
+    background: radial-gradient(circle at 60% 40%, #110e14 0%, #2d133d 100%);
+    border: 1.5px solid rgb(255 255 255 / 60%);
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.2s;
+    box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.10);
+    margin-left: auto;
+    margin-right: auto;
 }
 .step-navigation button:hover,
 .btn-primary:hover,
@@ -276,28 +280,26 @@
   justify-content: space-between;
   align-items: center;
   background-color: transparent;
-  border: 1px solid transparent;
-  padding: 18px;
+  padding: 16px;
   color: #ccc;
   font-size: 16px;
   font-weight: 500;
   cursor: pointer;
   transition: all 0.2s ease-in-out;
-  box-shadow: 0 2px 8px 0 rgba(0,0,0,0.04);
   margin-bottom: 0;
   width: 300px;
+  border: 1px solid transparent !important;
 }
 .method-btn-group { display: flex; align-items: center; gap: 15px; }
 .method-btn:hover {
-  background-color: rgba(255, 255, 255, 0.1);
-  border-color: rgba(255, 255, 255, 0.2);
+  background-color: rgba(255, 255, 255, 0);
+  border: 1px solid transparent !important;
 }
 .method-btn.active {
-  background-color: rgba(255, 255, 255, 0.15);
-  border-color: rgba(255, 255, 255, 0.3);
+  background-color: rgba(255, 255, 255, 0.1);
   color: #fff;
   font-weight: 600;
-  box-shadow: 0 4px 16px 0 rgba(80,60,180,0.10);
+  border: 1px solid transparent !important;
 }
 .method-btn svg { width: 24px; height: 24px; }
 .payment-content {
@@ -332,22 +334,23 @@
   font-size: 16px;
   cursor: pointer;
 }
+
 .dropdown-header .selected-bank-display { display: flex; align-items: center; gap: 10px; }
 .dropdown-list {
   position: absolute;
   top: 110%;
   left: 0;
   right: 0;
-  background-color: rgba(255, 255, 255, 0.04);
+  background-color: rgba(0, 0, 0, 0.366);
   border: 1px solid var(--border-color);
   border-radius: 10px;
   padding: 8px;
   margin: 0;
   max-height: 250px;
   overflow-y: auto;
-  z-index: 20;
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
+  z-index: 10;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
   list-style: none;
 }
 .dropdown-list li {
@@ -357,7 +360,7 @@
   padding: 12px;
   cursor: pointer;
   border-radius: 8px;
-  transition: background 0.2s ease;
+
 }
 .dropdown-list li:hover { background-color: rgba(255, 255, 255, 0.1); }
 .dropdown-list li.selected { background-color: rgba(255, 255, 255, 0.15); }
@@ -575,6 +578,7 @@
   font-size: 18px;
   font-weight: 600;
   color: #fff;
+  margin-top: -15px;
 }
 
 .credit-card-form .form-group {
@@ -604,7 +608,7 @@
 }
 
 .credit-card-form input[type="text"]:focus {
-  border-color: #a084e8;
+  border:1px solid #ffffff !important;
 }
 
 .credit-card-form .form-row {
@@ -641,18 +645,13 @@
   font-size: 18px;
   font-weight: 600;
   color: #fff;
-  background: linear-gradient(90deg, #7f53ac 0%, #647dee 100%);
   border: none;
   border-radius: 14px;
   margin-top: 8px;
   margin-bottom: 10px;
   cursor: pointer;
-  transition: background 0.2s;
 }
 
-.credit-card-form .payment-btnactive {
-  background: linear-gradient(90deg, #647dee 0%, #7f53ac 100%);
-}
 
 /* Checkbox */
 .credit-card-form .save-details {
@@ -662,7 +661,11 @@
   color: #ccc;
   gap: 10px;
   cursor: pointer;
-  margin-top: 0;
+  margin-top:20px;
+}
+
+.credit-card-form .save-details #saveCard{
+  margin-top: -10px;
 }
 
 .credit-card-form .form-group input[type="text"],
@@ -777,6 +780,9 @@
   align-items: center;
   gap: 16px;
 }
+.paypal-label{
+  margin-top: 90px !important;
+}
 
 .paypal-input {
   flex: 1;
@@ -790,9 +796,6 @@
   transition: border 0.2s;
 }
 
-.paypal-input:focus {
-  border-color: #a084e8;
-}
 
 .paypal-confirm-btn {
   width: auto;
@@ -1055,10 +1058,293 @@
   max-width: 400px;
   height: min-content;
 }
+
+
+.action-btn:hover {
+  filter: brightness(1.2);
+  border-color: rgba(255, 255, 255, 1);
+}
+
+/* correction css */
+.step-box {
+  background: rgba(255, 255, 255, 0.04);
+  padding: 20px 24px;
+  border-radius: 10px;
+  margin-bottom: 30px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.step-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.step-number {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.step-title {
+  font-weight: 700;
+  font-size: 16px;
+  color: #fff;
+}
+
+.login-details {
+  display: flex;
+  justify-content: space-between;
+  font-size: 15px;
+  font-weight: 400;
+  color: #bbb;
+  padding-left: 34px; /* Align under "LOGIN" text */
+}
+.step-box {
+  background: rgba(255, 255, 255, 0.04);
+  padding: 20px 24px;
+  border-radius: 10px;
+  margin-top: 30px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.step-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.step-number {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.step-title {
+  font-weight: 700;
+  font-size: 16px;
+  color: #fff;
+}
+.address-actions {
+  display: flex;
+  gap: 10px;              /* tighter */
+  align-items: center;    /* vertical center */
+}
+.add-new-address-btn {
+  margin: 30px auto 0;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #ccc;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 15px;
+  padding-top: 20px;
+  position: relative;
+}
+
+.add-new-address-btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 1px;
+  width: 100%;
+  background: rgba(255, 255, 255, 0.1);
+}
+.btn-secondary {
+  padding: 0.375rem 3rem;
+  font-size: 1.2rem;
+  font-weight: 600;
+  background: transparent;
+  color: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 16px;
+  cursor: pointer;
+  margin-right: 10px;
+}
+
+.step-number {
+  margin-top: 2px; /* align better with text */
+}
+.step-box {
+  margin-bottom: 35px; /* previously 30px */
+}
+
+.step-header {
+  margin-bottom: 10px;
+}
+.step-title {
+  font-weight: 700;
+  font-size: 18px;
+  color: #fff;
+}
+
+.username, .phone {
+  letter-spacing: 0.5px;
+}
+.address-card.selected {
+  border-color: #fff;
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.15); /* updated glow */
+}
+.add-new-address-btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 95%;
+  height: 1px;
+  background: rgba(255, 255, 255, 0.2);
+  border-top: 1px dashed rgba(255, 255, 255, 0.2);
+}
+.address-card-content {
+  padding-left: 30px; /* instead of 35px */
+}
+
+
+.action-btn {
+  padding: .65rem 3rem;
+  margin-top: .25rem;
+  font-family: 'Poppins', sans-serif;
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #FFFFFF;
+  background: radial-gradient(308.33% 308.33% at 53.98% 55.95%, rgba(0, 0, 0, 0.8) 0%, rgba(147, 51, 234, 0.4) 50%);
+  border: 1px solid rgba(174, 174, 174, 1);
+  border-radius: 16px;
+  cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+  width: auto;
+  min-width: 200px;
+  max-width: 400px;
+  height: min-content;
+}
 .action-btn:hover {
   filter: brightness(1.2);
   border-color: rgba(255, 255, 255, 1);
   box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
 }
 
- 
+/* =============================
+   STEPS / LOGIN / ADDRESS FIXES
+   ============================= */
+.step-box {
+  background: rgba(255, 255, 255, 0.04);
+  padding: 20px 24px;
+  border-radius: 10px;
+  margin-top: 30px;
+  margin-bottom: 35px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.step-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+.step-number {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-size: 13px;
+  font-weight: 500;
+  margin-top: 2px;
+}
+.step-title {
+  font-weight: 700;
+  font-size: 18px;
+  color: #fff;
+}
+.login-details {
+  display: flex;
+  justify-content: space-between;
+  font-size: 15px;
+  font-weight: 400;
+  color: #bbb;
+  padding-left: 34px;
+}
+.username, .phone {
+  letter-spacing: 0.5px;
+}
+.address-card.selected {
+  border-color: #fff;
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.15);
+}
+.address-actions {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+.address-card-content {
+  padding-left: 30px;
+}
+.add-new-address-btn {
+  margin: 30px auto 0;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #ccc;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 15px;
+  padding-top: 20px;
+  position: relative;
+}
+.add-new-address-btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 95%;
+  height: 1px;
+  background: rgba(255, 255, 255, 0.2);
+  border-top: 1px dashed rgba(255, 255, 255, 0.2);
+}
+.btn-secondary {
+  padding: 0.375rem 3rem;
+  font-size: 1.2rem;
+  font-weight: 600;
+  background: transparent;
+  color: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 16px;
+  cursor: pointer;
+  margin-right: 10px;
+}
+
+span.phone {
+    margin-right: 359px;
+}
+
+/*----------------------------------------
+-----------------------------------------*/

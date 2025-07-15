@@ -9,7 +9,8 @@ const productRoutes = require('./routes/productRoutes');
 const userRoutes = require('./routes/userRoutes');
 const orderRoutes = require('./routes/orderRoutes');
 const couponRoutes = require('./routes/couponRoutes');
-const compression = require('compression'); 
+const compression = require('compression');
+
 
 // Route imports - Newsletter
 const articleRoutes = require('./routes/articleRoutes');
@@ -102,3 +103,4 @@ app.use(errorHandler);
 app.listen(PORT, () => {
   console.log(`🚀 Server running on http://localhost:${PORT}`);
 });
+

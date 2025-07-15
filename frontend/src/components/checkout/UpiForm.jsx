@@ -1,6 +1,11 @@
 // src/components/checkout/UpiForm.jsx
 import React, { useState } from 'react';
 import { IndianRupee, CheckCircle, XCircle } from 'lucide-react';
+// import { QRCode } from 'qrcode.react';
+import QRCode from 'react-qr-code'; 
+import { useNavigate } from 'react-router-dom';
+
+
 
 const GPayLogo = () => <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f2/Google_Pay_Logo.svg/2560px-Google_Pay_Logo.svg.png" alt="GPay" />;
 const PhonePeLogo = () => <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/71/PhonePe_Logo.svg/2560px-PhonePe_Logo.svg.png" alt="PhonePe" />;
@@ -12,6 +17,15 @@ const UpiForm = () => {
   const [isVerified, setIsVerified] = useState(false);
   const [isVerifying, setIsVerifying] = useState(false);
   const [error, setError] = useState('');
+   const [useQR, setUseQR] = useState(false); 
+  const navigate = useNavigate();
+
+   const amount = 2; // 🆕 hardcoded demo amount (change later to cart total)
+  const receiverUpi = 'keerthanakrishnan9787@ybl'; // 🆕 change to ma’am's UPI tomorrow
+  const receiverName = 'LuxuryInTaste';
+  // const upiLink = `upi://pay?pa=${receiverUpi}&pn=${receiverName}&am=${amount}&cu=INR`; // 🆕 UPI link
+  const upiLink = `upi://pay?pa=keerthanakrishnan9787@ybl&pn=LuxuryInTaste&am=2&cu=INR`;
+
 
   const handleVerify = () => {
     setError('');
@@ -47,9 +61,22 @@ const UpiForm = () => {
         </button>
       );
     }
+    // if (isVerified) {
+    //   return <button className="action-btn">Pay Now</button>;
+    // }
     if (isVerified) {
-      return <button className="action-btn">Pay Now</button>;
-    }
+  return (
+    <button
+      className="action-btn"
+      onClick={() => {
+        navigate('/order-confirmation');
+      }}
+    >
+      Pay Now
+    </button>
+  );
+}
+
     return (
       <button className="action-btn" onClick={handleVerify}>
         Verify
@@ -96,6 +123,24 @@ const UpiForm = () => {
         <input type="checkbox" id="saveUpi" />
         <label htmlFor="saveUpi">Save details for future</label>
       </div>
+
+       {/* 🆕 QR Code Display Section */}
+   <div style={{ textAlign: 'center', padding: '2rem' }}>
+  <h3>Scan to Pay</h3>
+  <p>Pay ₹{amount} to {receiverName}</p>
+  <div style={{ background: 'white', padding: '16px', display: 'inline-block' }}>
+    <QRCode
+      value={upiLink}
+      size={200}
+      fgColor="purple" // Light purple (theme)
+      bgColor="#FFFFFF"
+    />
+  </div>
+  <p>Scan with GPay / PhonePe / Paytm</p>
+</div>
+
+
+      
     </div>
   );
 };
