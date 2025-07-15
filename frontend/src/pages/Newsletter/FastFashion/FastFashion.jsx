@@ -2,9 +2,9 @@ import React, { useState, useRef } from 'react';
 import './FastFashion.css';
 import Card from "../../../components/Newsletter-components/shared/Card/Card.jsx";
 
-const FastFashion = ({ posts }) => {
-  const [visibleCount, setVisibleCount] = useState(8); // Show 2 rows initially
-  const sectionRef = useRef(null); // To scroll back to this section
+const FastFashion = ({ posts, onContentChange }) => {
+  const [visibleCount, setVisibleCount] = useState(8);
+  const sectionRef = useRef(null);
 
   if (!posts || posts.length === 0) {
     return null;
@@ -16,11 +16,15 @@ const FastFashion = ({ posts }) => {
   const handleToggle = () => {
     if (allVisible) {
       setVisibleCount(8);
-      // Scroll back to section smoothly
       sectionRef.current?.scrollIntoView({ behavior: 'smooth' });
     } else {
       setVisibleCount((prev) => prev + 4);
     }
+
+    // ✅ notify parent AFTER DOM expands/collapses
+    setTimeout(() => {
+      if (onContentChange) onContentChange();
+    }, 50);
   };
 
   return (
