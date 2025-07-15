@@ -9,6 +9,8 @@ const productRoutes = require('./routes/productRoutes');
 const userRoutes = require('./routes/userRoutes');
 const orderRoutes = require('./routes/orderRoutes');
 const couponRoutes = require('./routes/couponRoutes');
+const compression = require('compression');
+
 
 // Route imports - Newsletter
 const articleRoutes = require('./routes/articleRoutes');
@@ -25,6 +27,8 @@ const { notFound, errorHandler } = require('./middleware/errorMiddleware');
 
 const app = express();
 const PORT = process.env.PORT || 5000;
+
+app.use(compression());
 
 //
 // ✅ PRODUCTION-FRIENDLY CORS CONFIG
@@ -104,3 +108,4 @@ app.use(errorHandler);
 app.listen(PORT, () => {
   console.log(`🚀 Server running on http://localhost:${PORT}`);
 });
+

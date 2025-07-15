@@ -4,9 +4,7 @@ import axios from 'axios';
 // ✅ Dynamically switch between local and production backend
 const isLocalhost = window.location.hostname === 'localhost';
 
-export const API_URL = isLocalhost
-  ? 'http://localhost:5000/api'
-  : 'https://lit-backend-azajexa8e2a9g4az.canadacentral-01.azurewebsites.net/api';
+export const API_URL ='https://lit-backend-azajexa8e2a9g4az.canadacentral-01.azurewebsites.net/api';
 
 
 // ✅ Get all products
@@ -18,6 +16,16 @@ export const getProducts = async () => {
     throw error.response?.data?.message || 'Failed to fetch products';
   }
 };
+
+export const getArticlesByCategory = async (category) => {
+  try {
+    const response = await axios.get(`${API_URL}/articles/category/${category}`);
+    return response.data;
+  } catch (error) {
+    throw error.response?.data?.message || 'Failed to fetch articles by category';
+  }
+};
+
 
 // ✅ Get featured products
 export const getFeaturedProducts = async () => {

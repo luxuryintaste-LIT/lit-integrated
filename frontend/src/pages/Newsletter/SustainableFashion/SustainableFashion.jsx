@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import './SustainableFashion.css';
 import Card from "../../../components/Newsletter-components/shared/Card/Card.jsx";
 
-const SustainableFashion = ({ posts }) => {
+const SustainableFashion = ({ posts, onContentChange }) => {
   const [showMore, setShowMore] = useState(false);
 
   if (!posts || posts.length === 0) {
@@ -20,6 +20,15 @@ const SustainableFashion = ({ posts }) => {
   const heroPosts = posts.slice(0, 2);
   const smallGridInitial = posts.slice(2, 6);
   const smallGridExtra = posts.slice(6);
+
+  const toggleShowMore = () => {
+    setShowMore(!showMore);
+
+    // ✅ notify parent AFTER DOM updates
+    setTimeout(() => {
+      if (onContentChange) onContentChange();
+    }, 50);
+  };
 
   return (
     <section className="sf-section">
@@ -57,7 +66,7 @@ const SustainableFashion = ({ posts }) => {
         ))}
       </div>
 
-      {/* Extra Posts - Render only if showMore */}
+      {/* Extra Posts */}
       {showMore && smallGridExtra.length > 0 && (
         <div className="sf-grid-small extra-posts">
           {smallGridExtra.map((post) => (
@@ -79,7 +88,7 @@ const SustainableFashion = ({ posts }) => {
         <div className="read-more-container">
           <button
             className="read-more-button"
-            onClick={() => setShowMore(!showMore)}
+            onClick={toggleShowMore}
           >
             {showMore ? 'Read Less' : 'Read More'}
           </button>

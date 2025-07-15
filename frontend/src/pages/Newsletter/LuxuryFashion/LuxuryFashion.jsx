@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import './LuxuryFashion.css';
 import Card from "../../../components/Newsletter-components/shared/Card/Card.jsx";
 
-const LuxuryFashion = ({ posts }) => {
+const LuxuryFashion = ({ posts, onContentChange }) => {
   const [showMore, setShowMore] = useState(false);
 
   if (!posts || posts.length === 0) {
@@ -20,6 +20,15 @@ const LuxuryFashion = ({ posts }) => {
   const featuredPosts = posts.slice(0, 5);
   const remainingPosts = posts.slice(5);
 
+  const toggleShowMore = () => {
+    setShowMore((prev) => !prev);
+
+    // ✅ notify parent AFTER DOM updates
+    setTimeout(() => {
+      if (onContentChange) onContentChange();
+    }, 50);
+  };
+
   return (
     <section className="lf-section">
       <div className="lf-title-container">
@@ -27,7 +36,7 @@ const LuxuryFashion = ({ posts }) => {
         <h2 className="lf-title-line2">FASHION</h2>
       </div>
 
-      {/* Featured Grid (5 styled posts) */}
+      {/* Featured Grid */}
       <div className="lf-grid-container">
         {featuredPosts[0] && (
           <div className="lf-card-wrapper lf-card-1">
@@ -72,7 +81,7 @@ const LuxuryFashion = ({ posts }) => {
         <div className="read-more-container">
           <button
             className="read-more-button"
-            onClick={() => setShowMore(!showMore)}
+            onClick={toggleShowMore}
           >
             {showMore ? 'Read Less' : 'Read More'}
           </button>

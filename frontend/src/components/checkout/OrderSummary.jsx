@@ -1,16 +1,21 @@
 import React from 'react';
-import { ShieldCheck, X } from 'lucide-react'; // Using lucide-react for icons
+import { ShieldCheck, X } from 'lucide-react';
 import { useDispatch, useSelector } from 'react-redux';
 import { removeFromCart } from '../../redux/reducers/cartReducer';
 
 const OrderSummary = ({ orderData }) => {
   const dispatch = useDispatch();
-  const cart = useSelector((state) => state.cart.cart);
+  const cartFromRedux = useSelector((state) => state.cart.cart);
   const discount = useSelector((state) => state.cart.discount);
 
-  // Calculate totals from actual cart data
+  // ✅ Combine both cart and Buy Now items
+  const isBuyNow = orderData?.items?.length > 0;
+  const items = isBuyNow
+    ? [...cartFromRedux, ...orderData.items]
+    : cartFromRedux;
+
   const calculateSubtotal = () => {
-    return cart.reduce((total, item) => total + item.price * item.quantity, 0);
+    return items.reduce((total, item) => total + item.price * item.quantity, 0);
   };
 
   const calculateTotal = () => {
@@ -21,7 +26,6 @@ const OrderSummary = ({ orderData }) => {
     dispatch(removeFromCart(itemId));
   };
 
-  // Default data to prevent errors if props are not passed
   const {
     platformFee = 0,
     deliveryFee = 0,
@@ -33,11 +37,11 @@ const OrderSummary = ({ orderData }) => {
     <div className="order-summary-container">
       <div className="summary-card">
         <h2 className="summary-title">PRICE DETAILS</h2>
-        
+
         {/* Cart Items Section */}
         <div className="cart-items-summary">
-          {cart.map((item) => (
-            <div key={item._id} className="cart-item-summary">
+          {items.map((item) => (
+            <div key={item._id || item.productId} className="cart-item-summary">
               <div className="item-info">
                 <div className="item-details">
                   <h4 className="item-name">{item.name}</h4>
@@ -50,13 +54,16 @@ const OrderSummary = ({ orderData }) => {
                 </div>
                 <div className="item-price">
                   <span>₹ {(item.price * item.quantity).toLocaleString('en-IN')}</span>
-                  <button 
-                    className="remove-item-btn"
-                    onClick={() => handleRemoveFromCart(item._id)}
-                    title="Remove item"
-                  >
-                    <X size={16} />
-                  </button>
+                  {/* Show remove button only if from Redux cart */}
+                  {cartFromRedux.some(c => (c._id || c.productId) === (item._id || item.productId)) && (
+                    <button
+                      className="remove-item-btn"
+                      onClick={() => handleRemoveFromCart(item._id)}
+                      title="Remove item"
+                    >
+                      <X size={16} />
+                    </button>
+                  )}
                 </div>
               </div>
             </div>
