@@ -41,7 +41,7 @@ const ComingSoonPage = () => {
         
         {/* We add the ref to the h1 and give it a special class */}
         <h1 className="main-heading spotlight-text" ref={headingRef}>
-          COMMING<br/>SOON
+          COMING<br/>SOON
         </h1>
         
         <p className="subtext">
