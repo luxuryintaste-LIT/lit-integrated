@@ -55,11 +55,11 @@ main {
 
 a {
   font-weight: 500;
-  color: #646cff;
+  color: #f3f3f7;
   text-decoration: inherit;
 }
 a:hover {
-  color: #535bf2;
+  color: #f0f0f5;
 }
 
 img {

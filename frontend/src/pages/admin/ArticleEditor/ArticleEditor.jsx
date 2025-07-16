@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import { useData } from '../../../context/context-admin/DataContext';
-import "../../../styles/styles-admin/Editor.css";
+import '../../../styles/styles-admin/Editor.css';
 
 const CATEGORIES = ['SustainableFashion', 'LuxuryFashion', 'FastFashion', 'SneakerWorld'];
 const LOCATIONS = ['Domestic', 'International'];
@@ -14,6 +14,7 @@ const ArticleEditor = () => {
   const navigate = useNavigate();
   const { getArticleBySlug, showNotification } = useData();
   const isEditing = Boolean(slug);
+  const quillRef = useRef();
 
   const [isLoading, setIsLoading] = useState(true);
   const [articleData, setArticleData] = useState({
@@ -55,6 +56,42 @@ const ArticleEditor = () => {
 
     fetchArticle();
   }, [isEditing, slug, getArticleBySlug, navigate, showNotification]);
+
+  useEffect(() => {
+    const quill = quillRef.current?.getEditor();
+    if (!quill) return;
+
+    quill.getModule('toolbar').addHandler('image', () => {
+      const input = document.createElement('input');
+      input.setAttribute('type', 'file');
+      input.setAttribute('accept', 'image/*');
+      input.click();
+
+      input.onchange = async () => {
+        const file = input.files[0];
+        if (!file) return;
+
+        const formData = new FormData();
+        formData.append('file', file);
+
+        try {
+          const res = await fetch(`${BASE_URL}/api/upload`, {
+            method: 'POST',
+            body: formData,
+          });
+
+          const data = await res.json();
+          if (data?.url) {
+            const range = quill.getSelection();
+            quill.insertEmbed(range?.index || 0, 'image', data.url);
+          }
+        } catch (err) {
+          console.error('Image upload failed:', err);
+          showNotification('Image upload failed');
+        }
+      };
+    });
+  }, [isLoading]);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -227,8 +264,9 @@ const ArticleEditor = () => {
             <div className="editor-input-group quill-wrapper">
               <label>Body Content</label>
               <ReactQuill
+                ref={quillRef}
                 theme="snow"
-                value={articleData.bodyContent}
+                value={articleData.bodyContent || '<p><br></p>'}
                 onChange={handleQuillChange}
                 modules={quillModules}
               />

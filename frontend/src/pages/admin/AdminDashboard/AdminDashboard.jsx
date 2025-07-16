@@ -17,7 +17,7 @@ const AdminDashboard = () => {
         <Link to="/admin/mail" className="dashboard-card" style={{ animationDelay: '200ms' }}>
           <FaEnvelopeOpenText className="dashboard-icon" />
           <h2>Mail Content</h2>
-          <p>Manage content for all mails.</p>
+          <p>Manage content for all mails.</p> 
         </Link>
       </div>
     </div>

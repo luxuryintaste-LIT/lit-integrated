@@ -3,30 +3,10 @@ const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
 const path = require('path');
-
-// Route imports - Ecommerce
-const productRoutes = require('./routes/productRoutes');
-const userRoutes = require('./routes/userRoutes');
-const orderRoutes = require('./routes/orderRoutes');
-const couponRoutes = require('./routes/couponRoutes');
 const compression = require('compression');
-
-
-// Route imports - Newsletter
-const articleRoutes = require('./routes/articleRoutes');
-const mailArticleRoutes = require('./routes/mailArticleRoutes');
-const fastFashionRoutes = require('./routes/fastFashionRoutes');
-const luxuryFashionRoutes = require('./routes/luxuryFashionRoutes');
-const sustainableFashionRoutes = require('./routes/sustainableFashionRoutes');
-const sneakerWorldRoutes = require('./routes/sneakerWorldRoutes');
-
-// Error middleware
-const { notFound, errorHandler } = require('./middleware/errorMiddleware');
 
 const app = express();
 const PORT = process.env.PORT || 5000;
-
-app.use(compression());
 
 //
 // ✅ PRODUCTION-FRIENDLY CORS CONFIG
@@ -49,18 +29,19 @@ app.use(cors({
 }));
 
 //
-// ✅ LARGE PAYLOAD HANDLING
+// ✅ COMPRESSION + PAYLOAD SIZE
 //
+app.use(compression());
 app.use(express.json({ limit: '50mb' }));
 app.use(express.urlencoded({ extended: true, limit: '50mb' }));
 
 //
-// ✅ STATIC IMAGE FOLDER
+// ✅ STATIC FILES
 //
 app.use('/uploads', express.static(path.join(__dirname, '/uploads')));
 
 //
-// ✅ MONGODB CONNECTION
+// ✅ CONNECT TO MONGODB
 //
 mongoose.connect(process.env.MONGODB_URI, {
   useNewUrlParser: true,
@@ -70,7 +51,23 @@ mongoose.connect(process.env.MONGODB_URI, {
   .catch(err => console.error('❌ MongoDB connection error:', err));
 
 //
-// ✅ ROUTES
+// ✅ IMPORT ROUTES
+//
+const productRoutes = require('./routes/productRoutes');
+const userRoutes = require('./routes/userRoutes');
+const orderRoutes = require('./routes/orderRoutes');
+const couponRoutes = require('./routes/couponRoutes');
+
+const articleRoutes = require('./routes/articleRoutes');
+const mailArticleRoutes = require('./routes/mailArticleRoutes');
+const fastFashionRoutes = require('./routes/fastFashionRoutes');
+const luxuryFashionRoutes = require('./routes/luxuryFashionRoutes');
+const sustainableFashionRoutes = require('./routes/sustainableFashionRoutes');
+const sneakerWorldRoutes = require('./routes/sneakerWorldRoutes');
+const uploadRoute = require('./routes/upload'); // ✅ IMAGE UPLOAD ROUTE
+
+//
+// ✅ REGISTER ROUTES
 //
 app.use('/api/products', productRoutes);
 app.use('/api/users', userRoutes);
@@ -84,6 +81,8 @@ app.use('/api/luxury-fashion', luxuryFashionRoutes);
 app.use('/api/sustainable-fashion', sustainableFashionRoutes);
 app.use('/api/sneaker-world', sneakerWorldRoutes);
 
+app.use(uploadRoute); // ✅ REGISTER IMAGE UPLOAD ROUTE
+
 //
 // ✅ ROOT ROUTE
 //
@@ -92,15 +91,15 @@ app.get('/', (req, res) => {
 });
 
 //
-// ✅ ERROR HANDLING
+// ✅ ERROR HANDLERS
 //
+const { notFound, errorHandler } = require('./middleware/errorMiddleware');
 app.use(notFound);
 app.use(errorHandler);
 
 //
-// ✅ SERVER START
+// ✅ START SERVER
 //
 app.listen(PORT, () => {
   console.log(`🚀 Server running on http://localhost:${PORT}`);
 });
-
