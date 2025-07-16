@@ -1,0 +1,224 @@
+/* --- CSS Custom Properties (Theme) --- */
+:root {
+  --text-primary: #ffffff;
+  --text-placeholder: rgba(255, 255, 255, 0.9);
+  --text-secondary: rgba(255, 255, 255, 0.7);
+  --underline-color: rgba(255, 255, 255, 0.5);
+  --underline-focus-color: #ffffff;
+  --purple-overlay-start: rgba(86, 61, 145, 0.85);
+  --purple-overlay-end: rgba(45, 31, 78, 0.9);
+  --header-glow-color: rgba(220, 210, 255, 0.4);
+  --button-text-gradient: linear-gradient(222deg, #E2C1FF, #877499);
+  --button-border-gradient: linear-gradient(45deg, #9333EA, #877499);
+}
+
+/* ---------------- General Page & Background Styling ---------------- */
+.contact-page {
+  font-family: 'Poppins', sans-serif;
+  min-height: 100vh;
+  padding: 60px 20px 80px 20px;
+  color: var(--text-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.contact-container {
+  max-width: 550px;
+  width: 100%;
+}
+
+/* ---------------- Header ---------------- */
+.contact-header {
+  margin-bottom: 50px;
+}
+
+.header-title {
+  font-size: 3.5rem;
+  font-weight: 600;
+  margin: 30px 0 1rem 0;
+  line-height: 1.2;
+  text-shadow: 0 0 15px var(--header-glow-color);
+}
+
+.contact-subtitle {
+  font-size: 1.1rem; /* Equivalent to body1 */
+  color: var(--text-placeholder);
+  font-weight: 300;
+  line-height: 1.7;
+  margin: 0;
+}
+
+
+/* ---------------- Custom Form Styling ---------------- */
+.contact-form {
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+}
+
+.custom-input,
+.custom-textarea {
+  background-color: transparent;
+  border: none;
+  border-bottom: 1px solid var(--underline-color);
+  color: var(--text-primary);
+  font-family: 'Poppins', sans-serif;
+  font-size: 1.1rem;
+  padding: 10px 2px;
+  width: 100%;
+  transition: border-color 0.3s ease;
+}
+
+.custom-input::placeholder,
+.custom-textarea::placeholder {
+  color: var(--text-placeholder);
+  font-weight: 400;
+}
+
+.custom-input:focus,
+.custom-textarea:focus {
+  outline: none;
+  border-bottom-color: var(--underline-focus-color);
+}
+
+.custom-textarea {
+  resize: none;
+}
+
+/* ---------------- Button Container & Style ---------------- */
+.button-container {
+  margin-top: 20px;
+  text-align: center;
+}
+
+.submit-button-contact {
+  background-color: transparent;
+  color: transparent;
+  border: none;
+  position: relative;
+  padding: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  font-family: 'Poppins', 'Inter', sans-serif;
+  border-radius: 16px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  width: 277px;
+  height: 52px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-image: linear-gradient(222deg, #E2C1FF, #877499);
+  background-clip: text;
+  -webkit-background-clip: text;
+}
+
+/* --- Gradient Border Effect --- */
+.submit-button-contact::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border-radius: 16px;
+  padding: 1px;
+  background: linear-gradient(45deg, #9333EA, #000000);
+  -webkit-mask: 
+    linear-gradient(#fff 0 0) content-box, 
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+}
+
+.submit-button-contact:hover {
+  filter: brightness(1.2);
+  border-color: rgba(255, 255, 255, 1);
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
+}
+/* ---------------- Reach Out Section Styling ---------------- */
+.reach-out-section {
+  margin-top: 80px;
+  padding-top: 40px;
+  border-top: 1px solid var(--underline-color);
+}
+
+.reach-out-title {
+  font-size: 1.5rem; /* Equivalent to h5 */
+  /* margin-bottom: 2rem; */
+  font-weight: 500;
+}
+
+.reach-out-para {
+  font-size: 1rem; /* Equivalent to body2 */
+  color: var(--text-placeholder);
+  margin-bottom: 30px;
+  margin-top: 10px;
+  line-height: 1.6;
+}
+/* This is our custom flexbox grid */
+.info-grid {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap; /* Allows items to wrap on smaller screens if needed */
+  gap: 20px;
+}
+
+.info-block {
+  flex: 1; /* Allows blocks to grow */
+  min-width: 220px; /* Prevents blocks from becoming too narrow */
+}
+
+.info-block h6 {
+  font-size: 0.9rem;
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--purple-overlay-start);
+  margin: 0 0 8px 0;
+}
+
+.info-block a {
+  font-weight: 500;
+  color: var(--text-placeholder);
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.info-block a:hover {
+  color: var(--header-glow-color);
+}
+
+.status-message {
+  text-align: center;
+  margin-top: 15px;
+  padding: 10px;
+  border-radius: 5px;
+  font-weight: 500;
+}
+
+.status-message.success {
+  background-color: #d4edda;
+  color: #155724;
+  border: 1px solid #c3e6cb;
+}
+
+.status-message.error {
+  background-color: #f8d7da;
+  color: #721c24;
+  border: 1px solid #f5c6cb;
+}
+
+/* ---------------- Responsive Design ---------------- */
+@media (max-width: 600px) {
+  .header-title {
+    font-size: 2.5rem;
+  }
+  .contact-subtitle {
+    font-size: 0.95rem;
+  }
+}
+

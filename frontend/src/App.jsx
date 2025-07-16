@@ -18,24 +18,29 @@ import { ArticleProvider } from './context/ArticleContext';
   import AdminLayout from './components/admin-components/AdminLayout';
   import Notification from './components/Notification'; // ✅ Added
 
-// Pages - Public
-import LandingPage from './components/LandingPage';
-import Shop from './pages/Shop';
-import ProductDetails from './components/Shop/ProductDetails';
-import Cart from './components/Shop/Cart';
-import Wishlist from './pages/Wishlist';
-import GameModes from './pages/GameModes';
-import About from './pages/About';
-import Contact from './pages/Contact';
-import Profile from './pages/profile/Profile/Profile';
-import Orders from './pages/profile/Orders';
-import Settings from './pages/profile/Settings';
-import CheckoutPage from './components/checkout/CheckoutPage';
-import OrderConfirmation from './pages/OrderConfirmation';
-import NotFound from './pages/NotFound';
-import ProductListPage from './pages/productListPage';
-import ComingSoonPage from './components/ComingSoonPage/ComingSoonPage';
-
+  // Pages - Public
+  import LandingPage from './components/LandingPage';
+  import Shop from './pages/Shop';  
+  import ProductDetails from './components/Shop/ProductDetails';
+  import Cart from './components/Shop/Cart';
+  import Wishlist from './pages/Wishlist';
+  import GameModes from './pages/GameModes';
+  import About from './pages/About';
+  import Contact from './pages/Contact';
+  import Profile from './pages/profile/Profile/Profile';
+  import PrivacyPolicy from './pages/privacyPolicy';
+  // import ReturnPolicy from './pages/returnPolicy.jsx';
+  // import TermsOfService from './pages/termsOfService';
+  import Orders from './pages/profile/Orders'; // ✅ Updated path
+  import Settings from './pages/profile/Settings'; // ✅ Updated path
+  // import AddFriendsPage from './pages/profile/AddFriendsPage/AddFriendsPage'; 
+  // import SignInPage from './auth/pages/SignInPage';
+  // import ForgotPasswordPage from './auth/pages/ForgotPasswordPage'; 
+  import CheckoutPage from './components/checkout/CheckoutPage';
+  import OrderConfirmation from './pages/OrderConfirmation';
+  import NotFound from './pages/NotFound';
+  import ProductListPage from './pages/productListPage';
+  import ComingSoonPage from './components/ComingSoonPage/ComingSoonPage';
 // Pages - Admin
 import AdminLogin from './pages/AdminLogin';
 import SignUpPage from './pages/admin/Auth/SignUpPage';
@@ -84,7 +89,11 @@ const AppContent = () => {
             <Route path="/game-modes" element={<ComingSoonPage />} />
             <Route path="/about" element={<About />} />
             <Route path="/contact" element={<Contact />} />
+            <Route path="/privacy" element={<PrivacyPolicy />} />
             <Route path="/profile" element={<Profile />} />
+            {/* <Route path='/returnpolicy' element={<ReturnPolicy />} /> 
+            <Route Path='/terms' element={<TermsOfService />} /> */}
+
             <Route path="/orders" element={<Orders />} />
             <Route path="/settings" element={<Settings />} /> 
             {/* <Route path="/add-friends" element={<AddFriendsPage />} />  */}

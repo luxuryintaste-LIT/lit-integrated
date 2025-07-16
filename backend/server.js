@@ -51,20 +51,20 @@ mongoose.connect(process.env.MONGODB_URI, {
   .catch(err => console.error('❌ MongoDB connection error:', err));
 
 //
-// ✅ IMPORT ROUTES
+// ✅ ROUTE IMPORTS
 //
 const productRoutes = require('./routes/productRoutes');
 const userRoutes = require('./routes/userRoutes');
 const orderRoutes = require('./routes/orderRoutes');
 const couponRoutes = require('./routes/couponRoutes');
-
 const articleRoutes = require('./routes/articleRoutes');
 const mailArticleRoutes = require('./routes/mailArticleRoutes');
 const fastFashionRoutes = require('./routes/fastFashionRoutes');
 const luxuryFashionRoutes = require('./routes/luxuryFashionRoutes');
 const sustainableFashionRoutes = require('./routes/sustainableFashionRoutes');
 const sneakerWorldRoutes = require('./routes/sneakerWorldRoutes');
-const uploadRoute = require('./routes/upload'); // ✅ IMAGE UPLOAD ROUTE
+const uploadRoute = require('./routes/upload');
+const contactRoutes = require('./routes/contactRoutes');
 
 //
 // ✅ REGISTER ROUTES
@@ -73,15 +73,14 @@ app.use('/api/products', productRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/orders', orderRoutes);
 app.use('/api/coupons', couponRoutes);
-
 app.use('/api/articles', articleRoutes);
 app.use('/api/mail-articles', mailArticleRoutes);
 app.use('/api/fast-fashion', fastFashionRoutes);
 app.use('/api/luxury-fashion', luxuryFashionRoutes);
 app.use('/api/sustainable-fashion', sustainableFashionRoutes);
 app.use('/api/sneaker-world', sneakerWorldRoutes);
-
-app.use(uploadRoute); // ✅ REGISTER IMAGE UPLOAD ROUTE
+app.use('/api/contact', contactRoutes);
+app.use(uploadRoute); // ✅ IMAGE UPLOAD ROUTE
 
 //
 // ✅ ROOT ROUTE

@@ -1,0 +1,191 @@
+/* src/styles/About.css */
+
+/* --- Theme Variables --- */
+:root {
+  /* --background-primary: #050816; */
+  --background-secondary: #100d25;
+  --text-primary: #ffffff;
+  --text-secondary: rgba(255, 255, 255, 0.75);
+  --accent-glow: rgba(147, 112, 219, 0.6);
+  /* --card-bg: rgba(21, 16, 48, 0.25); */
+  --card-border: rgba(255, 255, 255, 0.1);
+  --card-blur: 10px;
+    --header-glow-color: rgba(220, 210, 255, 0.4);
+
+}
+
+/* --- General Styling --- */
+.about-page {
+  background-color: var(--background-primary);
+  color: var(--text-primary);
+  min-height: 100vh;
+  font-family: 'Poppins', sans-serif;
+  padding: 80px 5%;
+  overflow: hidden;
+  position: relative;
+}
+
+.about-page::before {
+  content: '';
+  position: absolute;
+  top: 10%;
+  left: -15%;
+  width: 400px;
+  height: 400px;
+  background: radial-gradient(circle, var(--accent-glow) 0%, transparent 70%);
+  filter: blur(100px);
+  z-index: 0;
+}
+
+/* --- DESKTOP Layout Styling --- */
+.about-main-section {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 40px;
+  margin-bottom: 80px;
+  position: relative;
+  z-index: 1;
+}
+
+.about-text-content {
+  flex: 1;
+  max-width: 50%;
+}
+
+.about-illustration {
+  flex: 1;
+  max-width: 45%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+.about-illustration::after {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle, var(--accent-glow) 20%, transparent 65%);
+  filter: blur(80px);
+  opacity: 0.8;
+}
+
+.about-illustration img {
+  width: 100%;
+  height: auto;
+  max-width: 450px;
+  position: relative;
+  z-index: 1;
+}
+
+/* --- MOBILE Layout Styling (NEW) --- */
+.about-main-section-mobile {
+  text-align: center;
+  margin-bottom: 80px;
+}
+
+/* This styles the image when it's between the paragraphs */
+.about-illustration-mobile {
+  margin: 40px auto; /* Adds space above and below the image */
+  max-width: 70%;    /* Makes it smaller than the text width */
+  position: relative; /* Needed for the glow */
+}
+.about-illustration-mobile img {
+  width: 100%;
+}
+/* You can also add a glow to the mobile image if you like */
+.about-illustration-mobile::after {
+    content: '';
+    position: absolute;
+    z-index: -1;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%,-50%);
+    width: 120%; /* Make glow a bit bigger than image */
+    height: 120%;
+    background: radial-gradient(circle, var(--accent-glow) 10%, transparent 60%);
+    filter: blur(60px);
+}
+
+/* --- SHARED STYLES (Title, Description, Features) --- */
+.about-title {
+  font-size: 3.5rem;
+  font-weight: 600;
+  margin: 30px 0 1rem 0;
+  line-height: 1.2;
+  text-shadow: 0 0 15px var(--header-glow-color);
+}
+
+.about-description {
+  color: var(--text-secondary);
+  font-size: 1.1rem;
+  line-height: 1.7;
+  margin-bottom: 1rem;
+}
+
+.features-section {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 30px;
+  position: relative;
+  z-index: 1;
+}
+/* ... (rest of feature-card styles are the same) ... */
+.feature-card {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  backdrop-filter: blur(var(--card-blur));
+  -webkit-backdrop-filter: blur(var(--card-blur));
+  border-radius: 15px;
+  padding: 25px;
+  text-align: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  cursor: default;
+}
+.feature-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 10px 30px rgba(147, 112, 219, 0.2);
+}
+.feature-icon {
+  margin-bottom: 15px;
+  color: var(--accent-glow);
+}
+.feature-text {
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--text-primary);
+}
+
+
+/* --- RESPONSIVE ADJUSTMENTS --- */
+/* The main layout change is now handled by React.
+   We only need to adjust sizing and grid columns here. */
+
+@media (max-width: 1024px) {
+  /* This query is now just for the feature cards on tablets */
+  .features-section {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  .about-page {
+    padding: 60px 20px;
+  }
+  .about-title {
+    font-size: 2.5rem;
+  }
+  .about-description {
+    font-size: 1rem;
+  }
+  /* NEW: Style for the mobile image to be even smaller */
+  .about-illustration-mobile {
+    max-width: 60%; 
+  }
+  .features-section {
+    grid-template-columns: 1fr;
+  }
+}
