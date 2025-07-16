@@ -21,7 +21,7 @@
   background-position: center top;
   background-repeat: no-repeat;
   z-index: 0;
-  opacity: 0.3;
+  opacity: 1;
   /* filter: brightness(0.3);  */
 }
 
