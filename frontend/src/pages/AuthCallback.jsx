@@ -6,27 +6,33 @@ const AuthCallback = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const hash = window.location.hash;
-    const params = new URLSearchParams(hash.slice(1)); // remove '#' at beginning
+    console.log("🟡 AuthCallback mounted");
 
+    const fullUrl = window.location.href;
+    const hash = window.location.hash;
+    console.log("➡️ Full URL:", fullUrl);
+    console.log("➡️ Hash:", hash);
+
+    const params = new URLSearchParams(hash.slice(1)); // remove the '#' character
     const idToken = params.get('id_token');
 
     if (idToken) {
-      // Save the token locally (cookie or localStorage or context)
+      console.log('✅ Token found:', idToken);
       localStorage.setItem('id_token', idToken);
 
-      // Optionally: you can decode it with jwt-decode if needed
-
-      // Redirect to desired page
-      navigate('/'); // or '/dashboard', etc.
+      setTimeout(() => {
+        console.log('➡️ Redirecting to /');
+        navigate('/');
+      }, 2000); // Delay redirect to ensure logs are visible
     } else {
-      console.error('❌ No token found in URL');
+      console.error('❌ No id_token found in URL hash:', hash);
     }
   }, [navigate]);
 
   return (
     <div>
       <h2>Signing in...</h2>
+      <p>Please wait while we complete the authentication...</p>
     </div>
   );
 };
