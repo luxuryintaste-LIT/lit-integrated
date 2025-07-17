@@ -6,7 +6,6 @@ const AuthCallback = () => {
   const navigate = useNavigate();
   const [user, setUser] = useState(null);
 
-  // Helper to decode JWT payload
   const decodeJwt = (token) => {
     try {
       const payload = token.split('.')[1];
@@ -51,8 +50,8 @@ const AuthCallback = () => {
       <p>Please wait while we complete the authentication...</p>
       {user && (
         <div style={{ marginTop: '20px' }}>
-          <h3>Welcome, {user.name || user.given_name}!</h3>
-          <p>Email: {user.email}</p>
+          <h3>Welcome, {user.name || user.given_name || "User"}!</h3>
+          <p>Email: {user.emails?.[0]}</p>
         </div>
       )}
     </div>
