@@ -95,3 +95,14 @@ export const getArticleBySlug = async (slug) => {
   }
 };
 
+// ✅ Create or update user in DB
+export const createUser = async (userData) => {
+  try {
+    const response = await axios.post(`${API_URL}/users`, userData);
+    return response.data;
+  } catch (error) {
+    console.error("❌ API error creating user:", error);
+    throw error.response?.data?.message || 'User creation failed';
+  }
+};
+

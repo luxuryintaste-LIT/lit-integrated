@@ -1,6 +1,7 @@
 // src/pages/AuthCallback.jsx
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { createUser } from '../api'; // ✅ import the function
 
 const AuthCallback = () => {
   const navigate = useNavigate();
@@ -18,8 +19,6 @@ const AuthCallback = () => {
   };
 
   useEffect(() => {
-    console.log("🟡 AuthCallback mounted");
-
     const hash = window.location.hash;
     const params = new URLSearchParams(hash.slice(1));
     const idToken = params.get('id_token');
@@ -29,12 +28,27 @@ const AuthCallback = () => {
       localStorage.setItem('id_token', idToken);
 
       const decodedUser = decodeJwt(idToken);
+      if (!decodedUser) return;
+
       console.log("👤 Decoded User Info:", decodedUser);
       setUser(decodedUser);
 
-      // Optional: Store in localStorage
+      // Save to localStorage and sessionStorage
       localStorage.setItem('user_info', JSON.stringify(decodedUser));
+      sessionStorage.setItem('user_info', JSON.stringify(decodedUser));
 
+      // Call backend to store user in DB
+      const userData = {
+        azureId: decodedUser.oid || decodedUser.sub,
+        name: decodedUser.name || decodedUser.given_name,
+        email: decodedUser.emails?.[0] || decodedUser.email,
+      };
+
+      createUser(userData)
+        .then(res => console.log("✅ User stored in DB:", res))
+        .catch(err => console.error("❌ Failed to store user in DB:", err));
+
+      // Redirect after short delay
       setTimeout(() => {
         console.log('➡️ Redirecting to /');
         navigate('/');
