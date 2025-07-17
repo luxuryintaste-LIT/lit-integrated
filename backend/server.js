@@ -8,14 +8,11 @@ const compression = require('compression');
 const app = express();
 const PORT = process.env.PORT || 5000;
 
-//
-// ✅ PRODUCTION-FRIENDLY CORS CONFIG
-//
+// ✅ CORS setup
 const allowedOrigins = [
   'http://localhost:5173',
   'https://www.luxuryintaste.com'
 ];
-
 app.use(cors({
   origin: function (origin, callback) {
     if (!origin || allowedOrigins.includes(origin)) {
@@ -28,21 +25,13 @@ app.use(cors({
   credentials: true
 }));
 
-//
-// ✅ COMPRESSION + PAYLOAD SIZE
-//
+// ✅ Middleware
 app.use(compression());
 app.use(express.json({ limit: '50mb' }));
 app.use(express.urlencoded({ extended: true, limit: '50mb' }));
-
-//
-// ✅ STATIC FILES
-//
 app.use('/uploads', express.static(path.join(__dirname, '/uploads')));
 
-//
-// ✅ CONNECT TO MONGODB
-//
+// ✅ MongoDB connection
 mongoose.connect(process.env.MONGODB_URI, {
   useNewUrlParser: true,
   useUnifiedTopology: true
@@ -50,9 +39,7 @@ mongoose.connect(process.env.MONGODB_URI, {
   .then(() => console.log('✅ MongoDB connected'))
   .catch(err => console.error('❌ MongoDB connection error:', err));
 
-//
-// ✅ ROUTE IMPORTS
-//
+// ✅ Routes
 const productRoutes = require('./routes/productRoutes');
 const userRoutes = require('./routes/userRoutes');
 const orderRoutes = require('./routes/orderRoutes');
@@ -66,9 +53,7 @@ const sneakerWorldRoutes = require('./routes/sneakerWorldRoutes');
 const uploadRoute = require('./routes/upload');
 const contactRoutes = require('./routes/contactRoutes');
 
-//
-// ✅ REGISTER ROUTES
-//
+// ✅ Mount routes
 app.use('/api/products', productRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/orders', orderRoutes);
@@ -80,25 +65,19 @@ app.use('/api/luxury-fashion', luxuryFashionRoutes);
 app.use('/api/sustainable-fashion', sustainableFashionRoutes);
 app.use('/api/sneaker-world', sneakerWorldRoutes);
 app.use('/api/contact', contactRoutes);
-app.use(uploadRoute); // ✅ IMAGE UPLOAD ROUTE
+app.use(uploadRoute); // for image uploads
 
-//
-// ✅ ROOT ROUTE
-//
+// ✅ Root endpoint
 app.get('/', (req, res) => {
   res.send('🚀 Unified API for Ecommerce + Newsletter is running...');
 });
 
-//
-// ✅ ERROR HANDLERS
-//
+// ✅ Error handling middleware
 const { notFound, errorHandler } = require('./middleware/errorMiddleware');
 app.use(notFound);
 app.use(errorHandler);
 
-//
-// ✅ START SERVER
-//
+// ✅ Start server
 app.listen(PORT, () => {
   console.log(`🚀 Server running on http://localhost:${PORT}`);
 });

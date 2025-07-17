@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const User = require('../models/User');
 
-// Save or find user after social login
+// POST /api/users/login → create or find user
 router.post('/login', async (req, res) => {
   try {
     const { name, email, provider } = req.body;
@@ -11,11 +11,11 @@ router.post('/login', async (req, res) => {
       return res.status(400).json({ error: 'Name and email are required' });
     }
 
-    // Check if user exists
+    // Find existing user by email
     let user = await User.findOne({ email });
 
+    // Create user if not exists
     if (!user) {
-      // If not, create the user
       user = new User({ name, email, provider });
       await user.save();
     }
