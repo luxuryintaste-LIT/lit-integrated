@@ -1,7 +1,7 @@
 // src/pages/AuthCallback.jsx
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { createUser } from '../api'; // ✅ import the function
+import { createUser } from '../services/api'; // ✅ import the function
 
 const AuthCallback = () => {
   const navigate = useNavigate();
