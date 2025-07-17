@@ -6,6 +6,7 @@ const User = require('../models/User');
 router.post('/login', async (req, res) => {
   try {
     const { name, email, provider } = req.body;
+    console.log(name, email, provider);
 
     if (!email || !name) {
       return res.status(400).json({ error: 'Name and email are required' });
