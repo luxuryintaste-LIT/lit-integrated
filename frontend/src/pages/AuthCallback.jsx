@@ -39,7 +39,7 @@ const AuthCallback = () => {
 
       // Call backend to store user in DB
       const userData = {
-        azureId: decodedUser.oid || decodedUser.sub,
+        provider: decodedUser.oid || decodedUser.sub,
         name: decodedUser.name || decodedUser.given_name,
         email: decodedUser.emails?.[0] || decodedUser.email,
       };
