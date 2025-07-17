@@ -44,6 +44,8 @@ const AuthCallback = () => {
         email: decodedUser.emails?.[0] || decodedUser.email,
       };
 
+      console.log(userData)
+
       createUser(userData)
         .then(res => console.log("✅ User stored in DB:", res))
         .catch(err => console.error("❌ Failed to store user in DB:", err));

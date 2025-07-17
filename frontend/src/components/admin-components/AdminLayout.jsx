@@ -13,8 +13,13 @@ const AdminLayout = () => {
     
     const showBackButton = location.pathname !== '/admin/dashboard';
 
-    
-    const isDashboard = location.pathname === '/admin/dashboard';
+    const isDashboard =
+  location.pathname === '/admin/dashboard' ||
+  location.pathname === '/admin/ecomDashboard';
+
+   
+    const panelType = sessionStorage.getItem('adminPanelType');
+    const dashboardPath = panelType === 'ecom' ? '/admin/ecomDashboard' : '/admin/dashboard';
 
     return (
         <div className="admin-layout-container">
@@ -28,18 +33,54 @@ const AdminLayout = () => {
                         </button>
                     )}
                     {/* Show Dashboard link if not on dashboard */}
-                    {!isDashboard && (
-                         <Link to="/admin/dashboard" className="header-btn dashboard-link-btn">
-                            <FaColumns />
-                            <span>Dashboard</span>
-                        </Link>
-                    )}
+{!isDashboard && (
+  <Link to={dashboardPath} className="header-btn dashboard-link-btn">
+    <FaColumns />
+    <span>Dashboard</span>
+  </Link>
+)}
+
+
                 </div>
                 
-                <button onClick={logout} className="header-btn logout-btn">
+                {/* <button onClick={logout} className="header-btn logout-btn">
                     <span>Logout</span>
                     <FaSignOutAlt />
-                </button>
+                </button> */}
+
+ {/* <button
+  onClick={() => {
+    sessionStorage.removeItem('adminAuthenticated');
+    sessionStorage.removeItem('currentUser');
+
+    if (location.pathname.startsWith('/admin/ecomDashboard')) {
+      window.location.href = '/shop'; // Still use full reload for external
+    } else {
+      navigate('/newsletter'); // ✅ Smooth client-side redirect
+    }
+  }}
+  className="header-btn logout-btn"
+>
+  <span>Logout</span>
+  <FaSignOutAlt />
+</button> */}
+
+<button
+  onClick={() => {
+    if (location.pathname.startsWith('/admin/ecomDashboard')) {
+      logout('/shop', navigate); // ✅ Go to shop
+    } else {
+      logout('/newsletter', navigate); // ✅ Go to newsletter
+    }
+  }}
+  className="header-btn logout-btn"
+>
+  <span>Logout</span>
+  <FaSignOutAlt />
+</button>
+
+
+
             </header>
             <main className="admin-content-area">
                 <Outlet />

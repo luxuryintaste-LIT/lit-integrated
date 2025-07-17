@@ -101,17 +101,36 @@ export const AuthProvider = ({ children }) => {
   };
 
   // Logout logic
-  const logout = () => {
-    setCurrentUser(null);
-  };
+  // const logout = () => {
+  //   setCurrentUser(null);
+  // };
+
+
+// Add navigate as a param:
+const logout = (navigateTo, navigateFn) => {
+  setCurrentUser(null);
+  sessionStorage.removeItem('adminAuthenticated');
+  sessionStorage.removeItem('currentUser');
+
+  // ✅ Use navigate from react-router
+  if (navigateTo && navigateFn) {
+    navigateFn(navigateTo);
+  }
+};
+
+
+
+
+
 
   const value = {
-    isAuthenticated: !!currentUser,
-    login,
-    signup,
-    logout,
-    currentUser
-  };
+  isAuthenticated: !!currentUser,
+  login,
+  signup,
+  logout,  // <-- updated to accept 2 args
+  currentUser
+};
+
 
   return (
     <AuthContext.Provider value={value}>
