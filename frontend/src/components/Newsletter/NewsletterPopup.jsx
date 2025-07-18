@@ -1,6 +1,6 @@
 // NewsletterPopup.jsx
 import React, { useState } from 'react';
-import './newsletterPopup.css';
+import './NewsletterPopup.css'; // ✅ Ensure you have styles for the popup
 import { subscribeToNewsletter } from '../../services/api'; // ✅ Import your API function
 
 const NewsletterPopup = () => {
