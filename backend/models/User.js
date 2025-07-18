@@ -3,8 +3,7 @@ const mongoose = require('mongoose');
 const userSchema = new mongoose.Schema({
   provider: {
     type: String,
-    required: true,
-    unique: true, // Assuming each provider ID is unique
+    required: true, // Assuming each provider ID is unique
   },
   name: {
     type: String,
