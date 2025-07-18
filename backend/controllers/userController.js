@@ -18,6 +18,6 @@ exports.loginUser = async (req, res) => {
     res.status(200).json(user);
   } catch (err) {
     console.error('❌ Error in loginUser:', err.message, err);
-    res.status(500).json({ message: err.message || 'Server error while logging in user' });
+    res.status(500).json({ message: err.message || 'Server error while logging in user or while creating' });
   }
 };
