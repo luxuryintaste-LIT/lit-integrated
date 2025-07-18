@@ -17,6 +17,7 @@ import { ArticleProvider } from './context/ArticleContext';
   import ProtectedRoute from './components/admin-components/ProtectedRoute';
   import AdminLayout from './components/admin-components/AdminLayout';
   import Notification from './components/Notification'; // ✅ Added
+  import EcomAdminDashoard from './pages/admin/EcomAdminDashboard';
 
   // Pages - Public
   import LandingPage from './components/LandingPage';
@@ -53,7 +54,6 @@ import AdminArticlePage from './pages/admin/ArticlePage';
 import DeleteProductForm from './components/DeleteProductForm';
 import EditProductForm from './components/EditProductForm';
 import AuthCallback from './pages/AuthCallback';
-
 // Pages - Newsletter
 import NewsletterPage from './pages/Newsletter/NewsletterPage/NewsletterPage';
 import NewsletterArticlePage from './pages/Newsletter/ArticlePage/ArticlePage';
@@ -117,6 +117,7 @@ const AppContent = () => {
           <Route path="/admin/login" element={<AdminLogin />} />
           <Route path="/admin/signup" element={<SignUpPage />} />
           <Route path="/admin/article/:slug" element={<AdminArticlePage />} />
+          <Route path="/admin/ecomDashboard" element={<EcomAdminDashoard />} />
 
           <Route element={<ProtectedRoute><AdminLayout /></ProtectedRoute>}>
             <Route path="/admin/dashboard" element={<AdminDashboard />} />
