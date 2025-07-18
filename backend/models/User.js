@@ -8,11 +8,13 @@ const userSchema = new mongoose.Schema({
   name: {
     type: String,
     required: true,
+    unique: true, // Ensure unique names for providers
   },
   email: {
     type: String,
     required: true,
     lowercase: true,
+    unique: true, // Ensure unique emails
   },
 }, { timestamps: true });
 
