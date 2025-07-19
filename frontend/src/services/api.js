@@ -1,8 +1,7 @@
 // api.js
 import axios from 'axios';
 
-// ✅ Dynamically switch between local and production backend
-const isLocalhost = window.location.hostname === 'localhost';
+
 
 export const API_URL ='https://lit-backend-azajexa8e2a9g4az.canadacentral-01.azurewebsites.net/api';
 

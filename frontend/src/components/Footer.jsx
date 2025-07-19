@@ -16,7 +16,7 @@ const Footer = () => {
     setMessageType('');
 
     try {
-      const response = await fetch('https://lit-backend-azajexa8e2a9g4az.canadacentral-01.azurewebsites.net/api/subscribers/subscribe', {
+      const response = await fetch('https://localhost:5000/api/subscribers/subscribe', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
