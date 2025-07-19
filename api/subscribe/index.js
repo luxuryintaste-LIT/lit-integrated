@@ -38,6 +38,7 @@ module.exports = async function (context, req) {
             return;
         }
 
+
         // Initialize Cosmos DB client
         const cosmosEndpoint = process.env.COSMOS_DB_ENDPOINT;
         const cosmosKey = process.env.COSMOS_DB_KEY;

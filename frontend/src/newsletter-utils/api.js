@@ -8,7 +8,7 @@ export const api = {
         headers: {
           'Content-Type': 'application/json',
           'Accept': 'application/json',
-          'Origin': 'https://www.luxuryintaste.com', // replace if frontend domain changes
+          'Origin': 'https://wwluxuryintaste.com', // replace if frontend domain changes
         },
         mode: 'cors',
         credentials: 'include',
