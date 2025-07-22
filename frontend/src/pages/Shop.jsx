@@ -1,4 +1,7 @@
+// Shop.jsx (Updated)
+
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom'; // 👈 1. IMPORT useNavigate
 import axios from 'axios';
 import SearchBar from '../components/SearchBar';
 import CategoryCards from '../components/CategoryCards';
@@ -9,17 +12,17 @@ import Navbar from '../components/Newsletter-components/Navbar/Navbar';
 
 const Shop = () => {
   const [products, setProducts] = useState([]);
-  const [filteredProducts, setFilteredProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const navigate = useNavigate(); // 👈 2. INITIALIZE useNavigate
 
+  // This useEffect that fetches products is perfect and remains unchanged.
   useEffect(() => {
     const fetchProducts = async () => {
       try {
         setLoading(true);
         const data = await getProducts();
         setProducts(Array.isArray(data) ? data : []);
-        setFilteredProducts(Array.isArray(data) ? data : []);
         setLoading(false);
       } catch (err) {
         console.error('Error fetching products:', err);
@@ -30,23 +33,18 @@ const Shop = () => {
     fetchProducts();
   }, []);
 
+  // 👇 3. THIS IS THE ONLY FUNCTION THAT CHANGES.
+  // Instead of filtering, it navigates to the ProductListPage with a search query.
   const handleSearch = (query) => {
-    if (!query) {
-      setFilteredProducts(products);
-    } else {
-      const lowerQuery = query.toLowerCase();
-      setFilteredProducts(
-        products.filter(product =>
-          product.name?.toLowerCase().includes(lowerQuery) ||
-          product.description?.toLowerCase().includes(lowerQuery)
-        )
-      );
+    if (query.trim()) {
+      navigate(`/productlistpage?search=${encodeURIComponent(query.trim())}`);
     }
   };
 
   return (
     <div className="shop-page">
       <Navbar />
+      {/* This SearchBar now triggers navigation. */}
       <SearchBar onSearch={handleSearch} />
       <CategoryCards />
       <FilterBar />
@@ -55,7 +53,9 @@ const Shop = () => {
       ) : error ? (
         <h2>{error}</h2>
       ) : (
-        <ProductList products={filteredProducts} />
+        // This ProductList will now always show the full list of products.
+        // The filtering state that was here before is no longer needed for search.
+        <ProductList products={products} />
       )}
     </div>
   );

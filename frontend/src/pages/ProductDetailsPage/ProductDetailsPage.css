@@ -1,0 +1,78 @@
+/* --- 1. DEFAULT STYLES FOR THE PAGE LAYOUT --- */
+
+/* The main container for the entire page */
+.product-details-page-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 4rem 1.5rem;
+  color: #e0e0e0;
+  min-height: 100vh;
+}
+
+/* The 2-column grid for the image and info sections */
+.product-details-main-layout {
+  display: grid;
+  grid-template-columns: 0.9fr 1.1fr; 
+  gap: 3rem;
+  align-items: start;
+  margin-top: 1.5rem;
+}
+
+/* Styles for the loading and error states */
+.loader,
+.error-message {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 60vh;
+  font-size: 1.5rem;
+  font-weight: 500;
+  color: #e0e0e0;
+}
+
+
+/* --- 2. RESPONSIVE ADJUSTMENTS FOR THE LAYOUT --- */
+
+/* --- TABLET VIEW --- */
+@media (max-width: 992px) {
+  .product-details-main-layout {
+    /* Stack the image and info columns on top of each other */
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+  }
+}
+
+/* --- LARGE MOBILE VIEW --- */
+@media (max-width: 768px) {
+  .product-details-page-container {
+    padding: 1.5rem 1rem;
+    margin-top: 1rem;
+  }
+
+  .product-details-main-layout {
+    gap: 2rem;
+  }
+}
+
+/* --- SMALL MOBILE VIEW --- */
+@media (max-width: 576px) {
+  .product-details-page-container {
+    padding: 3rem;
+  }
+}
+
+/* 
+=========================================================
+✅ FIX FOR STACKED LAYOUT COLLISION 
+=========================================================
+*/
+@media (max-width: 992px) {
+  /*
+    NOTE: Replace '.image-gallery-container' with the actual class
+    of the element inside ProductImageGallery that has 'position: sticky'.
+  */
+  .image-gallery-container {
+    position: static;
+    top: auto;
+  }
+}

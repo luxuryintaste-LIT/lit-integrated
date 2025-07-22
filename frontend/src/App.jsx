@@ -16,12 +16,13 @@ import { ArticleProvider } from './context/ArticleContext';
   import MainLayout from './components/Newsletter-components/MainLayout/MainLayout';
   import ProtectedRoute from './components/admin-components/ProtectedRoute';
   import AdminLayout from './components/admin-components/AdminLayout';
-  import Notification from './components/Notification'; // ✅ Added
+  import Notification from './components/Notification'; 
+  import ScrollToTop from './components/ScrollToTop';
 
   // Pages - Public
   import LandingPage from './components/LandingPage';
   import Shop from './pages/Shop';  
-  import ProductDetails from './components/Shop/ProductDetails';
+  import ProductDetailsPage from './pages/ProductDetailsPage/ProductDetailsPage'; // ✅ CHANGED
   import Cart from './components/Shop/Cart';
   import Wishlist from './pages/Wishlist';
   import GameModes from './pages/GameModes';
@@ -31,8 +32,8 @@ import { ArticleProvider } from './context/ArticleContext';
   import PrivacyPolicy from './pages/privacyPolicy';
   // import ReturnPolicy from './pages/returnPolicy.jsx';
   // import TermsOfService from './pages/termsOfService';
-  import Orders from './pages/profile/Orders'; // ✅ Updated path
-  import Settings from './pages/profile/Settings'; // ✅ Updated path
+  import Orders from './pages/profile/Orders'; 
+  import Settings from './pages/profile/Settings'; 
   // import AddFriendsPage from './pages/profile/AddFriendsPage/AddFriendsPage'; 
   // import SignInPage from './auth/pages/SignInPage';
   // import ForgotPasswordPage from './auth/pages/ForgotPasswordPage'; 
@@ -73,17 +74,20 @@ const AppContent = () => {
   const showFooter = !isAdminPath;
 
   return (
+    
     <Background>
+      <ScrollToTop />
       <Notification />
       {showMainNavbar && <LandingPageNavbar />}
       {showNewsletterNavbar && <Navbar />}
 
         <main style={{ flex: 1, width: '100%' }}>
           <Routes>
+            
             {/* Public Routes */}
             <Route path="/" element={<LandingPage />} />
             <Route path="/shop" element={<Shop />} />
-            <Route path="/product/:id" element={<ProductDetails />} />
+            <Route path="/product/:id" element={<ProductDetailsPage />} /> {/* ✅ CHANGED */}
             <Route path="/cart" element={<Cart />} />
             <Route path="/wishlist" element={<Wishlist />} />
             <Route path="/game-modes" element={<ComingSoonPage />} />
@@ -148,6 +152,7 @@ const App = () => {
   };
 
   return (
+    
     <PayPalScriptProvider options={paypalOptions}>
       <CartProvider>
         <WishlistProvider>
