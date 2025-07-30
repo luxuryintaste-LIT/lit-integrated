@@ -30,6 +30,7 @@
     "react-quill": "^2.0.0",
     "react-redux": "^9.2.0",
     "react-router-dom": "^6.30.0",
+    "typesense": "^2.0.3",
     "uuid": "^11.1.0"
   },
   "devDependencies": {

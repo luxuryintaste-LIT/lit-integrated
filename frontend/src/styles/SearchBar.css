@@ -106,3 +106,21 @@
     gap: 0.75rem;
   }
 }
+
+/* changes */
+/* Add this to SearchBar.css if missing */
+
+
+.search-result-item {
+  padding: 6px 10px;
+  cursor: pointer;
+}
+
+
+
+.search-loading,
+.no-results {
+  padding: 8px;
+  font-style: italic;
+  color: #666;
+}

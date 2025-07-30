@@ -53,6 +53,7 @@ import AdminArticlePage from './pages/admin/ArticlePage';
 import DeleteProductForm from './components/DeleteProductForm';
 import EditProductForm from './components/EditProductForm';
 import AuthCallback from './pages/AuthCallback';
+import EcomAdminDashboard from './pages/admin/EcomAdminDashboard';
 
 // Pages - Newsletter
 import NewsletterPage from './pages/Newsletter/NewsletterPage/NewsletterPage';
@@ -120,6 +121,7 @@ const AppContent = () => {
 
           <Route element={<ProtectedRoute><AdminLayout /></ProtectedRoute>}>
             <Route path="/admin/dashboard" element={<AdminDashboard />} />
+            <Route path="/admin/ecomDashboard" element={<EcomAdminDashboard />} />
             <Route path="/admin/edit-product" element={<EditProductForm />} />
             <Route path="/admin/delete-product" element={<DeleteProductForm />} />
             <Route path="/admin/website" element={<ContentManager section="website" />} />
