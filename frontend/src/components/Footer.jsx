@@ -16,7 +16,7 @@ const Footer = () => {
     setMessageType('');
 
     try {
-      const response = await fetch('http://localhost:5000/api/newsletter/subscribe', {
+      const response = await fetch('https://lit-backend-azajexa8e2a9g4az.canadacentral-01.azurewebsites.net/api/subscribers/subscribe', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -31,6 +31,7 @@ const Footer = () => {
         setMessageType('success');
         setEmail(''); // Clear email input on success
       } else {
+        
         setMessage(data.message || 'Subscription failed.');
         setMessageType('error');
       }

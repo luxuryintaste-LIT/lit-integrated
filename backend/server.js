@@ -3,41 +3,16 @@ const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
 const path = require('path');
-
-// Route imports - Ecommerce
-const productRoutes = require('./routes/productRoutes');
-const userRoutes = require('./routes/userRoutes');
-const orderRoutes = require('./routes/orderRoutes');
-const couponRoutes = require('./routes/couponRoutes');
 const compression = require('compression');
-
-
-// Route imports - Newsletter
-const articleRoutes = require('./routes/articleRoutes');
-const mailArticleRoutes = require('./routes/mailArticleRoutes');
-const fastFashionRoutes = require('./routes/fastFashionRoutes');
-const luxuryFashionRoutes = require('./routes/luxuryFashionRoutes');
-const sustainableFashionRoutes = require('./routes/sustainableFashionRoutes');
-const sneakerWorldRoutes = require('./routes/sneakerWorldRoutes');
-
-const contactRoutes = require('./routes/contactRoutes');
-
-// Error middleware
-const { notFound, errorHandler } = require('./middleware/errorMiddleware');
 
 const app = express();
 const PORT = process.env.PORT || 5000;
 
-app.use(compression());
-
-//
-// ✅ PRODUCTION-FRIENDLY CORS CONFIG
-//
+// ✅ CORS setup
 const allowedOrigins = [
   'http://localhost:5173',
   'https://www.luxuryintaste.com'
 ];
-
 app.use(cors({
   origin: function (origin, callback) {
     if (!origin || allowedOrigins.includes(origin)) {
@@ -50,20 +25,13 @@ app.use(cors({
   credentials: true
 }));
 
-//
-// ✅ LARGE PAYLOAD HANDLING
-//
+// ✅ Middleware
+app.use(compression());
 app.use(express.json({ limit: '50mb' }));
 app.use(express.urlencoded({ extended: true, limit: '50mb' }));
-
-//
-// ✅ STATIC IMAGE FOLDER
-//
 app.use('/uploads', express.static(path.join(__dirname, '/uploads')));
 
-//
-// ✅ MONGODB CONNECTION
-//
+// ✅ MongoDB connection
 mongoose.connect(process.env.MONGODB_URI, {
   useNewUrlParser: true,
   useUnifiedTopology: true
@@ -71,41 +39,46 @@ mongoose.connect(process.env.MONGODB_URI, {
   .then(() => console.log('✅ MongoDB connected'))
   .catch(err => console.error('❌ MongoDB connection error:', err));
 
-//
-// ✅ ROUTES
-//
+// ✅ Routes
+const productRoutes = require('./routes/productRoutes');
+const userRoutes = require('./routes/userRoutes');
+const orderRoutes = require('./routes/orderRoutes');
+const couponRoutes = require('./routes/couponRoutes');
+const articleRoutes = require('./routes/articleRoutes');
+const mailArticleRoutes = require('./routes/mailArticleRoutes');
+const fastFashionRoutes = require('./routes/fastFashionRoutes');
+const luxuryFashionRoutes = require('./routes/luxuryFashionRoutes');
+const sustainableFashionRoutes = require('./routes/sustainableFashionRoutes');
+const sneakerWorldRoutes = require('./routes/sneakerWorldRoutes');
+const uploadRoute = require('./routes/upload');
+const contactRoutes = require('./routes/contactRoutes');
+const SubcribeRoutes = require('./routes/subscriberRoutes');
+
+// ✅ Mount routes
 app.use('/api/products', productRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/orders', orderRoutes);
 app.use('/api/coupons', couponRoutes);
-
 app.use('/api/articles', articleRoutes);
 app.use('/api/mail-articles', mailArticleRoutes);
 app.use('/api/fast-fashion', fastFashionRoutes);
 app.use('/api/luxury-fashion', luxuryFashionRoutes);
 app.use('/api/sustainable-fashion', sustainableFashionRoutes);
 app.use('/api/sneaker-world', sneakerWorldRoutes);
-
-app.use('/api/contact', require('./routes/contactRoutes'));
-
-
-//
-// ✅ ROOT ROUTE
-//
+app.use('/api/contact', contactRoutes);
+app.use(uploadRoute); // for image uploads
+app.use('/api/subscribers', SubcribeRoutes);
+// ✅ Root endpoint
 app.get('/', (req, res) => {
   res.send('🚀 Unified API for Ecommerce + Newsletter is running...');
 });
 
-//
-// ✅ ERROR HANDLING
-//
+// ✅ Error handling middleware
+const { notFound, errorHandler } = require('./middleware/errorMiddleware');
 app.use(notFound);
 app.use(errorHandler);
 
-//
-// ✅ SERVER START
-//
+// ✅ Start server
 app.listen(PORT, () => {
   console.log(`🚀 Server running on http://localhost:${PORT}`);
 });
-

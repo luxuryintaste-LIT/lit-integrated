@@ -23,7 +23,7 @@ const NewsletterPopup = ({ isOpen, onClose }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     
-   
+  
     
     
     setStatus({ loading: true, message: '', type: '' });

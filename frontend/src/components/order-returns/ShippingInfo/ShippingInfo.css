@@ -1,0 +1,16 @@
+.info-card {
+  border: 1px solid #333;
+  border-radius: 12px;
+  padding: 1.5rem;
+}
+
+.info-card-title {
+  margin: 0 0 1rem;
+  font-size: 1.1rem;
+  font-weight: 500;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid #333;
+}
+
+.info-card-content p { margin: 0.5rem 0; color: #a7a7a7; }
+.info-card-content .recipient-name { color: #fff; font-weight: 500; }

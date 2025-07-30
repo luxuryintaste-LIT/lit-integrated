@@ -1,9 +1,14 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { FaGlobe, FaEnvelopeOpenText } from 'react-icons/fa';
 import './AdminDashboard.css';
 
 const AdminDashboard = () => {
+  // ✅ Mark the panel as newsletter
+  useEffect(() => {
+    sessionStorage.setItem('adminPanelType', 'newsletter');
+  }, []);
+
   return (
     <div className="dashboard-container">
       <h1 className="dashboard-title">Content Management Hub</h1>

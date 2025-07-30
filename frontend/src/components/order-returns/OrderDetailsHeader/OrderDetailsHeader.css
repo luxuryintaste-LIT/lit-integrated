@@ -1,0 +1,44 @@
+.details-header-wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid #333;
+}
+
+.header-text h1 {
+  margin: 0;
+  font-size: 2rem;
+  color: #fff;
+}
+
+.header-text p {
+  margin: 0.25rem 0 0;
+  color: #a7a7a7;
+  font-size: 1rem;
+}
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.invoice-button {
+  background-color: transparent;
+  color: #a7a7a7;
+  border: 1px solid #444;
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+.invoice-button:hover {
+  background-color: #2a2a2a;
+  color: #fff;
+  border-color: #555;
+}

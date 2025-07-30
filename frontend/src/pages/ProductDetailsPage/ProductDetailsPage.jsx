@@ -52,13 +52,55 @@ const ProductDetailsPage = () => {
         fetchProduct();
     }, [id]);
 
-    const handleAddToCart = () => {
-        // ... (function logic is correct)
+
+     const handleAddToCart = () => {
+    if (!selectedColor || !selectedSize) {
+      alert('Please select a color and size.');
+      return;
+    }
+
+    const itemToAdd = {
+      ...product,
+      _id: product._id,
+      color: selectedColor,
+      size: selectedSize,
+      quantity: quantity,
     };
 
-    const handleBuyNow = () => {
-        // ... (function logic is correct)
+    // 3. USE the dispatch function
+    dispatch(addToCart(itemToAdd));
+    
+    // Give user feedback
+    alert(`${product.name} has been added to your cart!`);
+    // Or you could navigate them directly to the cart:
+    // navigate('/cart');
+  };
+
+  const handleBuyNow = () => {
+    if (!selectedColor || !selectedSize) {
+      alert('Please select a color and size.');
+      return;
+    }
+    
+    const productToBuy = {
+      productId: product._id,
+      name: product.name,
+      brand: product.brand,
+      price: product.price,
+      color: selectedColor,
+      size: selectedSize,
+      quantity: quantity,
     };
+
+    const orderData = {
+      items: [productToBuy],
+      platformFee: 20,
+      deliveryFee: 50,
+    };
+    
+    // Navigate to the order summary page
+    navigate('/checkout', { state: { orderData } });
+  };
 
     if (loading) return <Loader />;
     if (error) return <div className="error-message">{error}</div>;
