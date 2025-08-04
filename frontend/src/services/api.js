@@ -2,7 +2,7 @@
 import axios from 'axios';
 
 // ✅ Dynamically switch between local and production backend
-const isLocalhost = window.location.hostname === 'localhost';
+
 
 export const API_URL ='https://lit-backend-azajexa8e2a9g4az.canadacentral-01.azurewebsites.net/api';
 
@@ -70,7 +70,7 @@ export const validateCouponCode = async (code) => {
 // ✅ Subscribe to newsletter
 export const subscribeToNewsletter = async (email) => {
   try {
-    const response = await axios.post(`${API_URL}/newsletter/subscribe`, { email });
+    const response = await axios.post(`${API_URL}/subscribers/subscribe`, { email });
     return response.data;
   } catch (error) {
     throw error.response?.data?.message || 'Subscription failed';
@@ -92,6 +92,17 @@ export const getArticleBySlug = async (slug) => {
     return response.data;
   } catch (error) {
     throw error.response?.data?.message || 'Failed to fetch article by slug';
+  }
+};
+
+// ✅ Create or update user in DB
+export const createUser = async (userData) => {
+  try {
+    const response = await axios.post(`${API_URL}/users/login`, userData);
+    return response.data;
+  } catch (error) {
+    console.error("❌ API error creating user:", error);
+    throw error.response?.data?.message || 'User creation failed';
   }
 };
 

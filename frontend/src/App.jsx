@@ -16,12 +16,14 @@ import { ArticleProvider } from './context/ArticleContext';
   import MainLayout from './components/Newsletter-components/MainLayout/MainLayout';
   import ProtectedRoute from './components/admin-components/ProtectedRoute';
   import AdminLayout from './components/admin-components/AdminLayout';
-  import Notification from './components/Notification'; // ✅ Added
+  import Notification from './components/Notification';
+  import ScrollToTop from './components/ScrollToTop';
+  import EcomAdminDashoard from './pages/admin/EcomAdminDashboard';
 
   // Pages - Public
   import LandingPage from './components/LandingPage';
-  import Shop from './pages/Shop';  
-  import ProductDetails from './components/Shop/ProductDetails';
+  import Shop from './pages/Shop';
+  import ProductDetailsPage from './pages/ProductDetailsPage/ProductDetailsPage';
   import Cart from './components/Shop/Cart';
   import Wishlist from './pages/Wishlist';
   import GameModes from './pages/GameModes';
@@ -29,18 +31,17 @@ import { ArticleProvider } from './context/ArticleContext';
   import Contact from './pages/Contact';
   import Profile from './pages/profile/Profile/Profile';
   import PrivacyPolicy from './pages/privacyPolicy';
-  // import ReturnPolicy from './pages/returnPolicy.jsx';
-  // import TermsOfService from './pages/termsOfService';
-  import Orders from './pages/profile/Orders'; // ✅ Updated path
-  import Settings from './pages/profile/Settings'; // ✅ Updated path
-  // import AddFriendsPage from './pages/profile/AddFriendsPage/AddFriendsPage'; 
-  // import SignInPage from './auth/pages/SignInPage';
-  // import ForgotPasswordPage from './auth/pages/ForgotPasswordPage'; 
+  import Settings from './pages/profile/Settings';
   import CheckoutPage from './components/checkout/CheckoutPage';
   import OrderConfirmation from './pages/OrderConfirmation';
   import NotFound from './pages/NotFound';
   import ProductListPage from './pages/productListPage';
   import ComingSoonPage from './components/ComingSoonPage/ComingSoonPage';
+
+  // ✅ CHANGED: Import the new Orders and OrderDetails pages
+  import OrdersPage from './pages/OrdersPage/OrdersPage';
+  import OrderDetailsPage from './pages/OrderDetailsPage/OrderDetailsPage';
+
 // Pages - Admin
 import AdminLogin from './pages/AdminLogin';
 import SignUpPage from './pages/admin/Auth/SignUpPage';
@@ -53,8 +54,11 @@ import AdminArticlePage from './pages/admin/ArticlePage';
 import DeleteProductForm from './components/DeleteProductForm';
 import EditProductForm from './components/EditProductForm';
 import AuthCallback from './pages/AuthCallback';
+<<<<<<< HEAD
 import EcomAdminDashboard from './pages/admin/EcomAdminDashboard';
 
+=======
+>>>>>>> c66c7eb9db07783cd6db383d6289ff0021a02d1d
 // Pages - Newsletter
 import NewsletterPage from './pages/Newsletter/NewsletterPage/NewsletterPage';
 import NewsletterArticlePage from './pages/Newsletter/ArticlePage/ArticlePage';
@@ -74,17 +78,20 @@ const AppContent = () => {
   const showFooter = !isAdminPath;
 
   return (
+    
     <Background>
+      <ScrollToTop />
       <Notification />
       {showMainNavbar && <LandingPageNavbar />}
       {showNewsletterNavbar && <Navbar />}
 
         <main style={{ flex: 1, width: '100%' }}>
           <Routes>
+            
             {/* Public Routes */}
             <Route path="/" element={<LandingPage />} />
             <Route path="/shop" element={<Shop />} />
-            <Route path="/product/:id" element={<ProductDetails />} />
+            <Route path="/product/:id" element={<ProductDetailsPage />} />
             <Route path="/cart" element={<Cart />} />
             <Route path="/wishlist" element={<Wishlist />} />
             <Route path="/game-modes" element={<ComingSoonPage />} />
@@ -92,14 +99,12 @@ const AppContent = () => {
             <Route path="/contact" element={<Contact />} />
             <Route path="/privacy" element={<PrivacyPolicy />} />
             <Route path="/profile" element={<Profile />} />
-            {/* <Route path='/returnpolicy' element={<ReturnPolicy />} /> 
-            <Route Path='/terms' element={<TermsOfService />} /> */}
 
-            <Route path="/orders" element={<Orders />} />
-            <Route path="/settings" element={<Settings />} /> 
-            {/* <Route path="/add-friends" element={<AddFriendsPage />} />  */}
-            {/* <Route path="/signin" element={<SignInPage />} /> ✅ Newly added route
-            <Route path="/forgot-password" element={<ForgotPasswordPage />} /> ✅ Newly added route */}
+            {/* ✅ CHANGED: Replaced the old /orders route and added a new one for details */}
+            <Route path="/orders" element={<OrdersPage />} />
+            <Route path="/orders/:orderId" element={<OrderDetailsPage />} />
+            
+            <Route path="/settings" element={<Settings />} />
             <Route path="/checkout" element={<CheckoutPage />} />
             <Route path="/order-confirmation" element={<OrderConfirmation />} />
             <Route path="/ir-icon" element={<ComingSoonPage />} />
@@ -118,6 +123,7 @@ const AppContent = () => {
           <Route path="/admin/login" element={<AdminLogin />} />
           <Route path="/admin/signup" element={<SignUpPage />} />
           <Route path="/admin/article/:slug" element={<AdminArticlePage />} />
+          <Route path="/admin/ecomDashboard" element={<EcomAdminDashoard />} />
 
           <Route element={<ProtectedRoute><AdminLayout /></ProtectedRoute>}>
             <Route path="/admin/dashboard" element={<AdminDashboard />} />
@@ -150,6 +156,7 @@ const App = () => {
   };
 
   return (
+    
     <PayPalScriptProvider options={paypalOptions}>
       <CartProvider>
         <WishlistProvider>

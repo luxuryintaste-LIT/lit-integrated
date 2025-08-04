@@ -1,14 +1,14 @@
-import { API_CONFIG } from '../config';
+const BASE_URL = 'https://lit-backend-azajexa8e2a9g4az.canadacentral-01.azurewebsites.net/api';
 
 export const api = {
   subscribe: async (email) => {
     try {
-      const response = await fetch(`${API_CONFIG.BASE_URL}${API_CONFIG.ENDPOINTS.SUBSCRIBE}`, {
+      const response = await fetch(`${BASE_URL}/subscribers/subscribe`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
           'Accept': 'application/json',
-          'Origin': API_CONFIG.FRONTEND_URL
+          'Origin': 'https://www.luxuryintaste.com', // replace if frontend domain changes
         },
         mode: 'cors',
         credentials: 'include',
@@ -39,12 +39,12 @@ export const api = {
 
   confirmSubscription: async (email) => {
     try {
-      const response = await fetch(`${API_CONFIG.BASE_URL}${API_CONFIG.ENDPOINTS.CONFIRM}?email=${encodeURIComponent(email)}`, {
+      const response = await fetch(`${BASE_URL}/subscribers/confirm?email=${encodeURIComponent(email)}`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
           'Accept': 'application/json',
-          'Origin': API_CONFIG.FRONTEND_URL
+          'Origin': 'https://lit-client.vercel.app', // replace if frontend domain changes
         },
         mode: 'cors',
         credentials: 'include',
@@ -71,4 +71,4 @@ export const api = {
       };
     }
   },
-}; 
+};

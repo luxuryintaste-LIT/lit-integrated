@@ -1,15 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import {
-  Container,
-  Typography,
-  Grid,
-  Card,
-  CardMedia,
-  IconButton,
-  Button,
-  TextField,
-} from '@mui/material';
+import { Card, CardMedia, IconButton, Button, TextField } from '@mui/material';
 import { Add as AddIcon, Remove as RemoveIcon } from '@mui/icons-material';
 import { useDispatch, useSelector } from 'react-redux';
 import {
@@ -21,28 +12,17 @@ import {
 } from '../../redux/reducers/cartReducer';
 import { validateCouponCode } from '../../services/api';
 
-// ✅ Import the external CSS file
+import OrderSummary from '../checkout/OrderSummary';
 import '../../styles/Cart.css';
 
 const Cart = () => {
-  // All logic from Version 1 is preserved
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const cart = useSelector((state) => state.cart.cart);
-  const discount = useSelector((state) => state.cart.discount);
   const couponApplied = useSelector((state) => state.cart.couponApplied);
+
   const [couponInput, setCouponInput] = React.useState('');
   const [couponError, setCouponError] = React.useState('');
-
-  const SHIPPING_COST = 0; // Match Version 2's "Free shipping"
-
-  const calculateSubtotal = () => {
-    return cart.reduce((total, item) => total + item.price * item.quantity, 0);
-  };
-
-  const calculateTotal = () => {
-    return calculateSubtotal() + SHIPPING_COST - discount;
-  };
 
   const handleUpdateQuantity = (itemId, quantity) => {
     if (quantity > 0) {
@@ -62,12 +42,13 @@ const Cart = () => {
     setCouponError('');
     dispatch(clearCoupon());
     try {
+      const subtotal = cart.reduce((total, item) => total + item.price * item.quantity, 0);
       const { discountValue, discountType } = await validateCouponCode(couponInput);
       let calculatedDiscount = 0;
       if (discountType === 'flat') {
         calculatedDiscount = discountValue;
       } else if (discountType === 'percent') {
-        calculatedDiscount = Math.round(calculateSubtotal() * (discountValue / 100));
+        calculatedDiscount = Math.round(subtotal * (discountValue / 100));
       }
       dispatch(
         setCoupon({ coupon: couponInput, discount: calculatedDiscount, couponApplied: true })
@@ -99,17 +80,11 @@ const Cart = () => {
         <div className="cart-layout">
           {/* Cart Items Section */}
           <div className="cart-items-container">
+            {/* ✅ RESTORED ORIGINAL LOGIC FOR DISPLAYING ITEMS */}
             {cart.map((item) => {
-              // Convert image data to base64 for display
               const convertToBase64 = (image) => {
                 if (!image || !image.data || !image.contentType) return '/images/products/default-product.jpg';
-
-                // Case 1: Already base64 string
-                if (typeof image.data === 'string') {
-                  return `data:${image.contentType};base64,${image.data}`;
-                }
-
-                // Case 2: Buffer-like array from MongoDB
+                if (typeof image.data === 'string') return `data:${image.contentType};base64,${image.data}`;
                 if (Array.isArray(image.data)) {
                   try {
                     const byteArray = Uint8Array.from(image.data);
@@ -124,12 +99,10 @@ const Cart = () => {
                     return '/images/products/default-product.jpg';
                   }
                 }
-
                 return '/images/products/default-product.jpg';
               };
 
-              // Get the first image from the product
-              const imageSrc = item.images?.[0]?.images?.[0] 
+              const imageSrc = item.images?.[0]?.images?.[0]
                 ? convertToBase64(item.images[0].images[0])
                 : '/images/products/default-product.jpg';
 
@@ -162,29 +135,13 @@ const Cart = () => {
             })}
           </div>
 
-          {/* Order Summary Section */}
+          {/* REFACTORED Order Summary Section */}
           <div className="order-summary">
-            <h2 className="summary-title">Order Summary</h2>
-            <div className="summary-row">
-              <span>Subtotal</span>
-              <span>Rs. {calculateSubtotal().toLocaleString()}</span>
-            </div>
-            <div className="summary-row">
-              <span>Shipping</span>
-              <span>{SHIPPING_COST > 0 ? `Rs. ${SHIPPING_COST}` : 'Free'}</span>
-            </div>
-            {discount > 0 && (
-              <div className="summary-row discount-row">
-                <span>Coupon Applied</span>
-                <span>-Rs. {discount.toLocaleString()}</span>
-              </div>
-            )}
-            <div className="summary-row summary-total">
-              <span>Total</span>
-              <span>Rs. {calculateTotal().toLocaleString()}</span>
-            </div>
-            <button className="checkout-button" onClick={() => navigate('/checkout')}>
+            {/* The OrderSummary component now handles all the price details! */}
+            <OrderSummary />
 
+            {/* These controls are specific to the Cart page flow */}
+            <button className="checkout-button" onClick={() => navigate('/checkout')}>
               PROCEED TO CHECKOUT
             </button>
 
@@ -198,7 +155,6 @@ const Cart = () => {
                   value={couponInput}
                   onChange={(e) => setCouponInput(e.target.value)}
                   disabled={couponApplied}
-                  // ✅ Apply class directly to the input element
                   InputProps={{ className: 'promo-input' }}
                 />
                 <button className="apply-button" onClick={handleApplyCoupon} disabled={couponApplied || !couponInput}>
@@ -208,13 +164,14 @@ const Cart = () => {
               {couponError && <p className="promo-error">{couponError}</p>}
               {couponApplied && <p className="promo-success">Promo code applied successfully!</p>}
             </div>
-             <button className="clear-cart-button" onClick={handleClearCart}>
-                Clear Cart
+
+            <button className="clear-cart-button" onClick={handleClearCart}>
+              Clear Cart
             </button>
           </div>
         </div>
 
-        {/* Static Features Section from Version 2 */}
+        {/* Static Features Section */}
         <div className="features-section">
           <div className="feature-item">
             <h3 className="feature-title">EASY RETURNS</h3>

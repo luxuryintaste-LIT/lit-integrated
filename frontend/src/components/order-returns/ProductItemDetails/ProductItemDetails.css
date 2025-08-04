@@ -1,0 +1,59 @@
+/*
+  This new style is universal for both mobile and desktop.
+  It creates the centered, stacked layout you requested.
+*/
+
+.product-item-details-container {
+  display: flex;
+  flex-direction: column; /* Stack image and info vertically */
+  align-items: center;   /* Center them horizontally */
+  background-color: transparent; /* No background color, as requested */
+  padding: 2rem 0; /* Vertical padding to give it space */
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1); /* Subtle separator for lists */
+}
+
+/* The last item in a list shouldn't have a border below it */
+.product-item-details-container:last-child {
+  border-bottom: none;
+}
+
+.item-image {
+  width: 100%;
+  max-width: 200px; /* Controls the max size on large screens */
+  height: auto;
+  aspect-ratio: 1 / 1.2;
+  object-fit: cover;
+  border-radius: 12px; /* Slightly more rounded corners */
+  margin-bottom: 1.5rem; /* Space between image and text */
+}
+
+.item-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center; /* Ensure all text is centered */
+}
+
+.item-brand {
+  color: #e0e0e0; /* Bright white for the brand */
+  text-transform: uppercase;
+  font-size: 0.9rem;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  margin: 0 0 0.5rem;
+}
+
+.item-name {
+  color: #a7a7a7; /* Muted grey for the name */
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+  margin: 0;
+}
+
+.item-description,
+.item-size {
+  color: #a7a7a7; /* Muted grey for other details */
+  font-size: 1rem;
+  margin: 0.5rem 0 0;
+}

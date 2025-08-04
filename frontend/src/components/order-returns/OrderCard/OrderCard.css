@@ -1,0 +1,239 @@
+/* Make the entire card a clickable link */
+.order-card-link {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+}
+
+.order-card-container {
+  /* background-color: #1a1a1a; */
+  border: 1px solid #333;
+  border-radius: 12px;
+  overflow: hidden;
+  transition: all 0.2s ease-in-out;
+}
+
+.order-card-link:hover .order-card-container {
+  border-color: #9333ea;
+  transform: translateY(-3px);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+}
+
+.card-header {
+  /* background-color: #2a2a2a; */
+  padding: 1rem 1.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+
+
+.card-header-left {
+  display: flex;
+  gap: 2rem;
+}
+
+.info-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.info-label {
+  font-size: 0.75rem;
+  color: #a7a7a7;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.info-value {
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: #fff;
+}
+
+.card-header-right {
+  text-align: right;
+}
+  .orders-header p {
+    color: #a7a7a7;
+    font-size: .8rem;
+    margin-bottom: 2rem;
+    margin-top: 1rem;
+  }
+
+.info-value-copy {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.9rem;
+  font-family: monospace;
+  color: #fff;
+}
+
+.copy-button {
+  background: none;
+  border: none;
+  color: #a7a7a7;
+  cursor: pointer;
+  padding: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+  transition: all 0.2s;
+}
+.copy-button:hover {
+  color: #fff;
+  background-color: #444;
+}
+
+.card-body {
+  padding: 1.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.product-info {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.product-thumbnail {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 8px;
+  border: 1px solid #333;
+}
+
+.product-details .status-badge {
+  margin-bottom: 0.5rem;
+}
+
+.product-name {
+  font-size: 1.1rem;
+  font-weight: 500;
+  margin: 0.5rem 0;
+  color: #fff;
+  line-height: 1.4;
+}
+
+.delivery-estimate {
+  font-size: 0.9rem;
+  color: #a7a7a7;
+  margin: 0;
+}
+
+/* Gradient Button Styles */
+.card-actions .details-button {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: auto;
+  max-width: 277px;
+  height: 52px;
+  padding: 0 2rem;
+  font-family: 'Poppins', 'Inter', sans-serif;
+  font-size: 1rem;
+  font-weight: 600;
+  color: transparent;
+  background-image: linear-gradient(222deg, #E2C1FF, #877499);
+  background-clip: text;
+  -webkit-background-clip: text;
+  border: none;
+  background-color: transparent;
+  border-radius: 16px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.details-button::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 16px; 
+  padding: 1px;
+  background: linear-gradient(45deg, #9333EA, #333333); 
+  -webkit-mask: 
+    linear-gradient(#fff 0 0) content-box, 
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+          mask-composite: exclude;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+}
+
+.order-card-link:hover .details-button::before {
+  opacity: 1;
+}
+
+
+/* --- RESPONSIVE STYLES FOR SMALLER DEVICES --- */
+@media (max-width: 768px) {
+  /* Layout changes (existing) */
+  .card-body, .card-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .card-header-right {
+    width: 100%;
+    text-align: left;
+    margin-top: 0.5rem;
+  }
+  .card-actions {
+    width: 100%;
+    margin-top: 1rem;
+  }
+
+  .orders-header h1 {
+    font-size: 1rem; 
+
+  }
+
+  .orders-header p {
+    color: #a7a7a7;
+    font-size: .8rem;
+    margin-bottom: 2rem;
+  }
+  /* --- ✅ NEW MOBILE SIZE ADJUSTMENTS --- */
+
+  /* Reduce padding to make the card more compact */
+  .card-header {
+    padding: 0.75rem 1rem; 
+  }
+  .card-body {
+    padding: 1rem;
+  }
+
+  /* Make the product thumbnail smaller */
+  .product-thumbnail {
+    width: 64px;
+    height: 64px;
+  }
+  
+  /* Slightly reduce text sizes */
+  .info-label {
+    font-size: 0.7rem;
+  }
+  .info-value {
+    font-size: 0.85rem;
+  }
+  .product-name {
+    font-size: 1rem; /* Was 1.1rem */
+  }
+
+  /* Make the button full-width and slightly shorter */
+  .card-actions .details-button {
+    width: 100%; 
+    height: 48px;
+  }
+}

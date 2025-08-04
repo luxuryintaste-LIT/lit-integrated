@@ -1,7 +1,12 @@
 import React, { useEffect, useRef, useState } from 'react';
 import ProductCard from './ProductCard';
+<<<<<<< HEAD
 import { useNavigate } from 'react-router-dom'; // ✅ for navigation
 import '/src/styles/ProductList.css';
+=======
+import '/src/styles/ProductList.css';
+// import { YoutubeSearchedFor } from '@mui/icons-material';
+>>>>>>> c66c7eb9db07783cd6db383d6289ff0021a02d1d
 
 const ProductList = ({ products, isSearch }) => {
   const sectionRef = useRef(null);
@@ -42,7 +47,11 @@ const ProductList = ({ products, isSearch }) => {
   return (
     <section className="products-section" ref={sectionRef}>
       <div>
+<<<<<<< HEAD
         {!isSearch && <h2 className="section-title">Fresh Arrivals</h2>}
+=======
+        <h2 className="section-title ">Fresh Arrivals</h2>
+>>>>>>> c66c7eb9db07783cd6db383d6289ff0021a02d1d
         <div className="product-list-container">
           <div className="product-grid">
             {Array.isArray(displayedProducts) &&

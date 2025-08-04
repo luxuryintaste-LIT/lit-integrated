@@ -1,0 +1,35 @@
+/* Styling for the main page container */
+.orders-page-container {
+  color: #fff;
+  min-height: 100vh;
+  padding: 6rem 4rem;
+  font-family: 'Poppins', sans-serif;
+}
+
+
+
+.order-list {
+  margin-top: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+/* For Loading/Error states */
+.page-status-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 80vh;
+  font-size: 1.2rem;
+  color: #a7a7a7;
+}
+.page-status-container.error {
+  color: #f87171;
+}
+
+@media (max-width: 768px) {
+  .orders-page-container {
+    padding: 3.5rem;
+  }
+}

@@ -1,0 +1,147 @@
+/* Main container for the gallery */
+.image-gallery-container {
+  display: flex;
+  flex-direction: column-reverse; 
+  gap: 1rem;
+  position: sticky;
+  top: 2rem;
+}
+
+@media (min-width: 768px) {
+  .image-gallery-container {
+    flex-direction: row;
+  }
+}
+
+
+/* Thumbnail styles */
+.thumbnail-list {
+  display: flex;
+  flex-direction: row; 
+  gap: 10px;
+  overflow-x: auto;
+}
+
+@media (min-width: 768px) {
+  .thumbnail-list {
+    flex-direction: column;
+    overflow-x: visible;
+  }
+}
+
+.thumbnail-item {
+  cursor: pointer;
+  border: 2px solid #ccc;
+  transition: border-color 0.3s;
+  border-radius: 0;
+  flex-shrink: 0;
+}
+.thumbnail-item.active {
+  border-color: #007bff;
+}
+.thumbnail-item img {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 0;
+  display: block;
+}
+
+/* The wrapper for the large, main image */
+.main-image-wrapper {
+  flex-grow: 1;
+  max-width: 400px;
+  max-height: 500px;
+  min-height: 500px;
+  /* aspect-ratio: 4 / 6; */
+  background-color: #f7f7f7;
+  overflow: hidden; 
+  position: relative; 
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: zoom-in;
+}
+
+/* The main product image itself */
+.main-product-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; 
+  border-radius: 0;
+  touch-action: pan-y;
+  transition: transform 0.3s ease-out;
+}
+
+/* --- ✅ NEW ARROW STYLES (NO BACKGROUND) --- */
+.nav-arrow {
+  position: absolute;
+  top: 50%;
+  /* Vertically center the arrow */
+  transform: translateY(-50%); 
+  z-index: 10;
+  /* Remove all background and border styles */
+  background-color: transparent;
+  border: none;
+  width: 48px;  /* Make the clickable area slightly larger */
+  height: 48px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.2s, transform 0.2s;
+}
+
+/* Show arrows when hovering over the main image container */
+.main-image-wrapper:hover .nav-arrow {
+  opacity: 0.8;
+}
+
+/* Add a subtle hover effect to the arrow itself */
+.nav-arrow:hover {
+  opacity: 1;
+  /* Keep the vertical centering while scaling */
+  transform: translateY(-50%) scale(1.1);
+}
+
+/* ✅ THIS IS THE FIX: Position the arrows on opposite sides */
+.nav-arrow.prev {
+  left: 0.5rem;
+}
+.nav-arrow.next {
+  right: 0.5rem;
+}
+
+.nav-arrow svg {
+  width: 32px;
+  height: 32px;
+  /* Make the arrow white so it stands out on images */
+  stroke: #fff;
+  stroke-width: 2.5;
+  /* This adds a shadow to the SVG shape itself, making it readable on ANY background */
+  filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.7));
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+  .image-gallery-container {
+    position: static;
+  }
+  .main-image-wrapper {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 4 / 5;
+  }
+  /* Hide arrows on touch devices */
+  .nav-arrow {
+    display: none;
+  }
+}
+
+.image-wishlist-btn {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  z-index: 10;
+}

@@ -27,10 +27,15 @@ const productSchema = new mongoose.Schema({
     enum: ['Men', 'Women', 'Unisex'],
     required: true,
   },
-
+  // In your productSchema
+  sizeAndFit: {
+    modelInfo: String,
+    fitType: String,
+    fitDescription: String
+  },
     subcategory: { type: String, default: null },
   rating: { type: Number, default: 0 },
-  reviews: { type: Number, default: 0 },
+  reviews: { type: Number, default: 0 }, 
   sizes: { type: [String], default: [] },
   colors: { type: [String], default: [] },
 
@@ -43,6 +48,8 @@ const productSchema = new mongoose.Schema({
 }, {
   timestamps: true,
 });
+
+
 
 const Product = mongoose.model('Product', productSchema);
 

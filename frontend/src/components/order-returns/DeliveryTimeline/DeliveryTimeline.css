@@ -1,0 +1,105 @@
+/* Container for the horizontal timeline */
+.timeline-horizontal-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start; /* Aligns items at the top */
+  padding: 1rem 0;
+}
+
+/* A single step in the timeline (icon + label) */
+.timeline-step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  /* flex: 1; allows the steps to space out evenly */
+  flex: 1;
+  position: relative;
+}
+/* The last step shouldn't grow to push others away */
+.timeline-step:last-child {
+  flex: 0; 
+}
+
+
+/* The top row containing the icon and the connecting line */
+.step-top-row {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+/* Wrapper for the circular icon */
+.step-icon-wrapper {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1;
+  flex-shrink: 0; /* Prevents the icon from shrinking */
+  transition: background-color 0.3s, border-color 0.3s;
+}
+
+/* The line connecting the icons */
+.step-line {
+  height: 4px;
+  /* flex-grow: 1; is the key to making the line fill the space */
+  flex-grow: 1;
+  transition: background 0.3s;
+}
+
+/* --- STYLING BASED ON STATUS --- */
+
+/* PENDING (Future Steps) */
+.timeline-step.pending .step-icon-wrapper {
+  background-color: transparent;
+  border: 2px solid #374151; /* Dark grey border */
+  color: #6b7280; /* Muted icon color */
+}
+.timeline-step.pending .step-line {
+  background-color: #374151; 
+}
+.timeline-step.pending .step-label {
+  color: #6b7280; /* Muted text */
+}
+
+
+/* COMPLETED (Past Steps) */
+.timeline-step.completed .step-icon-wrapper {
+  background-color: #2dd4bf; /* Teal color from image */
+  border: 2px solid #2dd4bf;
+  color: #ffffff;
+}
+/* The beautiful gradient line */
+.timeline-step.completed .step-line {
+  background: linear-gradient(to right, #2dd4bf, #facc15); /* Teal to Yellow */
+}
+.timeline-step.completed .step-label {
+  color: #e0e0e0; /* Bright, but not as bright as current */
+}
+
+
+/* CURRENT (The Active Step) */
+.timeline-step.current .step-icon-wrapper {
+  background-color: #facc15; /* Yellow color from image */
+  border: 2px solid #facc15;
+  color: #111827; /* Dark text for contrast on yellow */
+}
+/* The line after the current step is pending */
+.timeline-step.current .step-line {
+  background-color: #374151;
+}
+.timeline-step.current .step-label {
+  color: #ffffff; /* Brightest white for the active label */
+  font-weight: 600;
+}
+
+/* Label Styling */
+.step-label {
+  font-size: 0.85rem;
+  max-width: 80px; /* Prevents long labels from breaking the layout */
+  transition: color 0.3s, font-weight 0.3s;
+}

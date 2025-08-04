@@ -1,0 +1,282 @@
+/* --- MAIN CONTAINER & LAYOUT --- */
+.product-info-container {
+  max-height: 100%;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.product-info-container * {
+  transform: scale(0.95);
+  transform-origin: top;
+}
+
+.product-info-container {
+  overflow-y: auto;
+}
+
+.product-main-info,
+.product-options,
+.product-actions {
+  /* No specific styles needed here for now */
+}
+
+/* --- TYPOGRAPHY & PRICE --- */
+.product-brand {
+    color: #ffffff;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-size: 20px;
+    font-weight: 500;
+}
+
+.product-title {
+    color: #fff;
+    font-size: 1rem;
+    font-weight: 100;
+    line-height: 1.2;
+    margin: 0.25rem 0 1rem 0;
+    letter-spacing: 2px;
+}
+
+.price-section {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.current-price {
+  color: #fff;
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+.original-price {
+  color: rgba(255, 255, 255, 0.5);
+  text-decoration: line-through;
+  margin-top: 55px;
+  margin-left: -194px;
+}
+
+.discount-badge {
+  background: linear-gradient(85.68deg, #9333ea, #fffefe);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-size: 1.2rem;
+  font-weight: 500;
+}
+
+/* --- OPTIONS STYLING --- */
+.options-group {
+  margin-bottom: 1.5rem;
+}
+
+.option-label {
+  font-size: 1rem;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.color-selector {
+  display: flex;
+  align-items: center;
+  padding-top: .5rem;
+}
+
+.color-swatch {
+  all: unset;
+  width: 48px;
+  height: 48px;
+  padding: 5px;
+  box-sizing: border-box;
+  border: 1px solid transparent;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: transparent;
+  border-radius: 50px;
+}
+
+.color-swatch-inner {
+  width: 100%;
+  height: 100%;
+  background-color: currentColor;
+  border-radius: 50px;
+  border: .5px solid rgba(255, 255, 255, 0.2);
+}
+
+.color-swatch.selected {
+  border-color: white;
+}
+
+.size-selector {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.size-box {
+  min-width: 60px;
+  padding: .5rem 1rem;
+  margin-top: .5rem;
+  background: transparent;
+  border: 1px solid #555;
+  border-radius: 0;
+  color: #e0e0e0;
+  cursor: pointer;
+  font-weight: 500;
+  text-align: center;
+  transition: all 0.2s;
+}
+
+.size-box.selected {
+  border: 2px solid #ae9e9e;
+  background-color: rgba(255, 255, 255, 0.1);
+  color: #fff;
+  font-weight: 600;
+  transform: scale(1.05);
+}
+
+.quantity-selector {
+  display: flex;
+  align-items: center;
+  gap: 2px; 
+}
+
+.quantity-btn {
+    height: 40px;
+    width: 40px;
+    background: transparent;
+    color: #fff;
+    border: 1px solid #fff;
+    outline: none;
+    font-size: 1.25rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+input.quantity-input {
+    width: 44px;
+    height: 44px;
+    background: transparent;
+    text-align: center;
+    margin-top:10px;
+    border: none;
+    padding-left: 11px;
+}
+
+/* --- ACTION BUTTONS STYLES --- */
+.action-buttons-group {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  width: 540px;
+  margin-top: 0px;
+}
+
+.btn-buy-now,
+.btn-secondary-cart {
+  padding: 18px 1px;
+  border-radius: 16px;
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+}
+
+.btn-buy-now:disabled,
+.btn-secondary-cart:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.btn-buy-now {
+  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 1);
+  background: radial-gradient(308.33% 308.33% at 53.98% 55.95%, rgba(0, 0, 0, 0.8) 0%, rgba(147, 51, 234, 0.4) 50%);
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+}
+
+.btn-secondary-cart {
+  color: #ffffff;
+  background: transparent;
+  border: 1px solid #555;
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0); 
+}
+
+/* --- ✅ FINAL RESPONSIVE STYLES FOR MOBILE DEVICES --- */
+@media (max-width: 768px) {
+  
+  /* --- 1. Reset Desktop Styles & Enforce Left Alignment --- */
+  .product-info-container {
+    text-align: left;
+    justify-content: flex-start;
+    gap: 1.25rem; /* A little more space for a clean look */
+  }
+  
+  .product-info-container * {
+    transform: none;
+  }
+  
+  .original-price {
+    margin: 0;
+  }
+
+  /* --- 2. Reduce Gaps and Font Sizes for a Compact View --- */
+  .product-brand {
+    font-size: 14px;
+  }
+
+  .product-title {
+    font-size: 1.1rem;
+    margin-bottom: 0.5rem;
+    letter-spacing: 1px;
+  }
+
+  .current-price {
+    font-size: 1.25rem;
+  }
+
+  .options-group {
+    margin-bottom: 1rem;
+  }
+
+  .option-label {
+      font-size: 0.9rem;
+  }
+
+  .color-swatch {
+    width: 38px;
+    height: 38px;
+  }
+
+  .size-box {
+      padding: 0.4rem 0.75rem;
+      font-size: 0.85rem;
+  }
+  
+  /* --- 3. PLACE Buttons Side-by-Side --- */
+  .action-buttons-group {
+    display: flex;         /* Use flexbox for alignment */
+    flex-direction: row;   /* Explicitly set to a row */
+    gap: 0.75rem;          /* Space between the two buttons */
+    width: 100%;           /* Container takes full available width */
+    margin-top: 1rem;
+  }
+
+  .btn-buy-now,
+  .btn-secondary-cart {
+    flex: 1;                /* CRITICAL: Makes both buttons share space equally */
+    width: auto;            /* Allow flex to control the width */
+    padding: 12px 10px;     /* Comfortable padding for mobile */
+    font-size: 0.9rem;      /* Smaller font to fit side-by-side */
+    border-radius: 8px;
+    white-space: nowrap;    /* Prevent text wrapping on very small screens */
+  }
+}
