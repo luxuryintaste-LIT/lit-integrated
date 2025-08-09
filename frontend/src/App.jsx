@@ -54,11 +54,9 @@ import AdminArticlePage from './pages/admin/ArticlePage';
 import DeleteProductForm from './components/DeleteProductForm';
 import EditProductForm from './components/EditProductForm';
 import AuthCallback from './pages/AuthCallback';
-<<<<<<< HEAD
+
 import EcomAdminDashboard from './pages/admin/EcomAdminDashboard';
 
-=======
->>>>>>> c66c7eb9db07783cd6db383d6289ff0021a02d1d
 // Pages - Newsletter
 import NewsletterPage from './pages/Newsletter/NewsletterPage/NewsletterPage';
 import NewsletterArticlePage from './pages/Newsletter/ArticlePage/ArticlePage';

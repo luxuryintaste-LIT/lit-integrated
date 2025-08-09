@@ -1,7 +1,7 @@
 /* ---------- Layout ---------- */
 .product-list-page {
   display: flex;
-  /* background-color: #111; */
+  background-color: #111;
   color: #fff;
   min-height: 100vh;
   padding: 6rem 2rem 2rem;

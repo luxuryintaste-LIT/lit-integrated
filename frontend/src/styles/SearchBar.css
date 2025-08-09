@@ -59,6 +59,8 @@
   opacity: 1; /* Ensure placeholder is visible */
 }
 
+
+
 /* Base styles for all icon buttons */
 .icon-button, .action-button {
   background: none;
@@ -123,4 +125,21 @@
   padding: 8px;
   font-style: italic;
   color: #666;
+}
+
+
+.search-input {
+     background-color: transparent !important;
+    border: none !important;
+    color: #fff;
+    padding: 0.6rem 1rem;
+    border-radius: 8px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.9rem;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.search-input:focus{
+  border-color: none !important;
+  box-shadow: none !important;
 }

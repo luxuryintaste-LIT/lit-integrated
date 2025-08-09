@@ -76,8 +76,7 @@ a.product-card {
     font-size: 1.0rem;
     color: var(--accent);
     font-weight: 500;
-
-    margin-bottom: 2px;
+    margin-bottom: -11px;
 }
 
 .product-name {
@@ -103,12 +102,12 @@ a.product-card {
   display: flex;
   align-items: center;
   gap: 2rem !important;
-  margin-top: 0.6rem;
+  margin-top: -25px;
 }
 
 .current-price {
-  font-size: 1.5rem !important;
-  font-weight: 600;
+  font-size: 1.3rem !important;
+  font-weight: 500;
 }
 
 .original-price {
@@ -116,6 +115,7 @@ a.product-card {
     text-decoration: line-through;
     color: var(--text-secondary);
     margin-top: -35px;
+    margin-left: -296px;
 }
 
 .discount {
@@ -123,7 +123,7 @@ a.product-card {
   font-weight: 600;
   padding: 0.2rem 0.5rem;
   border-radius: 4px;
-  background: rgba(147, 51, 234, 0.1);
+
   font-size: 1.2rem !important;
       margin-bottom: -25px;
       margin-left: 37px;
@@ -131,7 +131,7 @@ a.product-card {
 
 .button-container {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 2fr 2fr;
   gap: 0.95rem;
   margin-top: 5px !important;
   
@@ -139,9 +139,9 @@ a.product-card {
 
 .buy-now,
 .add-to-cart {
-  padding: 0.5rem 0.1rem;
+  padding: 0.5rem 0.5rem;
   border-radius: 20px !important;
-  font-weight: 500;
+  font-weight: 400;
   cursor: pointer;
   transition: all 0.3s ease;
   text-align: center;
@@ -149,6 +149,7 @@ a.product-card {
   align-items: center;
   justify-content: center;
   margin-bottom: -12px;
+  font-size: 1rem !important;
 }
 
 .buy-now {
@@ -312,3 +313,9 @@ a.product-card {
 } 
 
 
+.product-info {
+    display: flex;
+    gap: 1rem;
+    flex-direction: column;
+  align-items: baseline !important;
+}
