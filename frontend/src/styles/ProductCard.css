@@ -115,7 +115,7 @@ a.product-card {
     text-decoration: line-through;
     color: var(--text-secondary);
     margin-top: -35px;
-    margin-left: -316px;
+    margin-left: -296px !important;
 }
 
 .discount {
