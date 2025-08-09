@@ -299,9 +299,7 @@ a.product-card {
   
   .discount {
     font-size: 0.7rem;
-        margin-left: 182px;
-    margin-bottom: -10px;
-    margin-top: -58px;
+  
   }
   
   .wishlist-button {
@@ -318,4 +316,36 @@ a.product-card {
     gap: 1rem;
     flex-direction: column;
   align-items: baseline !important;
+}
+
+@media (max-width: 772px){
+  .current-price{
+    margin-top: -5px;
+    font-size: 1.2rem !important;
+  }
+  .original-price{
+    margin-top: 45px !important;
+    padding-left: 25px;
+  }
+  .discount{
+    font-size: 1rem !important;
+  }
+  .brand-name{
+    font-size: 1.1rem !important;
+  }
+}
+
+@media (max-width: 481px){
+  .current-price{
+    margin-top: -5px;
+    font-size: 1.2rem !important;
+  }
+  .original-price{
+    margin-top: 45px !important;
+    padding-left: -25px !important;
+  }
+  .discount{
+    font-size: 1rem !important;
+   
+  }
 }
