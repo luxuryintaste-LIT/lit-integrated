@@ -153,3 +153,20 @@
     background: rgba(255, 255, 255, 0.1);
   }
 } 
+
+@media (max-width: 768px) {
+  .filter-container {
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .select-wrapper {
+    flex: 1 1 45%; /* Allow them to shrink and wrap if needed */
+    min-width: 140px;
+    max-width: 100%;
+  }
+
+  .filter-select {
+    width: 100%;
+  }
+}

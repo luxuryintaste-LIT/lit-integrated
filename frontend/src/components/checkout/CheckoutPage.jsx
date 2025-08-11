@@ -13,6 +13,7 @@ const CheckoutPage = () => {
   const cartFromRedux = useSelector((state) => state.cart.cart);
   const itemsFromState = location.state?.items || [];
 
+  
   // Determine whether it's a "Buy Now" or normal cart checkout
   const items = itemsFromState.length > 0 ? itemsFromState : cartFromRedux;
 

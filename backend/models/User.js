@@ -1,10 +1,21 @@
 const mongoose = require('mongoose');
 
 const userSchema = new mongoose.Schema({
-  name: String,
-  email: { type: String, unique: true },
-  provider: String, // e.g., "google.com"
-  createdAt: { type: Date, default: Date.now }
-});
+  provider: {
+    type: String,
+    required: true,
+  },
+  name: {
+    type: String,
+    required: true,
+    unique: true, // Ensure unique names for providers
+  },
+  email: {
+    type: String,
+    required: true,
+    lowercase: true,
+    unique: true, // Ensure unique emails
+  },
+}, { timestamps: true });
 
 module.exports = mongoose.model('User', userSchema);

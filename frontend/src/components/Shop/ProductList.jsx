@@ -1,12 +1,12 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import ProductCard from './ProductCard';
-import SearchBar from '../SearchBar';
-// import menWomenImage from '/src/assets/men.png'; // This will no longer be needed as products come from API
+import { useNavigate } from 'react-router-dom'; // ✅ for navigation
 import '/src/styles/ProductList.css';
-import { YoutubeSearchedFor } from '@mui/icons-material';
 
-const ProductList = ({ products }) => {
+const ProductList = ({ products, isSearch }) => {
   const sectionRef = useRef(null);
+  const navigate = useNavigate(); // ✅ hook to navigate to Fresh Arrivals
+  const [showLimited, setShowLimited] = useState(true);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -32,29 +32,41 @@ const ProductList = ({ products }) => {
     };
   }, []);
 
-  // Remove hardcoded products array
-  // const products = [
-  //   ...
-  // ];
+  // ✅ Slice the product list to first 6 if showLimited is true
+  const displayedProducts = showLimited ? products.slice(0, 6) : products;
+
+  const handleSeeMore = () => {
+    navigate('/fresh-arrivals'); // ✅ You must define this route
+  };
 
   return (
     <section className="products-section" ref={sectionRef}>
       <div>
-        <SearchBar onSearch={(query) => console.log('Search query:', query)} />
-        <h2 className="section-title ">Fresh Arrivals</h2>
+        {!isSearch && <h2 className="section-title">Fresh Arrivals</h2>}
         <div className="product-list-container">
           <div className="product-grid">
-            {Array.isArray(products) && products.map(product => (
-              <ProductCard 
-                key={product._id} // Use _id from MongoDB
-                product={product}
-              />
-            ))} 
-          </div> 
+            {Array.isArray(displayedProducts) &&
+              displayedProducts.map(product => (
+                <ProductCard
+  key={product._id || product?.document?._id}
+  product={product.document || product}
+/>
+
+              ))}
+          </div>
         </div>
+
+        {/* ✅ Show See More button only if products.length > 6 */}
+        {products.length > 6 && showLimited && (
+          <div className="see-more-container">
+            <button className="see-more-btn" onClick={handleSeeMore}>
+              See More
+            </button>
+          </div>
+        )}
       </div>
     </section>
   );
 };
 
-export default ProductList; 
+export default ProductList;

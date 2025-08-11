@@ -82,12 +82,12 @@
 
 /* ---------- Sidebar Filter Bar ---------- */
 .advanced-filter-bar {
-  width: 280px;
-  padding: 1.5rem;
+  width: 260px !important;
+  padding: 0rem;
   height: fit-content;
   position: sticky;
   top: 6rem;
-  border-radius: 16px;
+  border-radius: 6px;
   background-color: rgba(28, 28, 28, 0.6);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
@@ -103,6 +103,7 @@
   padding-bottom: 1rem;
   letter-spacing: 1px;
   text-align: center;
+  margin-top: -15px;
 }
 
 /* ---------- Filter Groups ---------- */
@@ -122,7 +123,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 1rem 0.5rem;
+  padding: 0rem 0.5rem;
   margin: 0;
   border-radius: 6px;
   transition: background-color 0.3s ease;
@@ -210,8 +211,15 @@
   padding: 4px 0;
 }
 
-/* ---------- Checkbox Styles ---------- */
-.filter-options label {
+.filter-options input[type="checkbox"] {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+/* Style the label when it's next to the checkbox */
+.filter-options .custom-checkbox label {
   display: flex;
   align-items: center;
   padding: 0.6rem 0.5rem;
@@ -221,38 +229,31 @@
   border-radius: 4px;
   transition: all 0.2s ease-in-out;
   position: relative;
+  padding-left: 28px;
 }
 
-.filter-options label:hover {
-  background-color: rgba(255, 152, 0, 0.1);
-  color: #f0f0f0;
-}
-
-.filter-options input[type="checkbox"] {
-  opacity: 0;
-  width: 0;
-  height: 0;
-  position: absolute;
-}
-
-.filter-options label::before {
+/* Custom box before the label text */
+.filter-options .custom-checkbox label::before {
   content: '';
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
   width: 18px;
   height: 18px;
   border: 2px solid #666;
   border-radius: 4px;
-  margin-right: 12px;
   transition: all 0.2s ease;
-  flex-shrink: 0;
 }
 
-.filter-options label::after {
+/* Checkmark */
+.filter-options .custom-checkbox label::after {
   content: '';
   position: absolute;
-  left: 11px;
+  left: 6px;
   top: 14px;
-  width: 5px;
-  height: 10px;
+  width: 7px;
+  height: 11px;
   border: solid white;
   border-width: 0 3px 3px 0;
   transform: rotate(45deg) scale(0);
@@ -260,9 +261,10 @@
   transition: all 0.2s ease;
 }
 
+/* Checked state */
 .filter-options input[type="checkbox"]:checked + label::before {
-  background-color: #ff9800;
-  border-color: #ff9800;
+  background-color: #9146ff;
+  border-color: #ffffff;
 }
 
 .filter-options input[type="checkbox"]:checked + label::after {
@@ -275,8 +277,9 @@
 }
 
 .filter-options input[type="checkbox"]:focus + label::before {
-  box-shadow: 0 0 0 2px rgba(255, 152, 0, 0.5);
+  box-shadow: 0 0 0 2px #9146ff;
 }
+
 
 /* ---------- Purple Price Slider ---------- */
 .price-slider-group {
@@ -328,3 +331,288 @@
   font-weight: bold;
   color: #ffffffcc;
 }
+
+/* changes */
+
+.advanced-filter-bar {
+  width: 280px;
+  padding: 2rem 1.5rem;
+  background-color: rgba(30, 30, 30, 0.85);
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(12px);
+  position: sticky;
+  top: 6rem;
+  height: fit-content;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.4);
+}
+
+.advanced-filter-bar h2 {
+  font-size: 1.75rem;
+  margin-bottom: 1.5rem;
+  color: #fff;
+  text-align: center;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  padding-bottom: 1rem;
+}
+
+/* Filter Group Layout */
+.filter-group {
+  margin-bottom: 1.5rem;
+}
+
+.filter-group h4 {
+  font-size: 1.1rem;
+  color: #eee;
+  margin-bottom: 0.6rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* Custom Checkbox and Radio Styles */
+.custom-checkbox,
+.custom-radio {
+  display: flex;
+  align-items: center;
+  margin-bottom: 0.6rem;
+  cursor: pointer;
+}
+
+.custom-checkbox input,
+.custom-radio input {
+  margin-right: 10px;
+  width: 18px;
+  height: 18px;
+  accent-color: #a020f0;
+  cursor: pointer;
+}
+
+.custom-checkbox label,
+.custom-radio label {
+  color: #ccc;
+  font-size: 0.95rem;
+  transition: color 0.3s;
+  cursor: pointer;
+}
+
+.custom-checkbox:hover label,
+.custom-radio:hover label {
+  color: #fff;
+}
+
+.custom-checkbox input:checked + label,
+.custom-radio input:checked + label {
+  color: #fff;
+  font-weight: 500;
+}
+
+/* Price Range Styling */
+.filter-group input[type="range"] {
+  width: 100%;
+  height: 8px;
+  background: linear-gradient(to right, #a020f0, #a020f0);
+  border-radius: 5px;
+  outline: none;
+  margin: 8px 0;
+  -webkit-appearance: none;
+}
+
+.filter-group input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: #a020f0;
+  border: 2px solid white;
+  cursor: pointer;
+}
+
+.filter-group input[type="range"]::-moz-range-thumb {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: #a020f0;
+  border: 2px solid white;
+  cursor: pointer;
+}
+
+/* Subtle Hover Effects */
+.custom-checkbox:hover input,
+.custom-radio:hover input {
+  filter: brightness(1.2);
+}
+
+.filter-group > div:last-child {
+  margin-bottom: 0;
+}
+
+.accordion-icon {
+  float: right;
+  transition: transform 0.3s ease;
+}
+.filter-group.active .accordion-icon {
+  transform: rotate(90deg); /* or 180deg */
+}
+
+/* ---------------- Responsive Styles ---------------- */
+@media screen and (max-width: 1024px) {
+  .product-list-page {
+    flex-direction: column;
+  }
+
+  .advanced-filter-bar {
+    position: relative;
+    top: unset;
+    width: 100%;
+    padding: 1.5rem 1rem;
+    margin-bottom: 2rem;
+    border-radius: 12px;
+    box-shadow: none;
+  }
+
+  .advanced-filter-bar h2 {
+    font-size: 1.5rem;
+    text-align: left;
+    margin-bottom: 1rem;
+  }
+
+  .filter-group h4 {
+    font-size: 1rem;
+  }
+
+  .filter-options .custom-checkbox label,
+  .filter-options .custom-radio label {
+    font-size: 0.95rem;
+  }
+
+  .custom-select-wrapper {
+    min-width: 100%;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .advanced-filter-bar {
+    padding: 1rem;
+  }
+
+  .filter-options {
+    padding: 0 0.25rem;
+  }
+
+  .filter-options .custom-checkbox label,
+  .filter-options .custom-radio label {
+    font-size: 0.9rem;
+    padding-left: 24px;
+  }
+
+  .filter-group h4 {
+    padding: 0.75rem 0.5rem;
+  }
+
+  .accordion-icon {
+    width: 8px;
+    height: 8px;
+  }
+
+  .product-result-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+
+  .product-result-count {
+    font-size: 18px;
+  }
+}
+
+/* ===== Floating Filter Icon Button ===== */
+.floating-filter-button {
+  display: none;
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 999;
+  background-color: #a020f0;
+  border: none;
+  border-radius: 50%;
+  width: 56px;
+  height: 56px;
+  box-shadow: 0 8px 16px rgba(160, 32, 240, 0.4);
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.floating-filter-button:hover {
+  background-color: #b84dff;
+}
+
+.floating-filter-button .filter-icon {
+  width: 28px;
+  height: 28px;
+  color: #fff;
+}
+
+/* Show only on mobile/tablet */
+@media screen and (max-width: 1024px) {
+  .floating-filter-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .advanced-filter-bar {
+    position: fixed !important;
+    top: 6rem;
+    left: 0;
+    right: 0;
+    width: 100% !important;
+    height: calc(100vh - 6rem);
+    z-index: 9999;
+    overflow-y: auto;
+    padding-bottom: 4rem !important; /* Leave space for Apply button */
+  }
+
+  .advanced-filter-bar.hide {
+    display: none;
+  }
+
+  .advanced-filter-bar.show {
+    display: block;
+    animation: fadeIn 0.3s ease-in-out;
+  }
+
+  .filter-overlay-apply {
+    position: initial;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: #1e1e1e;
+    padding: 1rem;
+    text-align: center;
+    z-index: 10000;
+  }
+
+  .filter-overlay-apply button {
+    padding: 0.75rem 2rem;
+    background-color: #a020f0;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+  }
+
+  .filter-overlay-apply button:hover {
+    background-color: #b84dff;
+  }
+}
+
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+

@@ -1,0 +1,155 @@
+/* --- Base Styles (Mobile First) --- */
+.pricing-summary-container {
+  border: 1px solid ;
+  border-radius: 8px;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  overflow: hidden; /* Important for the accordion effect */
+}
+
+/* The clickable header for mobile */
+.summary-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+}
+
+.header-title {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #333;
+  margin: 0;
+}
+
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 700;
+  color: #222;
+}
+
+/* The content that expands/collapses */
+.summary-details-content {
+  /* This is the core of the accordion effect */
+  max-height: 0;
+  transition: max-height 0.4s ease-out, margin-top 0.4s ease-out;
+  margin-top: 0;
+  visibility: hidden;
+}
+
+/* When the container has the 'open' class, expand the content */
+.pricing-summary-container.open .summary-details-content {
+  max-height: 1000px; /* A large value to allow for expansion */
+  margin-top: 1.5rem; /* Add space between header and content */
+  visibility: visible;
+}
+
+.details-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.details-header h4 {
+  margin: 0;
+  font-size: 1.1rem;
+}
+
+.close-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  color: #555;
+}
+
+.price-breakdown {
+  /* border-bottom: 1px solid #eee; */
+  padding-bottom: 1rem;
+  margin-bottom: 1rem;
+}
+
+.price-row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 0.8rem;
+  font-size: 0.9rem;
+  color: #555;
+}
+
+.price-row span:last-child {
+  color: #222;
+  font-weight: 500;
+}
+
+.price-row .discount-value {
+  color: #059669; /* Green for discounts/savings */
+  font-weight: 600;
+}
+
+.semi-total {
+  font-weight: 600;
+  color: #333;
+}
+
+.grand-total {
+  font-weight: 700;
+  font-size: 1.1rem;
+  color: #222;
+}
+.grand-total span { color: #222; }
+
+
+.payment-method-info {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  /* background-color: #f7f7f7; */
+  padding: 0.75rem;
+  border-radius: 6px;
+  margin: 1.5rem 0;
+}
+.payment-icon { width: 24px; height: 24px; }
+
+
+.get-invoice-button {
+  width: 100%;
+  padding: 0.8rem;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #0c57d8; /* Blue color like Myntra */
+  /* background-color: #fff; */
+  border: 1px solid #0c57d8;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.2s, color 0.2s;
+}
+/* .get-invoice-button:hover { background-color: #f0f5ff; } */
+
+
+/* --- Desktop Styles (using a media query) --- */
+@media (min-width: 768px) {
+  /* On desktop, we don't want the accordion behavior */
+  .summary-header {
+    display: none; /* Hide the mobile header */
+  }
+
+  .summary-details-content {
+    /* Make the content always visible */
+    max-height: none;
+    visibility: visible;
+    margin-top: 0;
+    transition: none; /* No transition needed */
+  }
+
+  .details-header .close-button {
+    display: none; /* Hide the close button */
+  }
+
+  .pricing-summary-container {
+    padding: 1.5rem; /* Maybe a bit more padding on desktop */
+  }
+}

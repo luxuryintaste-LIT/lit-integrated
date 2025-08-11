@@ -70,13 +70,14 @@ const ProductCard = ({ product }) => {
         <div className="brand-name">{product.brand}</div>
         <h3 className="product-name-card">{product.name}</h3>
         <div className="price-container">
-          <div className="current-price">Rs. {product.price.toLocaleString()}</div>
-          {product.originalPrice && (
-            <div className="original-price">Rs. {product.originalPrice.toLocaleString()}</div>
-          )}
+          <div className="current-price">Rs. {product?.price?.toLocaleString() ?? 'Price not available'}</div>
           {product.discount && (
             <div className="discount">{product.discount}% OFF</div>
           )}
+          {product.originalPrice && (
+            <div className="original-price">Rs. {product.originalPrice.toLocaleString()}</div>
+          )}
+          
         </div>
         <div className="button-container">
           <Link to={`/product/${product._id}`} className="buy-now">Buy Now</Link>

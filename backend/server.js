@@ -52,6 +52,7 @@ const sustainableFashionRoutes = require('./routes/sustainableFashionRoutes');
 const sneakerWorldRoutes = require('./routes/sneakerWorldRoutes');
 const uploadRoute = require('./routes/upload');
 const contactRoutes = require('./routes/contactRoutes');
+const SubcribeRoutes = require('./routes/subscriberRoutes');
 
 // ✅ Mount routes
 app.use('/api/products', productRoutes);
@@ -66,7 +67,7 @@ app.use('/api/sustainable-fashion', sustainableFashionRoutes);
 app.use('/api/sneaker-world', sneakerWorldRoutes);
 app.use('/api/contact', contactRoutes);
 app.use(uploadRoute); // for image uploads
-
+app.use('/api/subscribers', SubcribeRoutes);
 // ✅ Root endpoint
 app.get('/', (req, res) => {
   res.send('🚀 Unified API for Ecommerce + Newsletter is running...');

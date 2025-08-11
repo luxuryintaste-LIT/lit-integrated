@@ -16,22 +16,33 @@ import Navbar from './components/Newsletter-components/Navbar/Navbar';
 import MainLayout from './components/Newsletter-components/MainLayout/MainLayout';
 import ProtectedRoute from './components/admin-components/ProtectedRoute';
 import AdminLayout from './components/admin-components/AdminLayout';
-import Notification from './components/Notification'; 
+import Notification from './components/Notification';
+import ScrollToTop from './components/ScrollToTop';
+
 import EcomAdminDashboard from './pages/admin/EcomAdminDashboard';
 import EcomDashboardView from './components/EcommerceAdmin/EcomDashboardView';
 import EcomProductsView from './components/EcommerceAdmin/EcomProductsView';
 import EcomProductForm from './components/EcommerceAdmin/EcomProductForm';
 import EditProductForm from './components/EcommerceAdmin/EditProductForm';
-
 import ProductDetailPage from './components/EcommerceAdmin/ProductDetailPage';
 
 // Dummy admin pages for sidebar
-import { Analytics, Offers, Inventory, Orders, Sales, Customers, Newsletter, Settings as AdminSettings } from './components/EcommerceAdmin/AdminDummyPages';
+import {
+  Analytics,
+  Offers,
+  Inventory,
+  Orders,
+  Sales,
+  Customers,
+  Newsletter,
+  Settings as AdminSettings
+} from './components/EcommerceAdmin/AdminDummyPages';
 
 // Pages - Public
 import LandingPage from './components/LandingPage';
-import Shop from './pages/Shop';  
+import Shop from './pages/Shop';
 import ProductDetails from './components/Shop/ProductDetails';
+import ProductDetailsPage from './pages/ProductDetailsPage/ProductDetailsPage'; // keep both, for old/new usage
 import Cart from './components/Shop/Cart';
 import Wishlist from './pages/Wishlist';
 import GameModes from './pages/GameModes';
@@ -39,13 +50,18 @@ import About from './pages/About';
 import Contact from './pages/Contact';
 import Profile from './pages/profile/Profile/Profile';
 import PrivacyPolicy from './pages/privacyPolicy';
-import OrdersProfile from './pages/profile/Orders'; 
-import SettingsProfile from './pages/profile/Settings'; 
+import OrdersProfile from './pages/profile/Orders';
+import SettingsProfile from './pages/profile/Settings';
+import Settings from './pages/profile/Settings'; // keep both if different
 import CheckoutPage from './components/checkout/CheckoutPage';
 import OrderConfirmation from './pages/OrderConfirmation';
 import NotFound from './pages/NotFound';
 import ProductListPage from './pages/productListPage';
 import ComingSoonPage from './components/ComingSoonPage/ComingSoonPage';
+
+// Orders pages (new)
+import OrdersPage from './pages/OrdersPage/OrdersPage';
+import OrderDetailsPage from './pages/OrderDetailsPage/OrderDetailsPage';
 
 // Pages - Admin
 import AdminLogin from './pages/AdminLogin';
@@ -57,7 +73,6 @@ import MailAdderPage from './pages/admin/MailAdderPage/MailAdderPage';
 import MailItemEditor from './pages/admin/MailItemEditor/MailItemEditor';
 import AdminArticlePage from './pages/admin/ArticlePage';
 import DeleteProductForm from './components/DeleteProductForm';
-
 import AuthCallback from './pages/AuthCallback';
 
 // Pages - Newsletter
@@ -79,6 +94,7 @@ const AppContent = () => {
 
   return (
     <Background>
+      <ScrollToTop />
       <Notification />
       {showMainNavbar && <LandingPageNavbar />}
       {showNewsletterNavbar && <Navbar />}
@@ -88,7 +104,9 @@ const AppContent = () => {
           {/* Public Routes */}
           <Route path="/" element={<LandingPage />} />
           <Route path="/shop" element={<Shop />} />
+          {/* keeping both old and new product details paths */}
           <Route path="/product/:id" element={<ProductDetails />} />
+          <Route path="/product-page/:id" element={<ProductDetailsPage />} />
           <Route path="/cart" element={<Cart />} />
           <Route path="/wishlist" element={<Wishlist />} />
           <Route path="/game-modes" element={<ComingSoonPage />} />
@@ -96,12 +114,21 @@ const AppContent = () => {
           <Route path="/contact" element={<Contact />} />
           <Route path="/privacy" element={<PrivacyPolicy />} />
           <Route path="/profile" element={<Profile />} />
-          <Route path="/orders" element={<OrdersProfile />} />
-          <Route path="/settings" element={<SettingsProfile />} /> 
+
+          {/* Orders routes */}
+          <Route path="/orders" element={<OrdersPage />} />
+          <Route path="/orders/:orderId" element={<OrderDetailsPage />} />
+          <Route path="/orders-old" element={<OrdersProfile />} />
+
+          <Route path="/settings" element={<Settings />} />
+          <Route path="/settings-old" element={<SettingsProfile />} />
           <Route path="/checkout" element={<CheckoutPage />} />
           <Route path="/order-confirmation" element={<OrderConfirmation />} />
           <Route path="/products" element={<ProductListPage />} />
           <Route path="/auth/callback" element={<AuthCallback />} />
+          <Route path="/ir-icon" element={<ComingSoonPage />} />
+          <Route path="/socials" element={<ComingSoonPage />} />
+          <Route path="/avatar-store" element={<ComingSoonPage />} />
 
           {/* Newsletter Routes */}
           <Route element={<MainLayout />}>
@@ -110,15 +137,19 @@ const AppContent = () => {
           <Route path="/newsletter/article/:slug" element={<NewsletterArticlePage />} />
 
           {/* Admin E-commerce Dashboard */}
-          <Route path="/admin/ecomDashboard/*" element={<ProtectedRoute><EcomAdminDashboard /></ProtectedRoute>}>
+          <Route
+            path="/admin/ecomDashboard/*"
+            element={
+              <ProtectedRoute>
+                <EcomAdminDashboard />
+              </ProtectedRoute>
+            }
+          >
             <Route index element={<EcomDashboardView />} />
             <Route path="products" element={<EcomProductsView />} />
-            
-           
             <Route path="products/add" element={<EcomProductForm />} />
             <Route path="products/edit/:id" element={<EditProductForm />} />
-             <Route path="products/:id" element={<ProductDetailPage />} />
-            
+            <Route path="products/:id" element={<ProductDetailPage />} />
             <Route path="analytics" element={<Analytics />} />
             <Route path="offers" element={<Offers />} />
             <Route path="inventory" element={<Inventory />} />
@@ -133,9 +164,9 @@ const AppContent = () => {
           <Route path="/admin/login" element={<AdminLogin />} />
           <Route path="/admin/signup" element={<SignUpPage />} />
           <Route path="/admin/article/:slug" element={<AdminArticlePage />} />
-
           <Route element={<ProtectedRoute><AdminLayout /></ProtectedRoute>}>
             <Route path="/admin/dashboard" element={<AdminDashboard />} />
+            <Route path="/admin/ecomDashboard" element={<EcomAdminDashboard />} />
             <Route path="/admin/edit-product" element={<EditProductForm />} />
             <Route path="/admin/delete-product" element={<DeleteProductForm />} />
             <Route path="/admin/website" element={<ContentManager section="website" />} />

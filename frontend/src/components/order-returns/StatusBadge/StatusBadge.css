@@ -1,0 +1,40 @@
+/* --- Base Styling for all Badges --- */
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 12px;
+  border-radius: 999px; /* Creates a pill shape */
+  font-size: 0.8rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  line-height: 1.5; /* Ensures consistent height */
+  white-space: nowrap; /* Prevents text from wrapping */
+}
+
+/* --- Color-coding for each specific status --- */
+/* Uses a semi-transparent background for a modern look on dark themes. */
+
+/* For "Delivered" status */
+.status-badge.delivered {
+  background-color: rgba(22, 163, 74, 0.2); /* Transparent Green */
+  color: #4ade80; /* Bright Green Text */
+}
+
+/* For "On the Way" status */
+.status-badge.on-the-way {
+  background-color: rgba(234, 179, 8, 0.2); /* Transparent Yellow */
+  color: #facc15; /* Bright Yellow Text */
+}
+
+/* For "Canceled" status */
+.status-badge.canceled {
+  background-color: rgba(239, 68, 68, 0.2); /* Transparent Red */
+  color: #f87171; /* Bright Red Text */
+}
+
+/* For "Returned" status */
+.status-badge.returned {
+  background-color: rgba(107, 114, 128, 0.2); /* Transparent Gray */
+  color: #9ca3af; /* Gray Text */
+}
