@@ -1,0 +1,14 @@
+.sales-analytics {
+  background: rgba(26, 26, 26, 0.6);
+  border-radius: 16px;
+  padding: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  color: #fff;
+}
+
+.sales-analytics h3 {
+  margin-bottom: 15px;
+  font-size: 18px;
+  color: #e0b0ff;
+}

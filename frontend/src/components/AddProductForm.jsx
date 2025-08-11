@@ -157,7 +157,8 @@ const AddProductForm = ({ isOpen, onClose }) => {
     colorImages: {},
     sizes: [],
     features: [],
-    featured: false
+    featured: false,
+    
   });
 
   const [newFeature, setNewFeature] = useState('');

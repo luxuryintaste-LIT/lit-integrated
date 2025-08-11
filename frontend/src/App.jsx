@@ -8,39 +8,45 @@ import { AuthProvider } from './context/context-admin/AuthContext';
 import { DataProvider } from './context/context-admin/DataContext';
 import { ArticleProvider } from './context/ArticleContext';
 
-  // Layout & UI
-  import Background from './components/Background/Background';
-  import Footer from './components/Newsletter-components/Footer/Footer';
-  import LandingPageNavbar from './components/Newsletter-components/Navbar/Navbar';
-  import Navbar from './components/Newsletter-components/Navbar/Navbar';
-  import MainLayout from './components/Newsletter-components/MainLayout/MainLayout';
-  import ProtectedRoute from './components/admin-components/ProtectedRoute';
-  import AdminLayout from './components/admin-components/AdminLayout';
-  import Notification from './components/Notification'; // ✅ Added
+// Layout & UI
+import Background from './components/Background/Background';
+import Footer from './components/Newsletter-components/Footer/Footer';
+import LandingPageNavbar from './components/Newsletter-components/Navbar/Navbar';
+import Navbar from './components/Newsletter-components/Navbar/Navbar';
+import MainLayout from './components/Newsletter-components/MainLayout/MainLayout';
+import ProtectedRoute from './components/admin-components/ProtectedRoute';
+import AdminLayout from './components/admin-components/AdminLayout';
+import Notification from './components/Notification'; 
+import EcomAdminDashboard from './pages/admin/EcomAdminDashboard';
+import EcomDashboardView from './components/EcommerceAdmin/EcomDashboardView';
+import EcomProductsView from './components/EcommerceAdmin/EcomProductsView';
+import EcomProductForm from './components/EcommerceAdmin/EcomProductForm';
+import EditProductForm from './components/EcommerceAdmin/EditProductForm';
 
-  // Pages - Public
-  import LandingPage from './components/LandingPage';
-  import Shop from './pages/Shop';  
-  import ProductDetails from './components/Shop/ProductDetails';
-  import Cart from './components/Shop/Cart';
-  import Wishlist from './pages/Wishlist';
-  import GameModes from './pages/GameModes';
-  import About from './pages/About';
-  import Contact from './pages/Contact';
-  import Profile from './pages/profile/Profile/Profile';
-  import PrivacyPolicy from './pages/privacyPolicy';
-  // import ReturnPolicy from './pages/returnPolicy.jsx';
-  // import TermsOfService from './pages/termsOfService';
-  import Orders from './pages/profile/Orders'; // ✅ Updated path
-  import Settings from './pages/profile/Settings'; // ✅ Updated path
-  // import AddFriendsPage from './pages/profile/AddFriendsPage/AddFriendsPage'; 
-  // import SignInPage from './auth/pages/SignInPage';
-  // import ForgotPasswordPage from './auth/pages/ForgotPasswordPage'; 
-  import CheckoutPage from './components/checkout/CheckoutPage';
-  import OrderConfirmation from './pages/OrderConfirmation';
-  import NotFound from './pages/NotFound';
-  import ProductListPage from './pages/productListPage';
-  import ComingSoonPage from './components/ComingSoonPage/ComingSoonPage';
+import ProductDetailPage from './components/EcommerceAdmin/ProductDetailPage';
+
+// Dummy admin pages for sidebar
+import { Analytics, Offers, Inventory, Orders, Sales, Customers, Newsletter, Settings as AdminSettings } from './components/EcommerceAdmin/AdminDummyPages';
+
+// Pages - Public
+import LandingPage from './components/LandingPage';
+import Shop from './pages/Shop';  
+import ProductDetails from './components/Shop/ProductDetails';
+import Cart from './components/Shop/Cart';
+import Wishlist from './pages/Wishlist';
+import GameModes from './pages/GameModes';
+import About from './pages/About';
+import Contact from './pages/Contact';
+import Profile from './pages/profile/Profile/Profile';
+import PrivacyPolicy from './pages/privacyPolicy';
+import OrdersProfile from './pages/profile/Orders'; 
+import SettingsProfile from './pages/profile/Settings'; 
+import CheckoutPage from './components/checkout/CheckoutPage';
+import OrderConfirmation from './pages/OrderConfirmation';
+import NotFound from './pages/NotFound';
+import ProductListPage from './pages/productListPage';
+import ComingSoonPage from './components/ComingSoonPage/ComingSoonPage';
+
 // Pages - Admin
 import AdminLogin from './pages/AdminLogin';
 import SignUpPage from './pages/admin/Auth/SignUpPage';
@@ -51,7 +57,7 @@ import MailAdderPage from './pages/admin/MailAdderPage/MailAdderPage';
 import MailItemEditor from './pages/admin/MailItemEditor/MailItemEditor';
 import AdminArticlePage from './pages/admin/ArticlePage';
 import DeleteProductForm from './components/DeleteProductForm';
-import EditProductForm from './components/EditProductForm';
+
 import AuthCallback from './pages/AuthCallback';
 
 // Pages - Newsletter
@@ -63,7 +69,6 @@ import { PayPalScriptProvider } from '@paypal/react-paypal-js';
 
 const AppContent = () => {
   const location = useLocation();
-
   const isAdminPath = location.pathname.startsWith('/admin');
   const isNewsletterPath = location.pathname.startsWith('/newsletter');
   const isNewsletterArticle = location.pathname.startsWith('/newsletter/article');
@@ -78,40 +83,51 @@ const AppContent = () => {
       {showMainNavbar && <LandingPageNavbar />}
       {showNewsletterNavbar && <Navbar />}
 
-        <main style={{ flex: 1, width: '100%' }}>
-          <Routes>
-            {/* Public Routes */}
-            <Route path="/" element={<LandingPage />} />
-            <Route path="/shop" element={<Shop />} />
-            <Route path="/product/:id" element={<ProductDetails />} />
-            <Route path="/cart" element={<Cart />} />
-            <Route path="/wishlist" element={<Wishlist />} />
-            <Route path="/game-modes" element={<ComingSoonPage />} />
-            <Route path="/about" element={<About />} />
-            <Route path="/contact" element={<Contact />} />
-            <Route path="/privacy" element={<PrivacyPolicy />} />
-            <Route path="/profile" element={<Profile />} />
-            {/* <Route path='/returnpolicy' element={<ReturnPolicy />} /> 
-            <Route Path='/terms' element={<TermsOfService />} /> */}
-
-            <Route path="/orders" element={<Orders />} />
-            <Route path="/settings" element={<Settings />} /> 
-            {/* <Route path="/add-friends" element={<AddFriendsPage />} />  */}
-            {/* <Route path="/signin" element={<SignInPage />} /> ✅ Newly added route
-            <Route path="/forgot-password" element={<ForgotPasswordPage />} /> ✅ Newly added route */}
-            <Route path="/checkout" element={<CheckoutPage />} />
-            <Route path="/order-confirmation" element={<OrderConfirmation />} />
-            <Route path="/ir-icon" element={<ComingSoonPage />} />
-            <Route path="/socials" element={<ComingSoonPage />} />
-            <Route path="/avatar-store" element={<ComingSoonPage />} />
-            <Route path="/products" element={<ProductListPage />} />
-            <Route path="/auth/callback" element={<AuthCallback />} />
+      <main style={{ flex: 1, width: '100%' }}>
+        <Routes>
+          {/* Public Routes */}
+          <Route path="/" element={<LandingPage />} />
+          <Route path="/shop" element={<Shop />} />
+          <Route path="/product/:id" element={<ProductDetails />} />
+          <Route path="/cart" element={<Cart />} />
+          <Route path="/wishlist" element={<Wishlist />} />
+          <Route path="/game-modes" element={<ComingSoonPage />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/contact" element={<Contact />} />
+          <Route path="/privacy" element={<PrivacyPolicy />} />
+          <Route path="/profile" element={<Profile />} />
+          <Route path="/orders" element={<OrdersProfile />} />
+          <Route path="/settings" element={<SettingsProfile />} /> 
+          <Route path="/checkout" element={<CheckoutPage />} />
+          <Route path="/order-confirmation" element={<OrderConfirmation />} />
+          <Route path="/products" element={<ProductListPage />} />
+          <Route path="/auth/callback" element={<AuthCallback />} />
 
           {/* Newsletter Routes */}
           <Route element={<MainLayout />}>
             <Route path="/newsletter" element={<NewsletterPage />} />
           </Route>
           <Route path="/newsletter/article/:slug" element={<NewsletterArticlePage />} />
+
+          {/* Admin E-commerce Dashboard */}
+          <Route path="/admin/ecomDashboard/*" element={<ProtectedRoute><EcomAdminDashboard /></ProtectedRoute>}>
+            <Route index element={<EcomDashboardView />} />
+            <Route path="products" element={<EcomProductsView />} />
+            
+           
+            <Route path="products/add" element={<EcomProductForm />} />
+            <Route path="products/edit/:id" element={<EditProductForm />} />
+             <Route path="products/:id" element={<ProductDetailPage />} />
+            
+            <Route path="analytics" element={<Analytics />} />
+            <Route path="offers" element={<Offers />} />
+            <Route path="inventory" element={<Inventory />} />
+            <Route path="orders" element={<Orders />} />
+            <Route path="sales" element={<Sales />} />
+            <Route path="customers" element={<Customers />} />
+            <Route path="newsletter" element={<Newsletter />} />
+            <Route path="settings" element={<AdminSettings />} />
+          </Route>
 
           {/* Admin Routes */}
           <Route path="/admin/login" element={<AdminLogin />} />

@@ -1,0 +1,21 @@
+.top-products {
+  margin-top: 2rem;
+}
+
+.top-products h2 {
+  color: #E0B0FF;
+  margin-bottom: 1rem;
+}
+
+.top-products-list {
+  display: flex;
+  gap: 1rem;
+  overflow-x: auto;
+  padding-bottom: 0.5rem;
+}
+
+.top-products-loading,
+.top-products-error {
+  color: #FFFFFF;
+  padding: 1rem;
+}

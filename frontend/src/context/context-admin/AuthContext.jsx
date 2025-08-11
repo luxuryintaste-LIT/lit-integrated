@@ -48,10 +48,13 @@ const getInitialUsers = () => {
 };
 
 export const AuthProvider = ({ children }) => {
-  const [users, setUsers] = useState(getInitialUsers);
+  const [users, setUsers] = useState(() => getInitialUsers());
+
+
 
   // Now use *sessionStorage* for currentUser so session expires on browser close
   const [currentUser, setCurrentUser] = useState(() => {
+
     try {
       const savedUser = sessionStorage.getItem('currentUser');
       return savedUser ? JSON.parse(savedUser) : null;
@@ -59,15 +62,15 @@ export const AuthProvider = ({ children }) => {
       return null;
     }
   });
+  const [loading, setLoading] = useState(true);
+  useEffect(() => {
+    setLoading(false);
+  }, []);
+
 
   // Persist admin users list in localStorage (so user DB survives across reloads)
   useEffect(() => {
-    localStorage.setItem('adminUsers', JSON.stringify(users));
-  }, [users]);
-
-  // Persist current user in *sessionStorage*
-  useEffect(() => {
-    if (currentUser) {
+        if (currentUser) {
       sessionStorage.setItem('currentUser', JSON.stringify(currentUser));
       sessionStorage.setItem('adminAuthenticated', 'true');
     } else {
@@ -75,6 +78,8 @@ export const AuthProvider = ({ children }) => {
       sessionStorage.removeItem('adminAuthenticated');
     }
   }, [currentUser]);
+
+   
 
   // Login logic
   const login = (email, password) => {
@@ -112,7 +117,7 @@ const logout = (navigateTo, navigateFn) => {
   sessionStorage.removeItem('adminAuthenticated');
   sessionStorage.removeItem('currentUser');
 
-  // ✅ Use navigate from react-router
+  //  Use navigate from react-router
   if (navigateTo && navigateFn) {
     navigateFn(navigateTo);
   }
@@ -128,7 +133,8 @@ const logout = (navigateTo, navigateFn) => {
   login,
   signup,
   logout,  // <-- updated to accept 2 args
-  currentUser
+  currentUser,
+  loading // <-- Add this
 };
 
 

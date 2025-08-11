@@ -1,0 +1,135 @@
+.ecom-admin-layout {
+  display: flex;
+}
+
+.ecom-admin-content {
+  flex: 1;
+  margin-left: 250px; /* sidebar width */
+  padding: 20px;
+  color: var(--text-primary);
+  background: transparent; /* so body background is visible */
+}
+
+.admin-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.dashboard-title {
+  font-size: 24px;
+  font-weight: 600;
+}
+/* Add this to the end of EcomAdminDashboard.css */
+
+.page-back-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(46, 26, 73, 0.8);
+  border: 1px solid #7a4edb;
+  color: #a78bfa;
+  padding: 10px 20px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.page-back-button:hover {
+  background: #7a4edb;
+  color: white;
+  box-shadow: 0 4px 15px rgba(120, 0, 255, 0.3);
+}
+/* Add this entire block to the end of EcomAdminDashboard.css */
+
+/* --- Main Layout Responsiveness --- */
+
+.mobile-menu-toggle {
+  display: none; /* Hidden on desktop */
+  background: none;
+  border: none;
+  color: #d4bfff;
+  cursor: pointer;
+  z-index: 1001; /* Ensure it's on top */
+}
+
+@media (max-width: 768px) {
+  .ecom-admin-layout {
+    /* On mobile, the content area should not have a margin,
+       as the sidebar will be hidden. */
+    display: block;
+  }
+
+  .ecom-admin-content {
+    margin-left: 0;
+  }
+
+  .admin-header {
+    /* Make sure the menu toggle is on the right */
+    justify-content: space-between;
+  }
+
+  .mobile-menu-toggle {
+    display: block; /* Show the hamburger icon */
+  }
+
+  /*
+    Now, let's control the sidebar itself.
+    This requires a change in EcomSidebar.css
+  */
+}
+
+/* Add this entire block to the end of EcomAdminDashboard.css */
+
+/* --- Main Layout Responsiveness --- */
+
+.mobile-menu-toggle {
+  display: none;
+  background: none;
+  border: none;
+  color: #d4bfff;
+  cursor: pointer;
+  z-index: 1002; /* Must be on top of the overlay and sidebar */
+  padding: 5px;
+}
+
+/* Style for the overlay that appears when the sidebar is open on mobile */
+.sidebar-overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(4px);
+  z-index: 999; /* Below the sidebar but above the content */
+}
+
+/* --- Media Query for Mobile --- */
+@media (max-width: 768px) {
+  .ecom-admin-layout {
+    display: block;
+  }
+
+  .ecom-admin-content {
+    margin-left: 0;
+    transition: transform 0.3s ease-in-out;
+  }
+
+  .admin-header {
+    justify-content: space-between;
+  }
+
+  .mobile-menu-toggle {
+    display: block;
+  }
+
+  /* When the sidebar is open, show the overlay */
+  .sidebar-open .sidebar-overlay {
+    display: block;
+  }
+}

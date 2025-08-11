@@ -1,0 +1,26 @@
+.sales-target {
+  text-align: center;
+}
+
+.progress-ring {
+  margin: 20px auto;
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  background: conic-gradient(#a855f7 0% 78%, rgba(255, 255, 255, 0.1) 78% 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0 25px rgba(168, 85, 247, 0.6);
+}
+
+.progress-text {
+  font-size: 22px;
+  font-weight: bold;
+  color: white;
+}
+
+.sales-target p {
+  margin-top: 10px;
+  color: rgba(255, 255, 255, 0.7);
+}

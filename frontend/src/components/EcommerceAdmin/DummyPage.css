@@ -1,0 +1,9 @@
+.dummy-page {
+  background: rgba(30, 0, 40, 0.4);
+  border-radius: 10px;
+  padding: 30px;
+  text-align: center;
+  color: #e0b0ff;
+  margin-top: 20px;
+  box-shadow: 0 0 10px rgba(224, 176, 255, 0.3);
+}

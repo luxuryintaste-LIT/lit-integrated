@@ -1,0 +1,27 @@
+.ecom-product-card {
+  background-color: #242424;
+  color: #FFFFFF;
+  padding: 1rem;
+  border-radius: 8px;
+  width: 180px;
+  flex-shrink: 0;
+  text-align: center;
+}
+
+.ecom-product-card .product-image {
+  width: 100%;
+  height: 120px;
+  object-fit: cover;
+  border-radius: 4px;
+  margin-bottom: 0.5rem;
+}
+
+.ecom-product-card h3 {
+  font-size: 1rem;
+  color: #E0B0FF;
+  margin-bottom: 0.5rem;
+}
+
+.ecom-product-card p {
+  margin: 0.2rem 0;
+}
