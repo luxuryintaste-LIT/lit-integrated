@@ -1,0 +1,40 @@
+     at JSXParserMixin.parseMaybeAssignAllowIn (C:\lit-integrated\frontend\node_modules\@babel\parser\lib\index.js:10748:17)   
+11:54:39 PM [vite] (client) hmr update /src/components/EcommerceAdmin/EcomProductsView.jsx
+11:55:02 PM [vite] (client) hmr update /src/components/EcommerceAdmin/AddProductForm.jsx
+11:55:22 PM [vite] (client) hmr update /src/components/EcommerceAdmin/EditProductForm.jsx
+11:55:40 PM [vite] (client) hmr update /src/components/EcommerceAdmin/EditProductForm.jsx (x2)
+11:55:42 PM [vite] (client) hmr update /src/components/EcommerceAdmin/EditProductForm.jsx (x3)
+11:55:45 PM [vite] (client) hmr update /src/components/EcommerceAdmin/EditProductForm.jsx (x4)
+11:55:47 PM [vite] (client) hmr update /src/components/EcommerceAdmin/EditProductForm.jsx (x5)
+11:55:57 PM [vite] (client) hmr update /src/components/EcommerceAdmin/AddProductForm.jsx
+11:59:40 PM [vite] (client) hmr update /src/components/EcommerceAdmin/EcomProductsView.jsx, /src/components/EcommerceAdmin/AddPr
+oductForm.jsx, /src/components/EcommerceAdmin/EditProductForm.jsx
+11:59:54 PM [vite] (client) hmr update /src/components/EcommerceAdmin/EcomProductsView.jsx
+12:00:10 AM [vite] (client) hmr update /src/components/EcommerceAdmin/EditProductForm.jsx
+
+ *  History restored 
+
+PS C:\lit-integrated> cd backend
+PS C:\lit-integrated\backend> npm start 
+
+> lit-landing-backend@1.0.0 start
+> node server.js
+
+(node:3552) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.       
+(Use `node --trace-deprecation ...` to show where the warning was created)
+🚀 Server running on http://localhost:5000
+✅ MongoDB connected
+
+ *  History restored 
+
+PS C:\lit-integrated> 
+ *  History restored 
+
+PS C:\lit-integrated>
+
+
+
+
+
+
+
