@@ -1,104 +1,96 @@
 // C:\lit-integrated\frontend\src\components\EcommerceAdmin\productService.js
 
-const STORAGE_KEY = 'ecom_admin_products';
+// This URL points to your real backend server, as defined in your .env file
+const API_URL = 'http://localhost:5000/api/products';
 
-const initialMockProducts = [
-    { _id: '1', name: 'Cyber-Punk Void Jacket', category: 'Apparel', productLine: 'Luxury Fashion', gender: 'Unisex', price: 120, stock: 50, material: 'Synth-Leather', description: 'A sleek, water-resistant jacket...', colors: ['Black', 'Purple'], sizes: ['M', 'L', 'XL'], features: ['Water-Resistant'], images: [{ images: ['https://picsum.photos/100?random=10'] }] },
-    { _id: '2', name: 'Holo-Lens 2049', category: 'Accessories', productLine: 'Fast Fashion', gender: 'Men', price: 250, stock: 30, material: 'Titanium', description: 'Augmented reality glasses...', colors: ['Gray', 'Silver'], sizes: ['One Size'], features: ['AR Display'], images: [{ images: ['https://picsum.photos/100?random=11'] }] },
-    { _id: '3', name: 'Gaia-Friendly Tee', category: 'Clothing', productLine: 'Sustainable Fashion', gender: 'Unisex', price: 75, stock: 150, material: 'Organic Cotton', description: 'A comfortable and stylish tee...', colors: ['White', 'Green'], sizes: ['S', 'M', 'L'], features: ['Organic'], images: [{ images: ['https://picsum.photos/100?random=12'] }] },
-];
-
-// This function runs once to set up the initial data in the browser's storage
-const initializeData = () => {
-  const data = localStorage.getItem(STORAGE_KEY);
-  if (!data) {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(initialMockProducts));
-  }
-};
-
-initializeData();
-
+/**
+ * Fetches all products from the backend server.
+ */
 export const getProducts = async () => {
-  await new Promise(resolve => setTimeout(resolve, 300));
-  const products = JSON.parse(localStorage.getItem(STORAGE_KEY));
-  return products;
+  const response = await fetch(API_URL);
+  if (!response.ok) {
+    throw new Error('Network response was not ok');
+  }
+  return await response.json();
 };
 
+/**
+ * Fetches a single product by its ID from the backend server.
+ */
 export const getProductById = async (id) => {
-  await new Promise(resolve => setTimeout(resolve, 300));
-  const products = await getProducts();
-  return products.find(p => p._id === id);
+  const response = await fetch(`${API_URL}/${id}`);
+  if (!response.ok) {
+    throw new Error('Failed to fetch product');
+  }
+  return await response.json();
 };
 
-export const createProduct = async (formData) => {
-  await new Promise(resolve => setTimeout(resolve, 500));
-  const products = await getProducts();
-  
-  // This is the new, correct image handling logic
-  let imageUrl = `https://picsum.photos/100?random=${new Date().getTime()}`; // Default placeholder
-  const firstColor = formData.colors[0];
-  if (firstColor && formData.colorImages[firstColor] && formData.colorImages[firstColor][0]) {
-    const imageFile = formData.colorImages[firstColor][0];
-    imageUrl = URL.createObjectURL(imageFile); // Create stable blob URL
+/**
+ * Creates a new product by sending data and images to the backend server.
+ */
+export const createProduct = async (productData) => {
+  const formData = new FormData();
+
+  // Append all simple text/number fields
+  Object.keys(productData).forEach(key => {
+    if (key !== 'colorImages') {
+      const value = productData[key];
+      if (Array.isArray(value)) {
+        value.forEach(item => formData.append(`${key}[]`, item));
+      } else {
+        formData.append(key, value);
+      }
+    }
+  });
+
+  // Append all image files for the backend to process
+  for (const color in productData.colorImages) {
+    productData.colorImages[color].forEach(file => {
+      formData.append(`images-${color}`, file);
+    });
   }
 
-  const newProduct = {
-    _id: `prod_${new Date().getTime()}`,
-    name: formData.productName,
-    category: formData.category,
-    productLine: formData.productLine,
-    gender: formData.gender,
-    price: formData.originalPrice,
-    stock: formData.stock,
-    material: formData.material,
-    description: formData.description,
-    colors: formData.colors,
-    sizes: formData.sizes,
-    features: formData.features,
-    discountPercentage: formData.discountPercentage,
-    modelSize: formData.modelSize,
-    couponCode: formData.couponCode,
-    images: [{ images: [imageUrl] }]
-  };
+  const response = await fetch(API_URL, {
+    method: 'POST',
+    body: formData,
+    // NOTE: Do NOT set Content-Type header when using FormData with fetch.
+    // The browser sets it automatically with the correct boundary.
+  });
 
-  const newProductList = [newProduct, ...products];
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(newProductList));
-  return newProduct;
+  if (!response.ok) {
+    throw new Error('Failed to create product on the server.');
+  }
+  return await response.json();
 };
 
-export const updateProduct = async (id, formData) => {
-  await new Promise(resolve => setTimeout(resolve, 500));
-  let products = await getProducts();
-  const productIndex = products.findIndex(p => p._id === id);
-  if (productIndex === -1) throw new Error("Product not found");
+/**
+ * Updates an existing product on the backend server.
+ */
+export const updateProduct = async (id, productData) => {
+  // For updates, we send JSON. Image updates would require FormData and a different backend logic.
+  const response = await fetch(`${API_URL}/${id}`, {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(productData),
+  });
 
-  const updatedProduct = {
-    ...products[productIndex],
-    name: formData.productName,
-    category: formData.category,
-    productLine: formData.productLine,
-    gender: formData.gender,
-    price: formData.originalPrice,
-    stock: formData.stock,
-    material: formData.material,
-    description: formData.description,
-    colors: formData.colors,
-    sizes: formData.sizes,
-    features: formData.features,
-    discountPercentage: formData.discountPercentage,
-    modelSize: formData.modelSize,
-    couponCode: formData.couponCode,
-  };
-
-  products[productIndex] = updatedProduct;
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(products));
-  return updatedProduct;
+  if (!response.ok) {
+    throw new Error('Failed to update product.');
+  }
+  return await response.json();
 };
 
+/**
+ * Deletes a product from the backend server.
+ */
 export const deleteProduct = async (id) => {
-  await new Promise(resolve => setTimeout(resolve, 500));
-  let products = await getProducts();
-  const newProductList = products.filter(p => p._id !== id);
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(newProductList));
-  return { success: true };
+  const response = await fetch(`${API_URL}/${id}`, {
+    method: 'DELETE',
+  });
+  if (!response.ok) {
+    throw new Error('Failed to delete product.');
+  }
+  return await response.json();
 };

@@ -1,89 +1,130 @@
-.dashboard-container {
-  padding: 2rem;
+/* C:\lit-integrated\frontend\src\pages\admin\EcomDashboardView.css */
+
+.dashboard-view-container { width: 100%; }
+.dashboard-header { margin-bottom: 1.5rem; }
+.dashboard-header h3 { font-size: 1.75rem; font-weight: 600; color: #e0e0e0; margin: 0; }
+
+/* --- The Main Grid Layout --- */
+.dashboard-layout-grid {
+  display: grid;
+  gap: 1.5rem;
+  grid-template-columns: repeat(12, 1fr);
+  grid-auto-rows: min-content;
+}
+
+/* Grid Area Assignments */
+.stat-card.revenue { grid-column: span 3; }
+.stat-card.order { grid-column: span 3; }
+.stat-card.customer { grid-column: span 3; }
+.stat-card.delivery { grid-column: span 3; }
+#sales-analytic { grid-column: span 8; }
+#sales-target { grid-column: span 4; }
+#top-products { grid-column: span 8; }
+#current-offer { grid-column: span 4; }
+
+/* --- Polished "Glassmorphism" Card Style --- */
+.dashboard-card {
+  background: rgba(30, 0, 60, 0.6);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(167, 139, 250, 0.2);
+  border-radius: 20px;
+  padding: 1.5rem;
   color: #fff;
-  background: radial-gradient(circle at top left, #1c003d, #0d001f);
-  min-height: 100vh;
   display: flex;
   flex-direction: column;
-  gap: 2rem;
 }
 
-.dashboard-title {
+.card-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; }
+.card-header h4 { margin: 0; font-size: 1.1rem; font-weight: 500; color: #d4bfff; }
+
+/* 
+  ===================================================================
+  --- THIS IS THE DEFINITIVE, DRIBBBLE-INSPIRED STAT CARD LAYOUT ---
+  ===================================================================
+*/
+.stat-card {
+  padding: 1.25rem;
+  justify-content: space-between; /* Creates space between header and body */
+}
+
+.stat-card-header, .stat-card-body {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.stat-icon-wrapper {
+  font-size: 1.25rem;
+  padding: 0.8rem;
+  border-radius: 12px;
+  background-color: rgba(139, 92, 246, 0.2);
+  color: #c4b5fd;
+  display: flex;
+}
+
+.stat-label {
+  margin: 0;
+  color: #b0a0ca;
+  font-size: 0.9rem;
+}
+
+.stat-card-body h3 {
+  margin: 0;
   font-size: 2rem;
-  color: #d4bfff;
-  text-align: center;
-  margin-bottom: 1rem;
+  font-weight: 600;
 }
 
-.cards-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 1.5rem;
+.stat-growth {
+  font-weight: 600;
+  font-size: 0.9rem;
 }
+.stat-growth.positive { color: #4ade80; }
+.stat-growth.negative { color: #f87171; }
 
-.card {
-  background: linear-gradient(145deg, #1a0033, #2e1a47);
-  padding: 1.5rem;
-  border-radius: 1rem;
-  text-align: center;
-  box-shadow: 0 0 20px rgba(155, 92, 255, 0.2);
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+
+/* --- CONTENT-SPECIFIC STYLES --- */
+#sales-analytic { min-height: 400px; }
+.date-filter { background: rgba(139, 92, 246, 0.2); border: 1px solid rgba(167, 139, 250, 0.5); color: #e0e0e0; border-radius: 8px; padding: 0.5rem 1rem; }
+.analytic-metrics { display: flex; flex-wrap: wrap; gap: 1.5rem; margin: 1rem 0; padding-bottom: 1.5rem; border-bottom: 1px solid rgba(255, 255, 255, 0.1); }
+.metric-item span { font-size: 0.8rem; color: #b0a0ca; }
+.metric-item p { margin: 0.25rem 0 0 0; font-size: 1.1rem; font-weight: 600; }
+.chart-container { flex-grow: 1; position: relative; }
+
+.doughnut-container { max-width: 200px; width: 100%; margin: 1rem auto; }
+.target-labels { margin-top: 1.5rem; display: flex; flex-direction: column; gap: 1rem; }
+.target-label-item { display: flex; align-items: center; gap: 0.75rem; }
+.target-label-item p { margin: 0; font-size: 0.9rem; color: #b0a0ca; }
+.target-label-item span { font-weight: 600; }
+.dot { width: 10px; height: 10px; border-radius: 50%; }
+.dot.daily { background-color: #8b5cf6; }
+.dot.monthly { background-color: rgba(139, 92, 246, 0.2); }
+
+.view-all-btn { background: rgba(139, 92, 246, 0.2); color: #c4b5fd; border-radius: 50%; width: 32px; height: 32px; border: none; cursor: pointer; }
+.top-products-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 1rem; }
+.top-product-card { text-align: center; }
+.top-product-card .img-wrapper { background: rgba(13, 0, 31, 0.5); border-radius: 12px; padding: 0.5rem; margin-bottom: 0.75rem; }
+.top-product-card img { width: 100%; height: auto; aspect-ratio: 1; }
+.top-product-card .name { font-weight: 500; margin: 0 0 0.25rem 0; font-size: 0.9rem; }
+.top-product-card .sales { color: #b0a0ca; font-size: 0.8rem; margin: 0; }
+
+.offer-list { display: flex; flex-direction: column; gap: 1rem; }
+.offer-item { background: rgba(13, 0, 31, 0.5); padding: 1rem; border-radius: 12px; }
+.offer-item.disabled { opacity: 0.6; }
+.offer-item p { margin: 0 0 0.25rem 0; font-weight: 500; }
+.offer-item span { font-size: 0.8rem; color: #b0a0ca; }
+
+/* --- FLAWLESS RESPONSIVENESS --- */
+@media (max-width: 1200px) {
+  .dashboard-layout-grid { grid-template-columns: repeat(8, 1fr); }
+  .stat-card { grid-column: span 4 !important; }
+  #sales-analytic, #top-products { grid-column: span 8 !important; }
+  #sales-target, #current-offer { grid-column: span 8 !important; }
 }
-
-.card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 0 25px rgba(155, 92, 255, 0.5);
-}
-
-.card-icon {
-  font-size: 2rem;
-  color: #9b5cff;
-  margin-bottom: 0.5rem;
-}
-
-.charts-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 2rem;
-}
-
-.chart-card {
-  background: linear-gradient(145deg, #1a0033, #2e1a47);
-  padding: 1.5rem;
-  border-radius: 1rem;
-  box-shadow: 0 0 20px rgba(155, 92, 255, 0.2);
-  text-align: center;
-}
-
-.target-text {
-  margin-top: 1rem;
-  color: #9b5cff;
-}
-
-.top-products {
-  background: linear-gradient(145deg, #1a0033, #2e1a47);
-  padding: 1.5rem;
-  border-radius: 1rem;
-  box-shadow: 0 0 20px rgba(155, 92, 255, 0.2);
-}
-
-.products-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-  gap: 1.5rem;
-  margin-top: 1rem;
-}
-
-.product-card {
-  text-align: center;
-}
-
-.product-card img {
-  width: 80px;
-  height: 80px;
-  margin-bottom: 0.5rem;
-}
-
-.product-card span {
-  color: #bbb;
+@media (max-width: 768px) {
+  .dashboard-layout-grid { grid-template-columns: 1fr; }
+  .stat-card, #sales-analytic, #sales-target, #top-products, #current-offer {
+    grid-column: span 1 !important;
+  }
 }

@@ -1,27 +1,47 @@
+/* C:\lit-integrated\frontend\src/pages/admin/EcomAdminDashboard.css */
+
+/* --- Main Layout for Desktop --- */
 .ecom-admin-layout {
-  display: flex;
+  position: relative;
+  width: 100%;
 }
 
 .ecom-admin-content {
-  flex: 1;
-  margin-left: 250px; /* sidebar width */
-  padding: 20px;
-  color: var(--text-primary);
-  background: transparent; /* so body background is visible */
+  /* This margin-left is the key. It pushes the content area to the right
+     to make exactly enough space for the fixed 250px sidebar. */
+  margin-left: 250px;
+  padding: 2rem;
+  width: calc(100% - 250px); /* Ensures content doesn't overflow */
+  min-height: 100vh;
 }
 
 .admin-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 20px;
+  margin-bottom: 2rem;
 }
 
 .dashboard-title {
-  font-size: 24px;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem; /* Space between icon and text */
+  font-size: 2rem;
   font-weight: 600;
+  color: #e0e0e0;
 }
-/* Add this to the end of EcomAdminDashboard.css */
+.dashboard-title-icon {
+  display: inline-flex;
+  /* A subtle animation for the icon change */
+  transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+  opacity: 1;
+  transform: scale(1);
+}
+
+.dashboard-title-text {
+  /* A subtle animation for the text change */
+  transition: opacity 0.3s ease-in-out;
+}
 
 .page-back-button {
   display: inline-flex;
@@ -43,62 +63,20 @@
   color: white;
   box-shadow: 0 4px 15px rgba(120, 0, 255, 0.3);
 }
-/* Add this entire block to the end of EcomAdminDashboard.css */
 
-/* --- Main Layout Responsiveness --- */
-
+/* --- Hamburger Menu and Overlay (for Mobile) --- */
 .mobile-menu-toggle {
   display: none; /* Hidden on desktop */
   background: none;
   border: none;
   color: #d4bfff;
   cursor: pointer;
-  z-index: 1001; /* Ensure it's on top */
-}
-
-@media (max-width: 768px) {
-  .ecom-admin-layout {
-    /* On mobile, the content area should not have a margin,
-       as the sidebar will be hidden. */
-    display: block;
-  }
-
-  .ecom-admin-content {
-    margin-left: 0;
-  }
-
-  .admin-header {
-    /* Make sure the menu toggle is on the right */
-    justify-content: space-between;
-  }
-
-  .mobile-menu-toggle {
-    display: block; /* Show the hamburger icon */
-  }
-
-  /*
-    Now, let's control the sidebar itself.
-    This requires a change in EcomSidebar.css
-  */
-}
-
-/* Add this entire block to the end of EcomAdminDashboard.css */
-
-/* --- Main Layout Responsiveness --- */
-
-.mobile-menu-toggle {
-  display: none;
-  background: none;
-  border: none;
-  color: #d4bfff;
-  cursor: pointer;
-  z-index: 1002; /* Must be on top of the overlay and sidebar */
+  z-index: 1002;
   padding: 5px;
 }
 
-/* Style for the overlay that appears when the sidebar is open on mobile */
 .sidebar-overlay {
-  display: none;
+  display: none; /* Hidden on desktop */
   position: fixed;
   top: 0;
   left: 0;
@@ -106,26 +84,21 @@
   height: 100%;
   background-color: rgba(0, 0, 0, 0.5);
   backdrop-filter: blur(4px);
-  z-index: 999; /* Below the sidebar but above the content */
+  z-index: 999;
 }
 
-/* --- Media Query for Mobile --- */
+
+/* --- Main Layout Responsiveness for Mobile --- */
 @media (max-width: 768px) {
-  .ecom-admin-layout {
-    display: block;
-  }
-
   .ecom-admin-content {
+    /* On mobile, the content takes the full width */
     margin-left: 0;
-    transition: transform 0.3s ease-in-out;
-  }
-
-  .admin-header {
-    justify-content: space-between;
+    width: 100%;
+    padding: 1.5rem;
   }
 
   .mobile-menu-toggle {
-    display: block;
+    display: block; /* Show the hamburger icon */
   }
 
   /* When the sidebar is open, show the overlay */
